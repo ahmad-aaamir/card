@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-wine: #45151F;
+  --color-brand-burgundy: #722C3B;
+  --color-brand-rose: #D7A3A0;
+  --color-brand-ivory: #F7F0E7;
+  --color-brand-gold: #C5A05B;
+  --color-brand-gold-light: #E7CF9B;
+  --color-brand-gold-dark: #977636;
+  --color-brand-dark: #220A10;
+  --color-brand-cream: #FAF6F0;
+
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-display: var(--font-cinzel), "Cinzel", Georgia, serif;
+  --font-script: var(--font-pinyon), "Pinyon Script", cursive;
+  --font-sans: var(--font-montserrat), "Montserrat", sans-serif;
+}
+
+:root {
+  --wine: #45151F;
+  --burgundy: #722C3B;
+  --rose: #D7A3A0;
+  --ivory: #F7F0E7;
+  --gold: #C5A05B;
+  --gold-light: #E7CF9B;
+  --gold-dark: #977636;
+}
+
+/* Custom fine typography styles */
+.font-serif {
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+}
+
+.font-display {
+  font-family: var(--font-cinzel), "Cinzel", Georgia, serif;
+}
+
+.font-script {
+  font-family: var(--font-pinyon), "Pinyon Script", cursive;
+}
+
+.font-sans {
+  font-family: var(--font-montserrat), "Montserrat", sans-serif;
+}
+
+.font-arabic {
+  font-family: var(--font-amiri), "Amiri", "Traditional Arabic", "Scheherazade New", serif;
+}
+
+/* Gold foil gradient effects */
+.gold-text-gradient {
+  background: linear-gradient(135deg, #F3DFB5 0%, #C5A05B 50%, #8E6D2E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-border-gradient {
+  border-image: linear-gradient(to bottom right, #E7CF9B, #C5A05B, #8C6B2B) 1;
+}
+
+/* Deckled paper and luxury stationery styling */
+.paper-card {
+  background-color: #F7F0E7;
+  background-image: radial-gradient(#eadfce 0.75px, transparent 0.75px);
+  background-size: 16px 16px;
+  box-shadow: 
+    0 20px 45px -10px rgba(36, 11, 16, 0.25),
+    0 1px 3px rgba(36, 11, 16, 0.08),
+    inset 0 0 40px rgba(197, 160, 91, 0.06);
+}
+
+.paper-deckled {
+  position: relative;
+  box-shadow: 
+    0 25px 60px -15px rgba(20, 5, 8, 0.4),
+    0 4px 12px rgba(20, 5, 8, 0.1);
+}
+
+/* Delicate filigree border utility */
+.gold-filigree-frame {
+  border: 1px solid rgba(197, 160, 91, 0.45);
+  outline: 1px solid rgba(197, 160, 91, 0.25);
+  outline-offset: 6px;
+}
+
+.gold-inner-frame {
+  border: 1px solid rgba(197, 160, 91, 0.35);
+}
+
+/* Custom scrollbar for luxury editorial feel */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #240B10;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #722C3B;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C5A05B;
+}
