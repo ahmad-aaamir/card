@@ -509,7 +509,7 @@ export function InvitationCover({
                   rotate: { duration: 11, repeat: Infinity, ease: "easeInOut" },
                 }}
                 style={{ transformOrigin: "top right" }}
-                className="absolute top-0 right-0 sm:-top-16 sm:-right-8 md:-top-20 md:-right-12 lg:-top-28 lg:-right-16 w-20 h-20 xs:w-28 xs:h-28 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[420px] lg:h-[420px] pointer-events-none z-15 drop-shadow-[0_15px_20px_rgba(0,0,0,0.85)] filter contrast-[1.05]"
+                className="absolute -top-3 -right-3 xs:-top-4 xs:-right-4 sm:-top-16 sm:-right-8 md:-top-20 md:-right-12 lg:-top-28 lg:-right-16 w-20 h-20 xs:w-28 xs:h-28 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[420px] lg:h-[420px] pointer-events-none z-15 drop-shadow-[0_15px_20px_rgba(0,0,0,0.85)] filter contrast-[1.05]"
               >
                 <Image
                   src="/images/floral-corner-garland.png"
@@ -625,15 +625,15 @@ export function InvitationCover({
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.8 }}
-                    className="w-full my-1 sm:my-2"
+                    className="w-full my-1 sm:my-2 px-3 sm:px-0"
                   >
                     <p
                       dir="rtl"
-                      className="font-arabic text-2xl sm:text-3xl md:text-4xl text-[#45151F] leading-relaxed font-semibold drop-shadow-[0_1px_1px_rgba(197,160,91,0.2)]"
+                      className="font-arabic text-xl xs:text-2xl sm:text-3xl md:text-4xl text-[#45151F] leading-relaxed font-semibold drop-shadow-[0_1px_1px_rgba(197,160,91,0.2)]"
                     >
                       {weddingData.islamicHeading.bismillahArabic}
                     </p>
-                    <span className="font-serif italic text-xs sm:text-sm text-[#722C3B] tracking-wider block mt-0.5">
+                    <span className="font-serif italic text-[11px] xs:text-xs sm:text-sm text-[#722C3B] tracking-wider block mt-0.5">
                       {weddingData.islamicHeading.bismillahTranslation}
                     </span>
                   </motion.div>

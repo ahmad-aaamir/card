@@ -272,8 +272,8 @@ function VineSegment({
           <path
             d={
               isEven
-                ? "M 18 0 C 45 120, 65 240, 32 360 C 5 460, 48 560, 22 640"
-                : "M 22 0 C 8 130, 52 260, 28 380 C 12 480, 55 560, 18 640"
+                ? "M 28 0 C 58 120, 80 240, 48 360 C 26 460, 68 560, 35 640"
+                : "M 35 0 C 20 130, 72 260, 45 380 C 28 480, 75 560, 30 640"
             }
             stroke="url(#vineGoldGrad)"
             strokeWidth="2.8"
@@ -284,8 +284,8 @@ function VineSegment({
           <path
             d={
               isEven
-                ? "M 122 0 C 95 120, 75 240, 108 360 C 135 460, 92 560, 118 640"
-                : "M 118 0 C 132 130, 88 260, 112 380 C 128 480, 85 560, 122 640"
+                ? "M 112 0 C 82 120, 60 240, 92 360 C 114 460, 72 560, 105 640"
+                : "M 105 0 C 120 130, 68 260, 95 380 C 112 480, 65 560, 110 640"
             }
             stroke="url(#vineGoldGrad)"
             strokeWidth="2.8"
@@ -298,7 +298,7 @@ function VineSegment({
         {isLeft ? (
           <>
             <path
-              d="M 38 140 C 65 145, 82 170, 72 195 C 64 210, 48 200, 54 186"
+              d="M 48 140 C 78 145, 98 170, 88 195 C 78 210, 60 200, 66 186"
               stroke="#C5A05B"
               strokeWidth="1.2"
               fill="none"
@@ -306,7 +306,7 @@ function VineSegment({
               opacity="0.85"
             />
             <path
-              d="M 30 410 C 60 415, 78 440, 68 465 C 60 480, 45 470, 50 456"
+              d="M 42 410 C 75 415, 95 440, 84 465 C 74 480, 58 470, 64 456"
               stroke="#E7CF9B"
               strokeWidth="1.2"
               fill="none"
@@ -317,7 +317,7 @@ function VineSegment({
         ) : (
           <>
             <path
-              d="M 102 140 C 75 145, 58 170, 68 195 C 76 210, 92 200, 86 186"
+              d="M 92 140 C 62 145, 42 170, 52 195 C 62 210, 80 200, 74 186"
               stroke="#C5A05B"
               strokeWidth="1.2"
               fill="none"
@@ -325,7 +325,7 @@ function VineSegment({
               opacity="0.85"
             />
             <path
-              d="M 110 410 C 80 415, 62 440, 72 465 C 80 480, 95 470, 90 456"
+              d="M 98 410 C 65 415, 45 440, 56 465 C 66 480, 82 470, 76 456"
               stroke="#E7CF9B"
               strokeWidth="1.2"
               fill="none"
@@ -338,35 +338,35 @@ function VineSegment({
         {/* Botanical Foliage Leaves spaced rhythmically along stem */}
         {isLeft ? (
           <>
-            <BotanicalLeaf x={24} y={60} rotation={-25} scale={0.9} color="emerald" />
-            <BotanicalLeaf x={35} y={110} rotation={35} scale={1.1} color="wine" />
-            <BotanicalLeaf x={50} y={190} rotation={-15} scale={1.0} color="emerald" />
-            <BotanicalLeaf x={42} y={260} rotation={45} scale={0.85} color="gold" />
-            <BotanicalLeaf x={28} y={330} rotation={-40} scale={1.05} color="emerald" />
-            <BotanicalLeaf x={18} y={420} rotation={30} scale={1.0} color="wine" />
-            <BotanicalLeaf x={36} y={490} rotation={-20} scale={1.1} color="emerald" />
-            <BotanicalLeaf x={30} y={570} rotation={40} scale={0.9} color="gold" />
+            <BotanicalLeaf x={36} y={60} rotation={-25} scale={0.9} color="emerald" />
+            <BotanicalLeaf x={48} y={110} rotation={35} scale={1.1} color="wine" />
+            <BotanicalLeaf x={65} y={190} rotation={-15} scale={1.0} color="emerald" />
+            <BotanicalLeaf x={56} y={260} rotation={45} scale={0.85} color="gold" />
+            <BotanicalLeaf x={42} y={330} rotation={-40} scale={1.05} color="emerald" />
+            <BotanicalLeaf x={32} y={420} rotation={30} scale={1.0} color="wine" />
+            <BotanicalLeaf x={50} y={490} rotation={-20} scale={1.1} color="emerald" />
+            <BotanicalLeaf x={44} y={570} rotation={40} scale={0.9} color="gold" />
           </>
         ) : (
           <>
-            <BotanicalLeaf x={116} y={60} rotation={205} scale={0.9} color="emerald" />
-            <BotanicalLeaf x={105} y={110} rotation={145} scale={1.1} color="wine" />
-            <BotanicalLeaf x={90} y={190} rotation={195} scale={1.0} color="emerald" />
-            <BotanicalLeaf x={98} y={260} rotation={135} scale={0.85} color="gold" />
-            <BotanicalLeaf x={112} y={330} rotation={220} scale={1.05} color="emerald" />
-            <BotanicalLeaf x={122} y={420} rotation={150} scale={1.0} color="wine" />
-            <BotanicalLeaf x={104} y={490} rotation={200} scale={1.1} color="emerald" />
-            <BotanicalLeaf x={110} y={570} rotation={140} scale={0.9} color="gold" />
+            <BotanicalLeaf x={104} y={60} rotation={205} scale={0.9} color="emerald" />
+            <BotanicalLeaf x={92} y={110} rotation={145} scale={1.1} color="wine" />
+            <BotanicalLeaf x={75} y={190} rotation={195} scale={1.0} color="emerald" />
+            <BotanicalLeaf x={84} y={260} rotation={135} scale={0.85} color="gold" />
+            <BotanicalLeaf x={98} y={330} rotation={220} scale={1.05} color="emerald" />
+            <BotanicalLeaf x={108} y={420} rotation={150} scale={1.0} color="wine" />
+            <BotanicalLeaf x={90} y={490} rotation={200} scale={1.1} color="emerald" />
+            <BotanicalLeaf x={96} y={570} rotation={140} scale={0.9} color="gold" />
           </>
         )}
       </svg>
 
-      {/* Luxury Blossoms placed along the vine */}
+      {/* Luxury Blossoms placed along the vine - moved inward for mobile visibility */}
       {isLeft ? (
         <>
           {/* Peony / Rose Blossom 1 */}
           <div
-            className="absolute top-[90px] left-[15px] sm:left-[22px] transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-700"
+            className="absolute top-[90px] left-[26px] xs:left-[30px] sm:left-[36px] transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-700"
             style={{
               animation: "vineFlowerFlutter 4.5s ease-in-out infinite alternate",
               animationDelay: `${segmentIndex * 0.3}s`,
@@ -377,7 +377,7 @@ function VineSegment({
 
           {/* Jasmine Blossom */}
           <div
-            className="absolute top-[230px] left-[42px] sm:left-[50px] transform -translate-x-1/2 -translate-y-1/2"
+            className="absolute top-[230px] left-[54px] xs:left-[60px] sm:left-[66px] transform -translate-x-1/2 -translate-y-1/2"
             style={{
               animation: "vineFlowerFlutter 5.2s ease-in-out infinite alternate",
               animationDelay: `${segmentIndex * 0.5 + 0.8}s`,
@@ -388,7 +388,7 @@ function VineSegment({
 
           {/* Bud */}
           <div
-            className="absolute top-[380px] left-[18px] sm:left-[25px] transform -translate-x-1/2 -translate-y-1/2"
+            className="absolute top-[380px] left-[28px] xs:left-[32px] sm:left-[36px] transform -translate-x-1/2 -translate-y-1/2"
             style={{
               animation: "vineFlowerFlutter 4.8s ease-in-out infinite alternate",
               animationDelay: `${segmentIndex * 0.4 + 1.2}s`,
@@ -399,7 +399,7 @@ function VineSegment({
 
           {/* Peony Blossom 2 */}
           <div
-            className="absolute top-[510px] left-[32px] sm:left-[38px] transform -translate-x-1/2 -translate-y-1/2"
+            className="absolute top-[510px] left-[42px] xs:left-[48px] sm:left-[54px] transform -translate-x-1/2 -translate-y-1/2"
             style={{
               animation: "vineFlowerFlutter 5.6s ease-in-out infinite alternate",
               animationDelay: `${segmentIndex * 0.6 + 0.3}s`,
@@ -412,7 +412,7 @@ function VineSegment({
         <>
           {/* Right Peony / Rose Blossom 1 */}
           <div
-            className="absolute top-[90px] right-[15px] sm:right-[22px] transform translate-x-1/2 -translate-y-1/2"
+            className="absolute top-[90px] right-[26px] xs:right-[30px] sm:right-[36px] transform translate-x-1/2 -translate-y-1/2"
             style={{
               animation: "vineFlowerFlutter 4.5s ease-in-out infinite alternate",
               animationDelay: `${segmentIndex * 0.3 + 0.5}s`,
@@ -423,7 +423,7 @@ function VineSegment({
 
           {/* Right Jasmine */}
           <div
-            className="absolute top-[230px] right-[42px] sm:right-[50px] transform translate-x-1/2 -translate-y-1/2"
+            className="absolute top-[230px] right-[54px] xs:right-[60px] sm:right-[66px] transform translate-x-1/2 -translate-y-1/2"
             style={{
               animation: "vineFlowerFlutter 5.2s ease-in-out infinite alternate",
               animationDelay: `${segmentIndex * 0.5 + 1.1}s`,
@@ -434,7 +434,7 @@ function VineSegment({
 
           {/* Right Bud */}
           <div
-            className="absolute top-[380px] right-[18px] sm:right-[25px] transform translate-x-1/2 -translate-y-1/2"
+            className="absolute top-[380px] right-[28px] xs:right-[32px] sm:right-[36px] transform translate-x-1/2 -translate-y-1/2"
             style={{
               animation: "vineFlowerFlutter 4.8s ease-in-out infinite alternate",
               animationDelay: `${segmentIndex * 0.4 + 0.7}s`,
@@ -445,7 +445,7 @@ function VineSegment({
 
           {/* Right Peony Blossom 2 */}
           <div
-            className="absolute top-[510px] right-[32px] sm:right-[38px] transform translate-x-1/2 -translate-y-1/2"
+            className="absolute top-[510px] right-[42px] xs:right-[48px] sm:right-[54px] transform translate-x-1/2 -translate-y-1/2"
             style={{
               animation: "vineFlowerFlutter 5.6s ease-in-out infinite alternate",
               animationDelay: `${segmentIndex * 0.6 + 1.4}s`,
@@ -465,7 +465,7 @@ function VineSegment({
  */
 function TopHangingCanopy() {
   return (
-    <div className="absolute top-0 inset-x-0 h-48 sm:h-64 pointer-events-none z-20 overflow-hidden">
+    <div className="absolute top-0 inset-x-0 h-48 sm:h-64 pointer-events-none z-20 overflow-hidden hidden sm:block">
       {/* Left Top Hanging Garland */}
       <div
         className="absolute -top-6 -left-6 sm:-top-8 sm:-left-8 w-44 sm:w-72 md:w-88 origin-top-left"
@@ -696,17 +696,17 @@ export function ContinuousFloralVines() {
       {/* Full-Height Continuous Side Vines running all the way down to the footer */}
       <div
         aria-hidden="true"
-        className="absolute inset-y-0 inset-x-0 pointer-events-none z-10 overflow-hidden"
+        className="absolute inset-y-0 inset-x-0 pointer-events-none z-25 overflow-hidden"
       >
         {/* Left Side Continuous Trailing Vine */}
-        <div className="absolute top-0 left-0 bottom-0 w-12 xs:w-16 sm:w-24 md:w-28 lg:w-36 flex flex-col items-start opacity-70 sm:opacity-90">
+        <div className="absolute top-0 left-0 sm:left-1 bottom-0 w-16 xs:w-20 sm:w-24 md:w-28 lg:w-36 flex flex-col items-start opacity-85 sm:opacity-95">
           {Array.from({ length: segmentCount }).map((_, i) => (
             <VineSegment key={`vine-left-${i}`} side="left" segmentIndex={i} />
           ))}
         </div>
 
         {/* Right Side Continuous Trailing Vine */}
-        <div className="absolute top-0 right-0 bottom-0 w-12 xs:w-16 sm:w-24 md:w-28 lg:w-36 flex flex-col items-end opacity-70 sm:opacity-90">
+        <div className="absolute top-0 right-0 sm:right-1 bottom-0 w-16 xs:w-20 sm:w-24 md:w-28 lg:w-36 flex flex-col items-end opacity-85 sm:opacity-95">
           {Array.from({ length: segmentCount }).map((_, i) => (
             <VineSegment key={`vine-right-${i}`} side="right" segmentIndex={i} />
           ))}
