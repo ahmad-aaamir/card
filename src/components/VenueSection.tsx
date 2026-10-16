@@ -2,14 +2,13 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Navigation, Car, Compass, Map as MapIcon, Image as ImageIcon, ExternalLink } from "lucide-react";
 import { weddingData } from "@/data/invitationData";
 import { OrnamentalDivider } from "./OrnamentalDivider";
 
 export function VenueSection() {
   const [activeTab, setActiveTab] = useState<"photo" | "map">("map");
-  const shouldReduceMotion = useReducedMotion();
 
   return (
     <section className="relative py-14 sm:py-24 px-3.5 sm:px-4 bg-[#240B10] text-[#FAF6F0] overflow-hidden">

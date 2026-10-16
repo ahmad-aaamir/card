@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback } from "react";
 import Image from "next/image";
 import {
   motion,
@@ -26,7 +26,6 @@ interface InvitationCoverProps {
 
 export function InvitationCover({
   initialState = "complete",
-  isEmerging = false,
   onStateChange,
   onReplayRequest,
 }: InvitationCoverProps) {
@@ -244,16 +243,17 @@ export function InvitationCover({
                 animate={
                   shouldReduceMotion
                     ? {}
-                    : { y: [0, -6, 0], rotate: [0, 0.6, 0] }
+                    : { y: [0, -4, 0], rotate: [0, 0.8, -0.4, 0] }
                 }
-                transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-10 -right-8 xs:-top-12 xs:-right-10 sm:-top-16 sm:-right-14 w-40 h-40 xs:w-48 xs:h-48 sm:w-64 sm:h-64 pointer-events-none z-30 drop-shadow-[0_20px_25px_rgba(0,0,0,0.8)]"
+                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                style={{ transformOrigin: "top right" }}
+                className="absolute -top-4 -right-1 xs:-top-6 xs:-right-2 sm:-top-14 sm:-right-8 md:-top-16 md:-right-12 w-24 h-24 xs:w-32 xs:h-32 sm:w-56 sm:h-56 md:w-64 md:h-64 pointer-events-none z-20 drop-shadow-[0_15px_20px_rgba(0,0,0,0.8)]"
               >
                 <Image
                   src="/images/floral-corner-garland.png"
                   alt="Lush peonies and roses"
                   fill
-                  sizes="260px"
+                  sizes="(max-width: 640px) 130px, 260px"
                   className="object-contain"
                 />
               </motion.div>
@@ -262,16 +262,17 @@ export function InvitationCover({
                 animate={
                   shouldReduceMotion
                     ? {}
-                    : { y: [0, 6, 0], rotate: [0, -0.6, 0] }
+                    : { y: [0, 4, 0], rotate: [0, -0.8, 0.4, 0] }
                 }
-                transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -bottom-10 -left-8 xs:-bottom-12 xs:-left-10 sm:-bottom-16 sm:-left-14 w-40 h-40 xs:w-48 xs:h-48 sm:w-60 sm:h-60 pointer-events-none z-30 drop-shadow-[0_20px_25px_rgba(0,0,0,0.8)]"
+                transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+                style={{ transformOrigin: "bottom left" }}
+                className="absolute -bottom-4 -left-1 xs:-bottom-6 xs:-left-2 sm:-bottom-14 sm:-left-8 md:-bottom-16 md:-left-12 w-24 h-24 xs:w-32 xs:h-32 sm:w-52 sm:h-52 md:w-60 md:h-60 pointer-events-none z-20 drop-shadow-[0_15px_20px_rgba(0,0,0,0.8)]"
               >
                 <Image
                   src="/images/floral-lower-cluster.png"
                   alt="Deep wine roses and gold foliage"
                   fill
-                  sizes="240px"
+                  sizes="(max-width: 640px) 130px, 240px"
                   className="object-contain"
                 />
               </motion.div>
@@ -485,36 +486,37 @@ export function InvitationCover({
               }}
               className="relative w-full max-w-full sm:max-w-4xl md:max-w-5xl lg:max-w-6xl xl:max-w-7xl mx-auto flex items-center justify-center will-change-transform"
             >
-              {/* ASYMMETRIC OPULENT FLORALS OVERLAPPING THE CARD */}
+              {/* ASYMMETRIC OPULENT FLORALS FRAMING THE CARD CORNERS */}
 
               {/* 1. Upper-Right Opulent Peonies & Garden Roses Garland */}
               <motion.div
                 initial={
                   shouldReduceMotion
                     ? {}
-                    : { scale: 0.5, opacity: 0, x: -30, y: 30 }
+                    : { scale: 0.6, opacity: 0, x: -15, y: 15 }
                 }
                 animate={{
                   scale: 1,
                   opacity: 1,
                   x: 0,
-                  y: shouldReduceMotion ? 0 : [0, -7, 0],
-                  rotate: shouldReduceMotion ? 0 : [0, 0.7, 0],
+                  y: shouldReduceMotion ? 0 : [0, -4, 0],
+                  rotate: shouldReduceMotion ? 0 : [0, 0.7, -0.3, 0],
                 }}
                 transition={{
                   scale: { duration: 1.4, ease: [0.16, 1, 0.3, 1] },
                   opacity: { duration: 1.2 },
-                  y: { duration: 13, repeat: Infinity, ease: "easeInOut" },
-                  rotate: { duration: 13, repeat: Infinity, ease: "easeInOut" },
+                  y: { duration: 11, repeat: Infinity, ease: "easeInOut" },
+                  rotate: { duration: 11, repeat: Infinity, ease: "easeInOut" },
                 }}
-                className="absolute -top-10 -right-4 xs:-top-14 xs:-right-6 sm:-top-20 sm:-right-10 md:-top-24 md:-right-12 lg:-top-28 lg:-right-16 w-44 h-44 xs:w-56 xs:h-56 sm:w-76 sm:h-76 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px] pointer-events-none z-25 drop-shadow-[0_25px_30px_rgba(0,0,0,0.85)] filter contrast-[1.05]"
+                style={{ transformOrigin: "top right" }}
+                className="absolute top-0 right-0 sm:-top-16 sm:-right-8 md:-top-20 md:-right-12 lg:-top-28 lg:-right-16 w-20 h-20 xs:w-28 xs:h-28 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[420px] lg:h-[420px] pointer-events-none z-15 drop-shadow-[0_15px_20px_rgba(0,0,0,0.85)] filter contrast-[1.05]"
               >
                 <Image
                   src="/images/floral-corner-garland.png"
                   alt="Opulent blush and ivory peonies with foliage"
                   fill
                   priority
-                  sizes="(max-width: 640px) 220px, (max-width: 768px) 300px, 420px"
+                  sizes="(max-width: 640px) 112px, (max-width: 768px) 300px, 420px"
                   className="object-contain"
                 />
               </motion.div>
@@ -524,45 +526,46 @@ export function InvitationCover({
                 initial={
                   shouldReduceMotion
                     ? {}
-                    : { scale: 0.5, opacity: 0, x: 30, y: -30 }
+                    : { scale: 0.6, opacity: 0, x: 15, y: -15 }
                 }
                 animate={{
                   scale: 1,
                   opacity: 1,
                   x: 0,
-                  y: shouldReduceMotion ? 0 : [0, 7, 0],
-                  rotate: shouldReduceMotion ? 0 : [0, -0.7, 0],
+                  y: shouldReduceMotion ? 0 : [0, 4, 0],
+                  rotate: shouldReduceMotion ? 0 : [0, -0.7, 0.3, 0],
                 }}
                 transition={{
                   scale: { duration: 1.4, ease: [0.16, 1, 0.3, 1] },
                   opacity: { duration: 1.2 },
                   y: {
-                    duration: 15,
+                    duration: 13,
                     repeat: Infinity,
                     ease: "easeInOut",
                     delay: 0.8,
                   },
                   rotate: {
-                    duration: 15,
+                    duration: 13,
                     repeat: Infinity,
                     ease: "easeInOut",
                     delay: 0.8,
                   },
                 }}
-                className="absolute -bottom-10 -left-4 xs:-bottom-14 xs:-left-6 sm:-bottom-20 sm:-left-10 md:-bottom-24 md:-left-12 lg:-bottom-28 lg:-left-16 w-44 h-44 xs:w-56 xs:h-56 sm:w-72 sm:h-72 md:w-92 md:h-92 lg:w-[400px] lg:h-[400px] pointer-events-none z-25 drop-shadow-[0_25px_30px_rgba(0,0,0,0.85)] filter contrast-[1.05]"
+                style={{ transformOrigin: "bottom left" }}
+                className="absolute bottom-0 left-0 sm:-bottom-16 sm:-left-8 md:-bottom-20 md:-left-12 lg:-bottom-28 lg:-left-16 w-20 h-20 xs:w-28 xs:h-28 sm:w-60 sm:h-60 md:w-76 md:h-76 lg:w-[400px] lg:h-[400px] pointer-events-none z-15 drop-shadow-[0_15px_20px_rgba(0,0,0,0.85)] filter contrast-[1.05]"
               >
                 <Image
                   src="/images/floral-lower-cluster.png"
                   alt="Deep wine roses and golden foliage"
                   fill
                   priority
-                  sizes="(max-width: 640px) 220px, (max-width: 768px) 290px, 400px"
+                  sizes="(max-width: 640px) 112px, (max-width: 768px) 290px, 400px"
                   className="object-contain"
                 />
               </motion.div>
 
               {/* 3. The Physical Handcrafted Warm Ivory Stationery Card Covering Whole Screen */}
-              <div className="relative z-10 w-full min-h-[88vh] sm:min-h-[92vh] flex flex-col justify-center bg-[#FAF6F0] rounded-sm p-5 xs:p-7 sm:p-12 md:p-16 lg:p-20 border border-[#C5A05B]/60 shadow-[0_35px_80px_-15px_rgba(0,0,0,0.88),0_15px_30px_-5px_rgba(0,0,0,0.6),inset_0_1px_2px_rgba(255,255,255,0.9),inset_0_0_50px_rgba(197,160,91,0.06)] overflow-hidden">
+              <div className="relative z-10 w-full min-h-[88vh] sm:min-h-[92vh] flex flex-col justify-center bg-[#FAF6F0] rounded-sm p-4 xs:p-6 sm:p-12 md:p-16 lg:p-20 border border-[#C5A05B]/60 shadow-[0_35px_80px_-15px_rgba(0,0,0,0.88),0_15px_30px_-5px_rgba(0,0,0,0.6),inset_0_1px_2px_rgba(255,255,255,0.9),inset_0_0_50px_rgba(197,160,91,0.06)] overflow-hidden">
                 {/* Fine cotton paper fiber micro-texture overlay */}
                 <div
                   aria-hidden="true"
@@ -599,7 +602,7 @@ export function InvitationCover({
                 />
 
                 {/* Card Interior Editorial Content with Timed Staggered Sequence */}
-                <div className="relative z-20 flex flex-col items-center text-center max-w-3xl mx-auto my-auto py-2 sm:py-4">
+                <div className="relative z-30 flex flex-col items-center text-center max-w-3xl mx-auto my-auto py-2 sm:py-4 px-2 sm:px-6">
                   
                   {/* 1. Small Refined Brand Wordmark Eyebrow */}
                   <motion.div

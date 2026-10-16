@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { CheckCircle2, Heart, Send, Phone, User, Users, MessageSquare } from "lucide-react";
+import { Heart, Send, Phone, User, Users, MessageSquare } from "lucide-react";
 import { weddingData } from "@/data/invitationData";
 import { CornerFiligree, OrnamentalDivider } from "./OrnamentalDivider";
 

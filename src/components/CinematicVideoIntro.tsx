@@ -89,11 +89,16 @@ export function CinematicVideoIntro({
     }
   };
 
+  const [prevReplayTrigger, setPrevReplayTrigger] = useState(replayTrigger);
+  if (replayTrigger !== prevReplayTrigger) {
+    setPrevReplayTrigger(replayTrigger);
+    setIsFadingOut(false);
+    setHasCompleted(false);
+  }
+
   // Handle replay request
   useEffect(() => {
     if (replayTrigger > 0) {
-      setIsFadingOut(false);
-      setHasCompleted(false);
       if (videoRef.current) {
         videoRef.current.currentTime = 0;
         videoRef.current.play().catch(() => {});

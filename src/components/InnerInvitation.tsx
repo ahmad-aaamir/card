@@ -1,13 +1,12 @@
 "use client";
 
 import React from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Calendar, Clock, MapPin } from "lucide-react";
 import { weddingData } from "@/data/invitationData";
 import { CornerFiligree, OrnamentalDivider } from "./OrnamentalDivider";
 
 export function InnerInvitation() {
-  const shouldReduceMotion = useReducedMotion();
 
   const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
     `${weddingData.couple.groom.firstName} & ${weddingData.couple.bride.firstName}'s Nikkah & Wedding`

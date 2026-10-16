@@ -11,9 +11,10 @@ import { VenueSection } from "@/components/VenueSection";
 import { RsvpSection } from "@/components/RsvpSection";
 import { ClosingSection } from "@/components/ClosingSection";
 import { CinematicVideoIntro } from "@/components/CinematicVideoIntro";
+import { ContinuousFloralVines } from "@/components/ContinuousFloralVines";
 
 export default function Home() {
-  const [animState, setAnimState] = useState<AnimationState>("complete");
+  const [, setAnimState] = useState<AnimationState>("complete");
   const [isIntroActive, setIsIntroActive] = useState(true);
   const [isEmerging, setIsEmerging] = useState(false);
   const [replayKey, setReplayKey] = useState(0);
@@ -62,6 +63,9 @@ export default function Home() {
         Emerges smoothly from within the video's envelope opening and expands to cover the screen
       */}
       <div className="relative w-full">
+        {/* Continuous Hanging Botanical Vines cascading down to footer in sync with the website */}
+        <ContinuousFloralVines />
+
         <InvitationCover
           key={`cover-${replayKey}`}
           initialState="complete"
