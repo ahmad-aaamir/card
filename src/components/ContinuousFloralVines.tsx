@@ -8,7 +8,7 @@ const useIsMounted = () => useSyncExternalStore(subscribeNoop, () => true, () =>
 
 /**
  * Botanical Flower Blossom SVG Component
- * Detailed luxury peony/rose with layered petals and golden core
+ * Luxury multi-layered peony and garden rose with golden stamen core
  */
 function BotanicalBlossom({
   size = 36,
@@ -26,23 +26,24 @@ function BotanicalBlossom({
         height={size}
         viewBox="0 0 40 40"
         style={{ transform: `rotate(${rotation}deg)` }}
-        className="overflow-visible filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
+        className="overflow-visible filter drop-shadow-[0_4px_8px_rgba(36,8,14,0.6)]"
       >
         <defs>
-          <radialGradient id="budGrad" cx="40%" cy="35%" r="65%">
-            <stop offset="0%" stopColor="#FAF0E6" />
-            <stop offset="50%" stopColor="#D7A3A0" />
-            <stop offset="100%" stopColor="#722C3B" />
+          <radialGradient id={`budGrad-${size}-${rotation}`} cx="38%" cy="32%" r="68%">
+            <stop offset="0%" stopColor="#FFFDF9" />
+            <stop offset="30%" stopColor="#F5D6D4" />
+            <stop offset="70%" stopColor="#C46D78" />
+            <stop offset="100%" stopColor="#551522" />
           </radialGradient>
         </defs>
         {/* Calyx leaves */}
-        <path d="M16 28 C12 24, 10 18, 14 14 C16 18, 18 24, 18 28 Z" fill="#3D4D33" />
-        <path d="M24 28 C28 24, 30 18, 26 14 C24 18, 22 24, 22 28 Z" fill="#4E6142" />
+        <path d="M16 28 C11 23, 9 17, 13 13 C15 17, 17 23, 17 28 Z" fill="#2E3B26" stroke="#C5A05B" strokeWidth="0.5" />
+        <path d="M24 28 C29 23, 31 17, 27 13 C25 17, 23 23, 23 28 Z" fill="#3D4F33" stroke="#C5A05B" strokeWidth="0.5" />
         {/* Bud Petals */}
-        <ellipse cx="20" cy="18" rx="8" ry="12" fill="url(#budGrad)" />
-        <path d="M16 12 C18 8, 22 8, 24 12 C21 16, 19 16, 16 12 Z" fill="#FAF0E6" opacity="0.9" />
-        {/* Gold stem tip */}
-        <path d="M20 28 Q20 36, 18 38" stroke="#C5A05B" strokeWidth="1.5" fill="none" />
+        <ellipse cx="20" cy="18" rx="8.5" ry="12.5" fill={`url(#budGrad-${size}-${rotation})`} stroke="#E7CF9B" strokeWidth="0.6" />
+        <path d="M16 11 C18 7, 22 7, 24 11 C21 15, 19 15, 16 11 Z" fill="#FFFDF9" opacity="0.9" />
+        {/* Delicate gold stem tip */}
+        <path d="M20 28 Q20 37, 18 39" stroke="#E7CF9B" strokeWidth="1.6" fill="none" />
       </svg>
     );
   }
@@ -54,71 +55,78 @@ function BotanicalBlossom({
         height={size}
         viewBox="0 0 36 36"
         style={{ transform: `rotate(${rotation}deg)` }}
-        className="overflow-visible filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]"
+        className="overflow-visible filter drop-shadow-[0_3px_8px_rgba(0,0,0,0.45)]"
       >
-        {/* 5-petal star jasmine in ivory and gold */}
+        {/* 5-petal royal star jasmine in ivory and antique gold */}
         <g transform="translate(18,18)">
           {[0, 72, 144, 216, 288].map((angle, idx) => (
             <ellipse
               key={idx}
               cx="0"
-              cy="-9"
-              rx="3.5"
-              ry="7"
+              cy="-9.5"
+              rx="3.8"
+              ry="7.5"
               transform={`rotate(${angle})`}
-              fill={idx % 2 === 0 ? "#FAF6F0" : "#F7EDE2"}
+              fill={idx % 2 === 0 ? "#FFFDF9" : "#F7EDE2"}
               stroke="#E7CF9B"
-              strokeWidth="0.5"
+              strokeWidth="0.6"
             />
           ))}
-          <circle cx="0" cy="0" r="2.5" fill="#C5A05B" />
+          {/* Radiant gold core with pearl accent */}
+          <circle cx="0" cy="0" r="3" fill="#C5A05B" />
+          <circle cx="0" cy="0" r="1.4" fill="#FFFDF9" />
         </g>
       </svg>
     );
   }
 
-  // Opulent Multi-Petal Peony / Rose
+  // Opulent Multi-Petal Royal Peony / Rose
   return (
     <svg
       width={size}
       height={size}
       viewBox="0 0 60 60"
       style={{ transform: `rotate(${rotation}deg)` }}
-      className="overflow-visible filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)]"
+      className="overflow-visible filter drop-shadow-[0_5px_12px_rgba(40,10,16,0.65)]"
     >
       <defs>
-        <radialGradient id={`peonyGrad-${size}-${rotation}`} cx="45%" cy="40%" r="60%">
+        <radialGradient id={`peonyGrad-${size}-${rotation}`} cx="45%" cy="38%" r="62%">
           <stop offset="0%" stopColor="#FFFDF9" />
-          <stop offset="35%" stopColor="#F5D6D4" />
-          <stop offset="75%" stopColor="#D7A3A0" />
-          <stop offset="100%" stopColor="#722C3B" />
+          <stop offset="28%" stopColor="#FCEAE9" />
+          <stop offset="60%" stopColor="#E29E9D" />
+          <stop offset="85%" stopColor="#9E3547" />
+          <stop offset="100%" stopColor="#4F111E" />
         </radialGradient>
         <radialGradient id={`peonyCore-${size}-${rotation}`} cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#F3DFB5" />
-          <stop offset="50%" stopColor="#C5A05B" />
-          <stop offset="100%" stopColor="#45151F" />
+          <stop offset="0%" stopColor="#FFF2D6" />
+          <stop offset="45%" stopColor="#C5A05B" />
+          <stop offset="100%" stopColor="#551522" />
         </radialGradient>
       </defs>
 
       <g transform="translate(30,30)">
-        {/* Outer Guard Petals */}
+        {/* Outer Deep Velvet Guard Petals */}
         {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => (
           <path
             key={`outer-${i}`}
-            d="M -10 -22 C -18 -16, -16 -4, 0 0 C 16 -4, 18 -16, 10 -22 C 4 -26, -4 -26, -10 -22 Z"
+            d="M -11 -23 C -20 -17, -18 -4, 0 0 C 18 -4, 20 -17, 11 -23 C 5 -27, -5 -27, -11 -23 Z"
             transform={`rotate(${angle})`}
             fill={`url(#peonyGrad-${size}-${rotation})`}
-            opacity="0.94"
+            stroke="#C5A05B"
+            strokeWidth="0.4"
+            opacity="0.96"
           />
         ))}
 
-        {/* Middle Soft Petals */}
+        {/* Middle Soft Blush Petals */}
         {[22, 67, 112, 157, 202, 247, 292, 337].map((angle, i) => (
           <path
             key={`mid-${i}`}
-            d="M -7 -16 C -12 -12, -10 -3, 0 0 C 10 -3, 12 -12, 7 -16 C 3 -19, -3 -19, -7 -16 Z"
+            d="M -8 -17 C -14 -13, -11 -3, 0 0 C 11 -3, 14 -13, 8 -17 C 4 -20, -4 -20, -8 -17 Z"
             transform={`rotate(${angle})`}
             fill={`url(#peonyGrad-${size}-${rotation})`}
+            stroke="#E7CF9B"
+            strokeWidth="0.4"
             opacity="0.98"
           />
         ))}
@@ -128,35 +136,35 @@ function BotanicalBlossom({
           <ellipse
             key={`inner-${i}`}
             cx="0"
-            cy="-6"
-            rx="4.5"
-            ry="7"
+            cy="-6.5"
+            rx="4.8"
+            ry="7.5"
             transform={`rotate(${angle})`}
-            fill="#FAF0E6"
+            fill="#FFFDF9"
             stroke="#D7A3A0"
             strokeWidth="0.5"
           />
         ))}
 
         {/* Golden Stamens Core */}
-        <circle cx="0" cy="0" r="5" fill={`url(#peonyCore-${size}-${rotation})`} />
+        <circle cx="0" cy="0" r="5.5" fill={`url(#peonyCore-${size}-${rotation})`} />
         {[
-          { x: 3, y: 0 },
-          { x: 2.3, y: 1.93 },
-          { x: 0.52, y: 2.95 },
-          { x: -1.5, y: 2.6 },
-          { x: -2.82, y: 1.03 },
-          { x: -2.82, y: -1.03 },
-          { x: -1.5, y: -2.6 },
-          { x: 0.52, y: -2.95 },
-          { x: 2.3, y: -1.93 },
+          { x: 3.2, y: 0 },
+          { x: 2.4, y: 2.1 },
+          { x: 0.55, y: 3.1 },
+          { x: -1.6, y: 2.8 },
+          { x: -3.0, y: 1.1 },
+          { x: -3.0, y: -1.1 },
+          { x: -1.6, y: -2.8 },
+          { x: 0.55, y: -3.1 },
+          { x: 2.4, y: -2.1 },
         ].map((pt, idx) => (
           <circle
             key={`dot-${idx}`}
             cx={pt.x}
             cy={pt.y}
-            r="0.8"
-            fill="#FAF6F0"
+            r="0.9"
+            fill="#FFF2D6"
           />
         ))}
       </g>
@@ -165,7 +173,7 @@ function BotanicalBlossom({
 }
 
 /**
- * Botanical Leaf Pair SVG
+ * Botanical Leaf Pair SVG with Fine Gold Veining
  */
 function BotanicalLeaf({
   x,
@@ -191,24 +199,24 @@ function BotanicalLeaf({
     <g transform={`translate(${x}, ${y}) rotate(${rotation}) scale(${scale})`}>
       {/* Leaf blade */}
       <path
-        d="M 0 0 C 8 -12, 18 -16, 26 -2 C 20 12, 8 10, 0 0 Z"
+        d="M 0 0 C 9 -13, 20 -17, 28 -2 C 22 13, 9 11, 0 0 Z"
         fill={fill}
         stroke="#C5A05B"
-        strokeWidth="0.5"
-        strokeOpacity="0.6"
-        className="filter drop-shadow-[0_2px_3px_rgba(0,0,0,0.4)]"
+        strokeWidth="0.6"
+        strokeOpacity="0.75"
+        className="filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.45)]"
       />
       {/* Central delicate gold leaf vein */}
-      <path d="M 0 0 Q 12 -4, 25 -2" stroke="#E7CF9B" strokeWidth="0.6" fill="none" opacity="0.8" />
-      <path d="M 7 -2 Q 10 -7, 13 -9" stroke="#E7CF9B" strokeWidth="0.4" fill="none" opacity="0.6" />
-      <path d="M 14 -3 Q 17 3, 20 4" stroke="#E7CF9B" strokeWidth="0.4" fill="none" opacity="0.6" />
+      <path d="M 0 0 Q 14 -4, 27 -2" stroke="#FFF2D6" strokeWidth="0.7" fill="none" opacity="0.85" />
+      <path d="M 8 -2 Q 11 -8, 14 -10" stroke="#E7CF9B" strokeWidth="0.45" fill="none" opacity="0.7" />
+      <path d="M 16 -3 Q 19 3, 22 5" stroke="#E7CF9B" strokeWidth="0.45" fill="none" opacity="0.7" />
     </g>
   );
 }
 
 /**
  * Single Continuous Segment of Hanging Vine Stem with Leaves & Blossoms
- * Used to tile smoothly down the margins of the website
+ * Curves reach inward to frame mobile and desktop pages gracefully
  */
 function VineSegment({
   side = "left",
@@ -218,119 +226,156 @@ function VineSegment({
   segmentIndex: number;
 }) {
   const isLeft = side === "left";
-  // Alternating curves for natural undulating vine trajectory
   const isEven = segmentIndex % 2 === 0;
 
   return (
     <div
-      className={`relative w-full h-[640px] pointer-events-none ${
+      className={`relative w-full h-[640px] pointer-events-none will-change-transform ${
         isLeft ? "origin-top-left" : "origin-top-right"
       }`}
       style={{
         animation: `${isLeft ? "vineWindSwayLeft" : "vineWindSwayRight"} ${
-          7 + (segmentIndex % 3) * 1.5
+          7 + (segmentIndex % 3) * 1.6
         }s ease-in-out infinite alternate`,
-        animationDelay: `${segmentIndex * 0.4}s`,
+        animationDelay: `${segmentIndex * 0.45}s`,
       }}
     >
       <svg
-        viewBox="0 0 140 640"
+        viewBox="0 0 160 640"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className="w-full h-full overflow-visible"
         preserveAspectRatio="none"
       >
         <defs>
+          {/* Metallic Gold Primary Vine Gradient */}
           <linearGradient id="vineGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#E7CF9B" />
-            <stop offset="40%" stopColor="#C5A05B" />
-            <stop offset="80%" stopColor="#977636" />
-            <stop offset="100%" stopColor="#5E4319" />
+            <stop offset="0%" stopColor="#FFF2D6" />
+            <stop offset="25%" stopColor="#E7CF9B" />
+            <stop offset="60%" stopColor="#C5A05B" />
+            <stop offset="85%" stopColor="#8C682D" />
+            <stop offset="100%" stopColor="#4A3414" />
+          </linearGradient>
+
+          {/* Shimmer Inner Specular Highlight */}
+          <linearGradient id="vineShimmerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#FFF7E6" stopOpacity="0.9" />
+            <stop offset="45%" stopColor="#E7CF9B" stopOpacity="0.75" />
+            <stop offset="80%" stopColor="#FFFDF9" stopOpacity="0.95" />
+            <stop offset="100%" stopColor="#C5A05B" stopOpacity="0.7" />
           </linearGradient>
 
           <linearGradient id="emeraldLeafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#556E4A" />
-            <stop offset="50%" stopColor="#35472E" />
+            <stop offset="0%" stopColor="#638057" />
+            <stop offset="50%" stopColor="#3A4F32" />
             <stop offset="100%" stopColor="#1E2B19" />
           </linearGradient>
 
           <linearGradient id="wineLeafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#8C3649" />
-            <stop offset="60%" stopColor="#551B27" />
-            <stop offset="100%" stopColor="#2A0B12" />
+            <stop offset="0%" stopColor="#9C3A50" />
+            <stop offset="55%" stopColor="#5D1C2A" />
+            <stop offset="100%" stopColor="#2E0B13" />
           </linearGradient>
 
           <linearGradient id="goldLeafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#F5E3BD" />
-            <stop offset="50%" stopColor="#C5A05B" />
+            <stop offset="0%" stopColor="#FFF2D6" />
+            <stop offset="45%" stopColor="#C5A05B" />
             <stop offset="100%" stopColor="#7A5D25" />
           </linearGradient>
         </defs>
 
-        {/* Main undulating continuous stem */}
+        {/* Main undulating continuous stem - deeper curve reaching inward */}
         {isLeft ? (
-          <path
-            d={
-              isEven
-                ? "M 28 0 C 58 120, 80 240, 48 360 C 26 460, 68 560, 35 640"
-                : "M 35 0 C 20 130, 72 260, 45 380 C 28 480, 75 560, 30 640"
-            }
-            stroke="url(#vineGoldGrad)"
-            strokeWidth="2.8"
-            strokeLinecap="round"
-            className="filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"
-          />
+          <>
+            {/* Base rich gold stem */}
+            <path
+              d={
+                isEven
+                  ? "M 32 0 C 68 120, 94 240, 56 360 C 32 460, 78 560, 40 640"
+                  : "M 40 0 C 24 130, 86 260, 52 380 C 32 480, 88 560, 36 640"
+              }
+              stroke="url(#vineGoldGrad)"
+              strokeWidth="3.2"
+              strokeLinecap="round"
+              className="filter drop-shadow-[0_3px_6px_rgba(0,0,0,0.65)]"
+            />
+            {/* Delicate inner metallic highlight */}
+            <path
+              d={
+                isEven
+                  ? "M 32 0 C 68 120, 94 240, 56 360 C 32 460, 78 560, 40 640"
+                  : "M 40 0 C 24 130, 86 260, 52 380 C 32 480, 88 560, 36 640"
+              }
+              stroke="url(#vineShimmerGrad)"
+              strokeWidth="1.2"
+              strokeLinecap="round"
+            />
+          </>
         ) : (
-          <path
-            d={
-              isEven
-                ? "M 112 0 C 82 120, 60 240, 92 360 C 114 460, 72 560, 105 640"
-                : "M 105 0 C 120 130, 68 260, 95 380 C 112 480, 65 560, 110 640"
-            }
-            stroke="url(#vineGoldGrad)"
-            strokeWidth="2.8"
-            strokeLinecap="round"
-            className="filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"
-          />
+          <>
+            {/* Base rich gold stem */}
+            <path
+              d={
+                isEven
+                  ? "M 128 0 C 92 120, 66 240, 104 360 C 128 460, 82 560, 120 640"
+                  : "M 120 0 C 136 130, 74 260, 108 380 C 128 480, 72 560, 124 640"
+              }
+              stroke="url(#vineGoldGrad)"
+              strokeWidth="3.2"
+              strokeLinecap="round"
+              className="filter drop-shadow-[0_3px_6px_rgba(0,0,0,0.65)]"
+            />
+            {/* Delicate inner metallic highlight */}
+            <path
+              d={
+                isEven
+                  ? "M 128 0 C 92 120, 66 240, 104 360 C 128 460, 82 560, 120 640"
+                  : "M 120 0 C 136 130, 74 260, 108 380 C 128 480, 72 560, 124 640"
+              }
+              stroke="url(#vineShimmerGrad)"
+              strokeWidth="1.2"
+              strokeLinecap="round"
+            />
+          </>
         )}
 
         {/* Fine curling tendrils reaching inward */}
         {isLeft ? (
           <>
             <path
-              d="M 48 140 C 78 145, 98 170, 88 195 C 78 210, 60 200, 66 186"
+              d="M 54 140 C 90 145, 116 170, 104 198 C 92 216, 70 204, 78 188"
               stroke="#C5A05B"
-              strokeWidth="1.2"
+              strokeWidth="1.4"
               fill="none"
               strokeLinecap="round"
-              opacity="0.85"
+              opacity="0.9"
             />
             <path
-              d="M 42 410 C 75 415, 95 440, 84 465 C 74 480, 58 470, 64 456"
+              d="M 48 410 C 88 415, 112 442, 98 470 C 86 486, 68 474, 75 458"
               stroke="#E7CF9B"
-              strokeWidth="1.2"
+              strokeWidth="1.4"
               fill="none"
               strokeLinecap="round"
-              opacity="0.85"
+              opacity="0.9"
             />
           </>
         ) : (
           <>
             <path
-              d="M 92 140 C 62 145, 42 170, 52 195 C 62 210, 80 200, 74 186"
+              d="M 106 140 C 70 145, 44 170, 56 198 C 68 216, 90 204, 82 188"
               stroke="#C5A05B"
-              strokeWidth="1.2"
+              strokeWidth="1.4"
               fill="none"
               strokeLinecap="round"
-              opacity="0.85"
+              opacity="0.9"
             />
             <path
-              d="M 98 410 C 65 415, 45 440, 56 465 C 66 480, 82 470, 76 456"
+              d="M 112 410 C 72 415, 48 442, 62 470 C 74 486, 92 474, 85 458"
               stroke="#E7CF9B"
-              strokeWidth="1.2"
+              strokeWidth="1.4"
               fill="none"
               strokeLinecap="round"
-              opacity="0.85"
+              opacity="0.9"
             />
           </>
         )}
@@ -338,120 +383,120 @@ function VineSegment({
         {/* Botanical Foliage Leaves spaced rhythmically along stem */}
         {isLeft ? (
           <>
-            <BotanicalLeaf x={36} y={60} rotation={-25} scale={0.9} color="emerald" />
-            <BotanicalLeaf x={48} y={110} rotation={35} scale={1.1} color="wine" />
-            <BotanicalLeaf x={65} y={190} rotation={-15} scale={1.0} color="emerald" />
-            <BotanicalLeaf x={56} y={260} rotation={45} scale={0.85} color="gold" />
-            <BotanicalLeaf x={42} y={330} rotation={-40} scale={1.05} color="emerald" />
-            <BotanicalLeaf x={32} y={420} rotation={30} scale={1.0} color="wine" />
-            <BotanicalLeaf x={50} y={490} rotation={-20} scale={1.1} color="emerald" />
-            <BotanicalLeaf x={44} y={570} rotation={40} scale={0.9} color="gold" />
+            <BotanicalLeaf x={42} y={60} rotation={-22} scale={0.95} color="emerald" />
+            <BotanicalLeaf x={58} y={110} rotation={38} scale={1.15} color="wine" />
+            <BotanicalLeaf x={78} y={190} rotation={-12} scale={1.05} color="emerald" />
+            <BotanicalLeaf x={68} y={260} rotation={48} scale={0.9} color="gold" />
+            <BotanicalLeaf x={50} y={330} rotation={-38} scale={1.1} color="emerald" />
+            <BotanicalLeaf x={38} y={420} rotation={32} scale={1.05} color="wine" />
+            <BotanicalLeaf x={60} y={490} rotation={-18} scale={1.15} color="emerald" />
+            <BotanicalLeaf x={52} y={570} rotation={42} scale={0.95} color="gold" />
           </>
         ) : (
           <>
-            <BotanicalLeaf x={104} y={60} rotation={205} scale={0.9} color="emerald" />
-            <BotanicalLeaf x={92} y={110} rotation={145} scale={1.1} color="wine" />
-            <BotanicalLeaf x={75} y={190} rotation={195} scale={1.0} color="emerald" />
-            <BotanicalLeaf x={84} y={260} rotation={135} scale={0.85} color="gold" />
-            <BotanicalLeaf x={98} y={330} rotation={220} scale={1.05} color="emerald" />
-            <BotanicalLeaf x={108} y={420} rotation={150} scale={1.0} color="wine" />
-            <BotanicalLeaf x={90} y={490} rotation={200} scale={1.1} color="emerald" />
-            <BotanicalLeaf x={96} y={570} rotation={140} scale={0.9} color="gold" />
+            <BotanicalLeaf x={118} y={60} rotation={202} scale={0.95} color="emerald" />
+            <BotanicalLeaf x={102} y={110} rotation={142} scale={1.15} color="wine" />
+            <BotanicalLeaf x={82} y={190} rotation={192} scale={1.05} color="emerald" />
+            <BotanicalLeaf x={92} y={260} rotation={132} scale={0.9} color="gold" />
+            <BotanicalLeaf x={110} y={330} rotation={218} scale={1.1} color="emerald" />
+            <BotanicalLeaf x={122} y={420} rotation={148} scale={1.05} color="wine" />
+            <BotanicalLeaf x={100} y={490} rotation={198} scale={1.15} color="emerald" />
+            <BotanicalLeaf x={108} y={570} rotation={138} scale={0.95} color="gold" />
           </>
         )}
       </svg>
 
-      {/* Luxury Blossoms placed along the vine - moved inward for mobile visibility */}
+      {/* Luxury Blossoms placed along the vine - moved inward for mobile responsiveness */}
       {isLeft ? (
         <>
           {/* Peony / Rose Blossom 1 */}
           <div
-            className="absolute top-[90px] left-[26px] xs:left-[30px] sm:left-[36px] transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-700"
+            className="absolute top-[90px] left-[34px] xs:left-[44px] sm:left-[48px] transform -translate-x-1/2 -translate-y-1/2 will-change-transform"
             style={{
-              animation: "vineFlowerFlutter 4.5s ease-in-out infinite alternate",
+              animation: "vineFlowerBreathe 4.8s ease-in-out infinite alternate",
               animationDelay: `${segmentIndex * 0.3}s`,
             }}
           >
-            <BotanicalBlossom size={isEven ? 36 : 42} rotation={isEven ? 18 : -24} variant="peony" />
+            <BotanicalBlossom size={isEven ? 38 : 44} rotation={isEven ? 18 : -24} variant="peony" />
           </div>
 
           {/* Jasmine Blossom */}
           <div
-            className="absolute top-[230px] left-[54px] xs:left-[60px] sm:left-[66px] transform -translate-x-1/2 -translate-y-1/2"
+            className="absolute top-[230px] left-[66px] xs:left-[80px] sm:left-[82px] transform -translate-x-1/2 -translate-y-1/2 will-change-transform"
             style={{
-              animation: "vineFlowerFlutter 5.2s ease-in-out infinite alternate",
+              animation: "vineFlowerBreathe 5.4s ease-in-out infinite alternate",
               animationDelay: `${segmentIndex * 0.5 + 0.8}s`,
             }}
           >
-            <BotanicalBlossom size={24} rotation={45} variant="jasmine" />
+            <BotanicalBlossom size={26} rotation={45} variant="jasmine" />
           </div>
 
           {/* Bud */}
           <div
-            className="absolute top-[380px] left-[28px] xs:left-[32px] sm:left-[36px] transform -translate-x-1/2 -translate-y-1/2"
+            className="absolute top-[380px] left-[36px] xs:left-[46px] sm:left-[48px] transform -translate-x-1/2 -translate-y-1/2 will-change-transform"
             style={{
-              animation: "vineFlowerFlutter 4.8s ease-in-out infinite alternate",
+              animation: "vineFlowerBreathe 5.0s ease-in-out infinite alternate",
               animationDelay: `${segmentIndex * 0.4 + 1.2}s`,
             }}
           >
-            <BotanicalBlossom size={26} rotation={-15} variant="bud" />
+            <BotanicalBlossom size={28} rotation={-15} variant="bud" />
           </div>
 
           {/* Peony Blossom 2 */}
           <div
-            className="absolute top-[510px] left-[42px] xs:left-[48px] sm:left-[54px] transform -translate-x-1/2 -translate-y-1/2"
+            className="absolute top-[510px] left-[52px] xs:left-[64px] sm:left-[68px] transform -translate-x-1/2 -translate-y-1/2 will-change-transform"
             style={{
-              animation: "vineFlowerFlutter 5.6s ease-in-out infinite alternate",
+              animation: "vineFlowerBreathe 5.8s ease-in-out infinite alternate",
               animationDelay: `${segmentIndex * 0.6 + 0.3}s`,
             }}
           >
-            <BotanicalBlossom size={isEven ? 32 : 38} rotation={isEven ? -30 : 25} variant="peony" />
+            <BotanicalBlossom size={isEven ? 34 : 40} rotation={isEven ? -30 : 25} variant="peony" />
           </div>
         </>
       ) : (
         <>
           {/* Right Peony / Rose Blossom 1 */}
           <div
-            className="absolute top-[90px] right-[26px] xs:right-[30px] sm:right-[36px] transform translate-x-1/2 -translate-y-1/2"
+            className="absolute top-[90px] right-[34px] xs:right-[44px] sm:right-[48px] transform translate-x-1/2 -translate-y-1/2 will-change-transform"
             style={{
-              animation: "vineFlowerFlutter 4.5s ease-in-out infinite alternate",
+              animation: "vineFlowerBreathe 4.8s ease-in-out infinite alternate",
               animationDelay: `${segmentIndex * 0.3 + 0.5}s`,
             }}
           >
-            <BotanicalBlossom size={isEven ? 40 : 34} rotation={isEven ? -20 : 30} variant="peony" />
+            <BotanicalBlossom size={isEven ? 42 : 36} rotation={isEven ? -20 : 30} variant="peony" />
           </div>
 
           {/* Right Jasmine */}
           <div
-            className="absolute top-[230px] right-[54px] xs:right-[60px] sm:right-[66px] transform translate-x-1/2 -translate-y-1/2"
+            className="absolute top-[230px] right-[66px] xs:right-[80px] sm:right-[82px] transform translate-x-1/2 -translate-y-1/2 will-change-transform"
             style={{
-              animation: "vineFlowerFlutter 5.2s ease-in-out infinite alternate",
+              animation: "vineFlowerBreathe 5.4s ease-in-out infinite alternate",
               animationDelay: `${segmentIndex * 0.5 + 1.1}s`,
             }}
           >
-            <BotanicalBlossom size={24} rotation={-45} variant="jasmine" />
+            <BotanicalBlossom size={26} rotation={-45} variant="jasmine" />
           </div>
 
           {/* Right Bud */}
           <div
-            className="absolute top-[380px] right-[28px] xs:right-[32px] sm:right-[36px] transform translate-x-1/2 -translate-y-1/2"
+            className="absolute top-[380px] right-[36px] xs:right-[46px] sm:right-[48px] transform translate-x-1/2 -translate-y-1/2 will-change-transform"
             style={{
-              animation: "vineFlowerFlutter 4.8s ease-in-out infinite alternate",
+              animation: "vineFlowerBreathe 5.0s ease-in-out infinite alternate",
               animationDelay: `${segmentIndex * 0.4 + 0.7}s`,
             }}
           >
-            <BotanicalBlossom size={26} rotation={15} variant="bud" />
+            <BotanicalBlossom size={28} rotation={15} variant="bud" />
           </div>
 
           {/* Right Peony Blossom 2 */}
           <div
-            className="absolute top-[510px] right-[42px] xs:right-[48px] sm:right-[54px] transform translate-x-1/2 -translate-y-1/2"
+            className="absolute top-[510px] right-[52px] xs:right-[64px] sm:right-[68px] transform translate-x-1/2 -translate-y-1/2 will-change-transform"
             style={{
-              animation: "vineFlowerFlutter 5.6s ease-in-out infinite alternate",
+              animation: "vineFlowerBreathe 5.8s ease-in-out infinite alternate",
               animationDelay: `${segmentIndex * 0.6 + 1.4}s`,
             }}
           >
-            <BotanicalBlossom size={isEven ? 36 : 30} rotation={isEven ? 25 : -15} variant="peony" />
+            <BotanicalBlossom size={isEven ? 38 : 32} rotation={isEven ? 25 : -15} variant="peony" />
           </div>
         </>
       )}
@@ -468,9 +513,9 @@ function TopHangingCanopy() {
     <div className="absolute top-0 inset-x-0 h-48 sm:h-64 pointer-events-none z-20 overflow-hidden hidden sm:block">
       {/* Left Top Hanging Garland */}
       <div
-        className="absolute -top-6 -left-6 sm:-top-8 sm:-left-8 w-44 sm:w-72 md:w-88 origin-top-left"
+        className="absolute -top-6 -left-6 sm:-top-8 sm:-left-8 w-44 sm:w-72 md:w-88 origin-top-left will-change-transform"
         style={{
-          animation: "vineWindSwayLeft 6.5s ease-in-out infinite alternate",
+          animation: "vineWindSwayLeft 6.8s ease-in-out infinite alternate",
         }}
       >
         <svg viewBox="0 0 320 220" fill="none" className="w-full h-full filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.7)]">
@@ -478,7 +523,13 @@ function TopHangingCanopy() {
           <path
             d="M 0 30 C 80 40, 180 80, 240 160 C 270 200, 290 220, 310 210"
             stroke="url(#vineGoldGrad)"
-            strokeWidth="3.2"
+            strokeWidth="3.4"
+            strokeLinecap="round"
+          />
+          <path
+            d="M 0 30 C 80 40, 180 80, 240 160 C 270 200, 290 220, 310 210"
+            stroke="url(#vineShimmerGrad)"
+            strokeWidth="1.2"
             strokeLinecap="round"
           />
           {/* Secondary hanging drooping tendrils */}
@@ -496,21 +547,21 @@ function TopHangingCanopy() {
 
         {/* Hanging Floral Clusters */}
         <div className="absolute top-[85px] left-[70px] sm:left-[95px]">
-          <BotanicalBlossom size={34} rotation={12} variant="peony" />
+          <BotanicalBlossom size={36} rotation={12} variant="peony" />
         </div>
         <div className="absolute top-[135px] left-[130px] sm:left-[165px]">
-          <BotanicalBlossom size={42} rotation={-18} variant="peony" />
+          <BotanicalBlossom size={44} rotation={-18} variant="peony" />
         </div>
         <div className="absolute top-[175px] left-[180px] sm:left-[225px]">
-          <BotanicalBlossom size={26} rotation={30} variant="jasmine" />
+          <BotanicalBlossom size={28} rotation={30} variant="jasmine" />
         </div>
       </div>
 
       {/* Right Top Hanging Garland */}
       <div
-        className="absolute -top-6 -right-6 sm:-top-8 sm:-right-8 w-44 sm:w-72 md:w-88 origin-top-right"
+        className="absolute -top-6 -right-6 sm:-top-8 sm:-right-8 w-44 sm:w-72 md:w-88 origin-top-right will-change-transform"
         style={{
-          animation: "vineWindSwayRight 7.2s ease-in-out infinite alternate",
+          animation: "vineWindSwayRight 7.4s ease-in-out infinite alternate",
         }}
       >
         <svg viewBox="0 0 320 220" fill="none" className="w-full h-full filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.7)]">
@@ -518,7 +569,13 @@ function TopHangingCanopy() {
           <path
             d="M 320 30 C 240 40, 140 80, 80 160 C 50 200, 30 220, 10 210"
             stroke="url(#vineGoldGrad)"
-            strokeWidth="3.2"
+            strokeWidth="3.4"
+            strokeLinecap="round"
+          />
+          <path
+            d="M 320 30 C 240 40, 140 80, 80 160 C 50 200, 30 220, 10 210"
+            stroke="url(#vineShimmerGrad)"
+            strokeWidth="1.2"
             strokeLinecap="round"
           />
           {/* Secondary hanging drooping tendrils */}
@@ -536,13 +593,13 @@ function TopHangingCanopy() {
 
         {/* Hanging Floral Clusters */}
         <div className="absolute top-[85px] right-[70px] sm:right-[95px]">
-          <BotanicalBlossom size={34} rotation={-12} variant="peony" />
+          <BotanicalBlossom size={36} rotation={-12} variant="peony" />
         </div>
         <div className="absolute top-[135px] right-[130px] sm:right-[165px]">
-          <BotanicalBlossom size={42} rotation={22} variant="peony" />
+          <BotanicalBlossom size={44} rotation={22} variant="peony" />
         </div>
         <div className="absolute top-[175px] right-[180px] sm:right-[225px]">
-          <BotanicalBlossom size={26} rotation={-30} variant="jasmine" />
+          <BotanicalBlossom size={28} rotation={-30} variant="jasmine" />
         </div>
       </div>
     </div>
@@ -553,15 +610,15 @@ function TopHangingCanopy() {
  * Floating Wind Petals Component
  * Renders delicate blush and gold petals floating softly downwards across the screen
  */
-function FloatingWindPetals({ count = 9 }: { count?: number }) {
+function FloatingWindPetals({ count = 10 }: { count?: number }) {
   const shouldReduceMotion = useReducedMotion();
 
   const petals = useMemo(() => {
     return Array.from({ length: count }, (_, i) => ({
       id: i,
-      left: `${(i * 11 + 6) % 94}%`,
-      delay: i * 2.3,
-      duration: 16 + (i % 5) * 3,
+      left: `${(i * 10 + 5) % 94}%`,
+      delay: i * 2.1,
+      duration: 15 + (i % 5) * 3,
       size: 14 + (i % 3) * 6,
       rotateInit: (i * 45) % 360,
       isGold: i % 3 === 0,
@@ -587,12 +644,12 @@ function FloatingWindPetals({ count = 9 }: { count?: number }) {
             width={p.size}
             height={p.size * 1.5}
             viewBox="0 0 20 30"
-            className="filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
+            className="filter drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)]"
           >
             <path
               d="M 10 0 C 2 8, 0 20, 10 30 C 20 20, 18 8, 10 0 Z"
               fill={p.isGold ? "#E7CF9B" : "#F5D6D4"}
-              opacity={p.isGold ? 0.75 : 0.85}
+              opacity={p.isGold ? 0.8 : 0.88}
               stroke={p.isGold ? "#C5A05B" : "#D7A3A0"}
               strokeWidth="0.5"
             />
@@ -606,62 +663,73 @@ function FloatingWindPetals({ count = 9 }: { count?: number }) {
 /**
  * ContinuousFloralVines:
  * Full-height hanging botanical vine system that runs continuously down both sides
- * of the website all the way to the footer. Swaying naturally in the wind.
+ * of the website all the way to the footer with organic multi-harmonic wind dynamics.
  */
 export function ContinuousFloralVines() {
-  // Number of 640px segments to cover the entire page height seamlessly
-  // Covers ~5000px page height from header to footer
   const segmentCount = 9;
 
   return (
     <>
-      {/* Dynamic Scoped Keyframes for Natural Wind Dynamics */}
+      {/* Dynamic Keyframes for Natural Organic Wind Dynamics & Floral Breathing */}
       <style jsx global>{`
         @keyframes vineWindSwayLeft {
           0% {
-            transform: rotate(0deg) skewX(0deg);
+            transform: rotate(0deg) skewX(0deg) translateY(0px);
           }
-          30% {
-            transform: rotate(1.4deg) skewX(0.7deg) translateY(-2px);
+          22% {
+            transform: rotate(2.2deg) skewX(1.1deg) translateY(-3px) translateX(2px);
           }
-          65% {
-            transform: rotate(-0.9deg) skewX(-0.5deg) translateY(2px);
+          48% {
+            transform: rotate(-1.2deg) skewX(-0.6deg) translateY(2px) translateX(-1px);
           }
-          85% {
-            transform: rotate(1.8deg) skewX(0.9deg) translateY(-1px);
+          72% {
+            transform: rotate(2.8deg) skewX(1.4deg) translateY(-1px) translateX(3px);
+          }
+          86% {
+            transform: rotate(0.8deg) skewX(0.4deg) translateY(1px);
           }
           100% {
-            transform: rotate(0deg) skewX(0deg);
+            transform: rotate(0deg) skewX(0deg) translateY(0px);
           }
         }
 
         @keyframes vineWindSwayRight {
           0% {
-            transform: rotate(0deg) skewX(0deg);
+            transform: rotate(0deg) skewX(0deg) translateY(0px);
           }
-          25% {
-            transform: rotate(-1.5deg) skewX(-0.8deg) translateY(-2px);
+          22% {
+            transform: rotate(-2.2deg) skewX(-1.1deg) translateY(-3px) translateX(-2px);
           }
-          60% {
-            transform: rotate(1.1deg) skewX(0.6deg) translateY(2px);
+          48% {
+            transform: rotate(1.2deg) skewX(0.6deg) translateY(2px) translateX(1px);
           }
-          85% {
-            transform: rotate(-1.7deg) skewX(-0.9deg) translateY(-1px);
+          72% {
+            transform: rotate(-2.8deg) skewX(-1.4deg) translateY(-1px) translateX(-3px);
+          }
+          86% {
+            transform: rotate(-0.8deg) skewX(-0.4deg) translateY(1px);
           }
           100% {
-            transform: rotate(0deg) skewX(0deg);
+            transform: rotate(0deg) skewX(0deg) translateY(0px);
           }
         }
 
-        @keyframes vineFlowerFlutter {
+        @keyframes vineFlowerBreathe {
           0% {
             transform: translate(-50%, -50%) rotate(0deg) scale(1);
+            filter: drop-shadow(0 4px 10px rgba(69,21,31,0.5)) drop-shadow(0 0 6px rgba(197,160,91,0.3));
           }
-          50% {
-            transform: translate(-50%, -50%) rotate(4deg) scale(1.04);
+          35% {
+            transform: translate(-50%, -50%) rotate(5deg) scale(1.07);
+            filter: drop-shadow(0 6px 14px rgba(69,21,31,0.65)) drop-shadow(0 0 10px rgba(197,160,91,0.5));
+          }
+          70% {
+            transform: translate(-50%, -50%) rotate(-3deg) scale(0.97);
+            filter: drop-shadow(0 3px 8px rgba(69,21,31,0.45)) drop-shadow(0 0 5px rgba(197,160,91,0.25));
           }
           100% {
-            transform: translate(-50%, -50%) rotate(-3deg) scale(0.98);
+            transform: translate(-50%, -50%) rotate(0deg) scale(1);
+            filter: drop-shadow(0 4px 10px rgba(69,21,31,0.5)) drop-shadow(0 0 6px rgba(197,160,91,0.3));
           }
         }
 
@@ -671,42 +739,42 @@ export function ContinuousFloralVines() {
             opacity: 0;
           }
           10% {
-            opacity: 0.85;
-          }
-          50% {
-            transform: translateY(50vh) translateX(45px) rotate(180deg);
             opacity: 0.9;
           }
+          50% {
+            transform: translateY(50vh) translateX(55px) rotate(190deg);
+            opacity: 0.95;
+          }
           85% {
-            opacity: 0.8;
+            opacity: 0.85;
           }
           100% {
-            transform: translateY(105vh) translateX(85px) rotate(360deg);
+            transform: translateY(105vh) translateX(95px) rotate(360deg);
             opacity: 0;
           }
         }
       `}</style>
 
       {/* Floating Breeze Petals */}
-      <FloatingWindPetals count={8} />
+      <FloatingWindPetals count={10} />
 
       {/* Top Canopy Archway hanging down */}
       <TopHangingCanopy />
 
-      {/* Full-Height Continuous Side Vines running all the way down to the footer */}
+      {/* Full-Height Continuous Side Vines - Moved noticeably inward on mobile responsiveness */}
       <div
         aria-hidden="true"
         className="absolute inset-y-0 inset-x-0 pointer-events-none z-25 overflow-hidden"
       >
-        {/* Left Side Continuous Trailing Vine */}
-        <div className="absolute top-0 left-0 sm:left-1 bottom-0 w-16 xs:w-20 sm:w-24 md:w-28 lg:w-36 flex flex-col items-start opacity-85 sm:opacity-95">
+        {/* Left Side Continuous Trailing Vine - inward positioning for mobile visibility */}
+        <div className="absolute top-0 left-2 xs:left-4 sm:left-2 md:left-4 lg:left-6 bottom-0 w-20 xs:w-24 sm:w-28 md:w-34 lg:w-40 flex flex-col items-start opacity-90 sm:opacity-95">
           {Array.from({ length: segmentCount }).map((_, i) => (
             <VineSegment key={`vine-left-${i}`} side="left" segmentIndex={i} />
           ))}
         </div>
 
-        {/* Right Side Continuous Trailing Vine */}
-        <div className="absolute top-0 right-0 sm:right-1 bottom-0 w-16 xs:w-20 sm:w-24 md:w-28 lg:w-36 flex flex-col items-end opacity-85 sm:opacity-95">
+        {/* Right Side Continuous Trailing Vine - inward positioning for mobile visibility */}
+        <div className="absolute top-0 right-2 xs:right-4 sm:right-2 md:right-4 lg:right-6 bottom-0 w-20 xs:w-24 sm:w-28 md:w-34 lg:w-40 flex flex-col items-end opacity-90 sm:opacity-95">
           {Array.from({ length: segmentCount }).map((_, i) => (
             <VineSegment key={`vine-right-${i}`} side="right" segmentIndex={i} />
           ))}

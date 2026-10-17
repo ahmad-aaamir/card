@@ -138,13 +138,13 @@ export function InvitationCover({
     <section
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      className="relative w-full min-h-screen flex items-center justify-center px-2 xs:px-4 sm:px-6 md:px-10 py-6 sm:py-12 overflow-hidden bg-[#180408]"
+      className="relative w-full min-h-[100dvh] sm:min-h-screen flex items-center justify-center px-2 xs:px-3 sm:px-6 md:px-10 py-1.5 xs:py-2 sm:py-6 overflow-hidden bg-[#180408]"
     >
       {/* ============================================================= */}
-      {/* 1. CINEMATIC LUXURY VELVET ENVIRONMENT & DIRECTIONAL LIGHTING  */}
+      {/* 1. CINEMATIC LUXURY FLORAL & VELVET ENVIRONMENT               */}
       {/* ============================================================= */}
 
-      {/* Real editorial crushed burgundy velvet textile backdrop */}
+      {/* Synchronized HD Luxury Floral Backdrop */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -152,16 +152,16 @@ export function InvitationCover({
         className="absolute inset-0 z-0 pointer-events-none"
       >
         <Image
-          src="/images/editorial-velvet-backdrop.jpg"
-          alt="Crushed burgundy velvet editorial backdrop"
+          src="/images/hd-flower-background.jpg"
+          alt="Luxury royal floral wedding backdrop"
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center scale-105 filter brightness-[0.82] contrast-[1.12]"
+          className="object-cover object-center scale-105 filter brightness-[0.92] contrast-[1.08]"
         />
-        {/* Soft studio vignette darkening edges */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#160307]/80 via-[#26070e]/40 to-[#140205]/90" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#0f0205_95%)] opacity-85" />
+        {/* Soft studio ambient light framing the card without hiding the HD flowers */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#180408]/35 via-transparent to-[#180408]/45" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,#0f0205_95%)] opacity-50" />
       </motion.div>
 
       {/* Directional studio lighting beam from top-left */}
@@ -509,14 +509,14 @@ export function InvitationCover({
                   rotate: { duration: 11, repeat: Infinity, ease: "easeInOut" },
                 }}
                 style={{ transformOrigin: "top right" }}
-                className="absolute -top-3 -right-3 xs:-top-4 xs:-right-4 sm:-top-16 sm:-right-8 md:-top-20 md:-right-12 lg:-top-28 lg:-right-16 w-20 h-20 xs:w-28 xs:h-28 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[420px] lg:h-[420px] pointer-events-none z-15 drop-shadow-[0_15px_20px_rgba(0,0,0,0.85)] filter contrast-[1.05]"
+                className="absolute -top-2 -right-2 xs:-top-3 xs:-right-3 sm:-top-16 sm:-right-8 md:-top-20 md:-right-12 lg:-top-28 lg:-right-16 w-14 h-14 xs:w-18 xs:h-18 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[420px] lg:h-[420px] pointer-events-none z-15 drop-shadow-[0_15px_20px_rgba(0,0,0,0.85)] filter contrast-[1.05]"
               >
                 <Image
                   src="/images/floral-corner-garland.png"
                   alt="Opulent blush and ivory peonies with foliage"
                   fill
                   priority
-                  sizes="(max-width: 640px) 112px, (max-width: 768px) 300px, 420px"
+                  sizes="(max-width: 640px) 90px, (max-width: 768px) 300px, 420px"
                   className="object-contain"
                 />
               </motion.div>
@@ -552,20 +552,20 @@ export function InvitationCover({
                   },
                 }}
                 style={{ transformOrigin: "bottom left" }}
-                className="absolute bottom-0 left-0 sm:-bottom-16 sm:-left-8 md:-bottom-20 md:-left-12 lg:-bottom-28 lg:-left-16 w-20 h-20 xs:w-28 xs:h-28 sm:w-60 sm:h-60 md:w-76 md:h-76 lg:w-[400px] lg:h-[400px] pointer-events-none z-15 drop-shadow-[0_15px_20px_rgba(0,0,0,0.85)] filter contrast-[1.05]"
+                className="absolute -bottom-2 -left-2 sm:-bottom-16 sm:-left-8 md:-bottom-20 md:-left-12 lg:-bottom-28 lg:-left-16 w-14 h-14 xs:w-18 xs:h-18 sm:w-60 sm:h-60 md:w-76 md:h-76 lg:w-[400px] lg:h-[400px] pointer-events-none z-15 drop-shadow-[0_15px_20px_rgba(0,0,0,0.85)] filter contrast-[1.05]"
               >
                 <Image
                   src="/images/floral-lower-cluster.png"
                   alt="Deep wine roses and golden foliage"
                   fill
                   priority
-                  sizes="(max-width: 640px) 112px, (max-width: 768px) 290px, 400px"
+                  sizes="(max-width: 640px) 90px, (max-width: 768px) 290px, 400px"
                   className="object-contain"
                 />
               </motion.div>
 
               {/* 3. The Physical Handcrafted Warm Ivory Stationery Card Covering Whole Screen */}
-              <div className="relative z-10 w-full min-h-[88vh] sm:min-h-[92vh] flex flex-col justify-center bg-[#FAF6F0] rounded-sm p-4 xs:p-6 sm:p-12 md:p-16 lg:p-20 border border-[#C5A05B]/60 shadow-[0_35px_80px_-15px_rgba(0,0,0,0.88),0_15px_30px_-5px_rgba(0,0,0,0.6),inset_0_1px_2px_rgba(255,255,255,0.9),inset_0_0_50px_rgba(197,160,91,0.06)] overflow-hidden">
+              <div className="relative z-10 w-full h-auto max-h-[97dvh] sm:max-h-none sm:min-h-[88vh] flex flex-col justify-center bg-[#FAF6F0] rounded-sm p-2.5 xs:p-3.5 sm:p-10 md:p-14 lg:p-18 border border-[#C5A05B]/60 shadow-[0_35px_80px_-15px_rgba(0,0,0,0.88),0_15px_30px_-5px_rgba(0,0,0,0.6),inset_0_1px_2px_rgba(255,255,255,0.9),inset_0_0_50px_rgba(197,160,91,0.06)] overflow-hidden">
                 {/* Fine cotton paper fiber micro-texture overlay */}
                 <div
                   aria-hidden="true"
@@ -580,42 +580,42 @@ export function InvitationCover({
                 />
 
                 {/* Double Antique-Gold Foil Ornamental Border with Shimmer Accent */}
-                <div className="absolute inset-2.5 sm:inset-4 md:inset-5 border-2 border-[#C5A05B] pointer-events-none shadow-[inset_0_0_8px_rgba(197,160,91,0.15)]" />
-                <div className="absolute inset-4 sm:inset-6 md:inset-7 border border-[#C5A05B]/50 border-dashed pointer-events-none" />
+                <div className="absolute inset-1.5 xs:inset-2 sm:inset-4 md:inset-5 border sm:border-2 border-[#C5A05B] pointer-events-none shadow-[inset_0_0_8px_rgba(197,160,91,0.15)]" />
+                <div className="absolute inset-2.5 xs:inset-3 sm:inset-6 md:inset-7 border border-[#C5A05B]/50 border-dashed pointer-events-none" />
 
                 {/* Antique Gold Corner Filigrees */}
                 <CornerFiligree
                   position="top-left"
-                  className="top-3 left-3 sm:top-5 sm:left-5 md:top-6 md:left-6 text-[#C5A05B]"
+                  className="top-2 left-2 sm:top-5 sm:left-5 md:top-6 md:left-6 text-[#C5A05B] scale-75 sm:scale-100"
                 />
                 <CornerFiligree
                   position="top-right"
-                  className="top-3 right-3 sm:top-5 sm:right-5 md:top-6 md:right-6 text-[#C5A05B]"
+                  className="top-2 right-2 sm:top-5 sm:right-5 md:top-6 md:right-6 text-[#C5A05B] scale-75 sm:scale-100"
                 />
                 <CornerFiligree
                   position="bottom-left"
-                  className="bottom-3 left-3 sm:bottom-5 sm:left-5 md:bottom-6 md:left-6 text-[#C5A05B]"
+                  className="bottom-2 left-2 sm:bottom-5 sm:left-5 md:bottom-6 md:left-6 text-[#C5A05B] scale-75 sm:scale-100"
                 />
                 <CornerFiligree
                   position="bottom-right"
-                  className="bottom-3 right-3 sm:bottom-5 sm:right-5 md:bottom-6 md:right-6 text-[#C5A05B]"
+                  className="bottom-2 right-2 sm:bottom-5 sm:right-5 md:bottom-6 md:right-6 text-[#C5A05B] scale-75 sm:scale-100"
                 />
 
                 {/* Card Interior Editorial Content with Timed Staggered Sequence */}
-                <div className="relative z-30 flex flex-col items-center text-center max-w-3xl mx-auto my-auto py-2 sm:py-4 px-2 sm:px-6">
+                <div className="relative z-30 flex flex-col items-center text-center max-w-3xl mx-auto my-auto py-1 sm:py-3 px-1 sm:px-6">
                   
                   {/* 1. Small Refined Brand Wordmark Eyebrow */}
                   <motion.div
                     initial={{ opacity: 0, y: -6 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.15, duration: 0.7 }}
-                    className="flex items-center justify-center gap-2 mb-2 sm:mb-3"
+                    className="flex items-center justify-center gap-1.5 mb-0.5 xs:mb-1 sm:mb-2.5"
                   >
-                    <span className="font-display tracking-[0.32em] sm:tracking-[0.4em] text-[9px] sm:text-xs text-[#9D783E] uppercase font-semibold">
+                    <span className="font-display tracking-[0.25em] sm:tracking-[0.4em] text-[8px] xs:text-[9px] sm:text-xs text-[#9D783E] uppercase font-semibold">
                       {weddingData.brand.name}
                     </span>
-                    <span className="text-[#C5A05B]/60 text-xs">·</span>
-                    <span className="font-serif italic text-xs tracking-wider text-[#722C3B]">
+                    <span className="text-[#C5A05B]/60 text-[10px] sm:text-xs">·</span>
+                    <span className="font-serif italic text-[10px] sm:text-xs tracking-wider text-[#722C3B]">
                       {weddingData.brand.collection}
                     </span>
                   </motion.div>
@@ -625,15 +625,15 @@ export function InvitationCover({
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.8 }}
-                    className="w-full my-1 sm:my-2 px-3 sm:px-0"
+                    className="w-full my-0.5 sm:my-1.5 px-1"
                   >
                     <p
                       dir="rtl"
-                      className="font-arabic text-xl xs:text-2xl sm:text-3xl md:text-4xl text-[#45151F] leading-relaxed font-semibold drop-shadow-[0_1px_1px_rgba(197,160,91,0.2)]"
+                      className="font-arabic text-lg xs:text-xl sm:text-3xl md:text-4xl text-[#45151F] leading-tight font-semibold drop-shadow-[0_1px_1px_rgba(197,160,91,0.2)]"
                     >
                       {weddingData.islamicHeading.bismillahArabic}
                     </p>
-                    <span className="font-serif italic text-[11px] xs:text-xs sm:text-sm text-[#722C3B] tracking-wider block mt-0.5">
+                    <span className="font-serif italic text-[9px] xs:text-[10px] sm:text-xs text-[#722C3B] tracking-wide block mt-0.5">
                       {weddingData.islamicHeading.bismillahTranslation}
                     </span>
                   </motion.div>
@@ -643,11 +643,11 @@ export function InvitationCover({
                     initial={{ opacity: 0, scale: 0.88 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.45, duration: 0.8, ease: "easeOut" }}
-                    className="relative my-2 sm:my-3.5 flex items-center justify-center"
+                    className="relative my-0.5 xs:my-1 sm:my-2.5 flex items-center justify-center"
                   >
-                    <div className="w-18 h-18 sm:w-22 sm:h-22 rounded-full border-2 border-[#C5A05B] flex items-center justify-center bg-gradient-to-br from-[#FFFDF9] via-[#FAF3E8] to-[#EFE5D5] shadow-[0_4px_18px_rgba(197,160,91,0.3)] relative group">
+                    <div className="w-11 h-11 xs:w-13 xs:h-13 sm:w-20 sm:h-20 rounded-full border border-sm:border-2 border-[#C5A05B] flex items-center justify-center bg-gradient-to-br from-[#FFFDF9] via-[#FAF3E8] to-[#EFE5D5] shadow-[0_3px_12px_rgba(197,160,91,0.25)] relative group">
                       <div className="absolute inset-1 sm:inset-1.5 rounded-full border border-[#C5A05B]/40 border-dashed" />
-                      <span className="font-display text-xl sm:text-2xl tracking-widest text-[#45151F] font-semibold drop-shadow-sm">
+                      <span className="font-display text-sm xs:text-base sm:text-2xl tracking-widest text-[#45151F] font-semibold drop-shadow-sm">
                         {weddingData.couple.monogram}
                       </span>
                     </div>
@@ -658,7 +658,7 @@ export function InvitationCover({
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.6, duration: 0.8 }}
-                    className="font-serif italic text-xs sm:text-sm md:text-base text-[#722C3B] tracking-wide mt-1 px-4 max-w-lg leading-relaxed font-medium"
+                    className="font-serif italic text-[9px] xs:text-[11px] sm:text-sm md:text-base text-[#722C3B] tracking-normal sm:tracking-wide mt-0.5 px-2 max-w-lg leading-tight font-medium"
                   >
                     Together with their families, cordially invite you to celebrate the Nikkah &amp; Wedding reception of
                   </motion.p>
@@ -668,19 +668,19 @@ export function InvitationCover({
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.72, duration: 0.9 }}
-                    className="my-2 sm:my-3.5 w-full"
+                    className="my-0.5 sm:my-2 w-full"
                   >
-                    <h1 className="font-script text-5xl sm:text-7xl md:text-8xl text-[#45151F] leading-[1.05] font-normal drop-shadow-[0_1px_1px_rgba(197,160,91,0.25)]">
+                    <h1 className="font-script text-3xl xs:text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-[#45151F] leading-none font-normal drop-shadow-[0_1px_1px_rgba(197,160,91,0.25)]">
                       {weddingData.couple.groom.firstName}
                     </h1>
-                    <div className="flex items-center justify-center gap-3 my-0.5 sm:my-1">
-                      <span className="h-[1px] w-8 sm:w-16 bg-gradient-to-r from-transparent to-[#C5A05B]" />
-                      <span className="font-display text-xs sm:text-sm tracking-[0.35em] text-[#C5A05B] font-semibold">
+                    <div className="flex items-center justify-center gap-2 my-0 sm:my-0.5">
+                      <span className="h-[1px] w-6 sm:w-16 bg-gradient-to-r from-transparent to-[#C5A05B]" />
+                      <span className="font-display text-[10px] sm:text-sm tracking-[0.25em] sm:tracking-[0.35em] text-[#C5A05B] font-semibold">
                         &amp;
                       </span>
-                      <span className="h-[1px] w-8 sm:w-16 bg-gradient-to-l from-transparent to-[#C5A05B]" />
+                      <span className="h-[1px] w-6 sm:w-16 bg-gradient-to-l from-transparent to-[#C5A05B]" />
                     </div>
-                    <h2 className="font-script text-5xl sm:text-7xl md:text-8xl text-[#45151F] leading-[1.05] font-normal drop-shadow-[0_1px_1px_rgba(197,160,91,0.25)]">
+                    <h2 className="font-script text-3xl xs:text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-[#45151F] leading-none font-normal drop-shadow-[0_1px_1px_rgba(197,160,91,0.25)]">
                       {weddingData.couple.bride.firstName}
                     </h2>
                   </motion.div>
@@ -690,9 +690,9 @@ export function InvitationCover({
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.85, duration: 0.7 }}
-                    className="w-full flex justify-center"
+                    className="w-full flex justify-center scale-75 sm:scale-100 origin-center"
                   >
-                    <OrnamentalDivider variant="crest" className="my-2 sm:my-3" />
+                    <OrnamentalDivider variant="crest" className="my-0.5 sm:my-2" />
                   </motion.div>
 
                   {/* 6. Wedding Formal Date, Hijri & Venue Details */}
@@ -700,25 +700,25 @@ export function InvitationCover({
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.95, duration: 0.8 }}
-                    className="space-y-1 sm:space-y-1.5 px-3"
+                    className="space-y-0.5 sm:space-y-1 px-1.5"
                   >
-                    <p className="font-serif uppercase tracking-[0.18em] sm:tracking-[0.24em] text-xs sm:text-sm text-[#45151F] font-semibold max-w-md leading-relaxed">
+                    <p className="font-serif uppercase tracking-[0.14em] sm:tracking-[0.24em] text-[10px] xs:text-xs sm:text-sm text-[#45151F] font-semibold max-w-md leading-tight">
                       {weddingData.event.formalDate}
                     </p>
-                    <p className="font-serif italic text-xs sm:text-sm text-[#9D783E] font-medium">
+                    <p className="font-serif italic text-[9px] xs:text-[11px] sm:text-sm text-[#9D783E] font-medium leading-tight">
                       {weddingData.event.hijriDate}
                     </p>
-                    <p className="font-serif italic text-xs sm:text-sm text-[#722C3B] mt-1 font-medium">
+                    <p className="font-serif italic text-[9px] xs:text-[11px] sm:text-sm text-[#722C3B] leading-tight font-medium">
                       {weddingData.venue.hall} · {weddingData.venue.name} · {weddingData.venue.cityStateZip}
                     </p>
                   </motion.div>
 
-                  {/* 7. Action Controls: Details & Replay */}
+                  {/* 7. Action Controls: Details & Replay - Responsive row side-by-side */}
                   <motion.div
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.08, duration: 0.8 }}
-                    className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3.5 w-full max-w-md px-2"
+                    className="mt-2 xs:mt-2.5 sm:mt-5 flex flex-row items-center justify-center gap-1.5 xs:gap-2 sm:gap-3.5 w-full max-w-md px-1"
                   >
                     {/* View Details / Scroll Button with spring micro-interaction */}
                     <motion.button
@@ -726,10 +726,10 @@ export function InvitationCover({
                       whileHover={{ scale: 1.03, y: -1 }}
                       whileTap={{ scale: 0.97 }}
                       onClick={scrollToNext}
-                      className="w-full sm:w-auto group flex items-center justify-center gap-2 px-6 py-2.5 rounded-full border border-[#C5A05B] bg-gradient-to-r from-[#722C3B] to-[#45151F] hover:from-[#893547] hover:to-[#571b27] text-[#FAF6F0] font-serif text-xs uppercase tracking-widest transition-all cursor-pointer shadow-lg hover:shadow-[0_4px_20px_rgba(114,44,59,0.45)]"
+                      className="flex-1 sm:flex-initial group flex items-center justify-center gap-1 sm:gap-2 px-2.5 xs:px-4 sm:px-6 py-1.5 xs:py-2 sm:py-2.5 rounded-full border border-[#C5A05B] bg-gradient-to-r from-[#722C3B] to-[#45151F] hover:from-[#893547] hover:to-[#571b27] text-[#FAF6F0] font-serif text-[9px] xs:text-[11px] sm:text-xs uppercase tracking-wider sm:tracking-widest transition-all cursor-pointer shadow-lg hover:shadow-[0_4px_20px_rgba(114,44,59,0.45)] whitespace-nowrap"
                     >
                       <span>View Wedding Details</span>
-                      <ChevronDown className="w-3.5 h-3.5 text-[#E7CF9B] group-hover:translate-y-0.5 transition-transform" />
+                      <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#E7CF9B] group-hover:translate-y-0.5 transition-transform" />
                     </motion.button>
 
                     {/* Replay Cinematic Opening Button */}
@@ -739,9 +739,9 @@ export function InvitationCover({
                       whileTap={{ scale: 0.97 }}
                       onClick={handleReplay}
                       title="Replay cinematic video intro"
-                      className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-full border border-[#C5A05B]/60 hover:border-[#C5A05B] bg-[#FFFDF9]/85 text-[#722C3B] hover:text-[#45151F] font-serif text-xs tracking-wider uppercase transition-all cursor-pointer shadow-sm hover:shadow-md"
+                      className="flex-1 sm:flex-initial flex items-center justify-center gap-1 sm:gap-1.5 px-2 xs:px-3 sm:px-5 py-1.5 xs:py-2 sm:py-2.5 rounded-full border border-[#C5A05B]/60 hover:border-[#C5A05B] bg-[#FFFDF9]/85 text-[#722C3B] hover:text-[#45151F] font-serif text-[9px] xs:text-[11px] sm:text-xs tracking-normal sm:tracking-wider uppercase transition-all cursor-pointer shadow-sm hover:shadow-md whitespace-nowrap"
                     >
-                      <RotateCcw className="w-3.5 h-3.5 text-[#C5A05B]" />
+                      <RotateCcw className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#C5A05B]" />
                       <span>Replay Opening</span>
                     </motion.button>
                   </motion.div>

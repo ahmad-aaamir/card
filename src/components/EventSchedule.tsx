@@ -25,7 +25,7 @@ export function EventSchedule() {
   };
 
   return (
-    <section className="relative py-14 sm:py-24 px-3.5 sm:px-4 bg-[#20080E] flex justify-center overflow-hidden">
+    <section className="relative py-12 sm:py-20 px-3.5 sm:px-4 bg-[#20080E]/50 backdrop-blur-[1px] flex justify-center overflow-hidden">
       <div className="relative z-10 w-full max-w-2xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 35 }}

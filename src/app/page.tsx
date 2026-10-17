@@ -52,6 +52,18 @@ export default function Home() {
         onComplete={handleVideoIntroComplete}
       />
 
+      {/* HD Luxury Floral Background Layer flowing in sync across the entire website */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/hd-flower-background.jpg"
+          alt="Luxury wedding floral background"
+          className="w-full h-full object-cover object-center filter brightness-[0.92] contrast-[1.08]"
+        />
+        {/* Soft luxury wine veil allowing the HD florals to fill background spaces */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#180408]/30 via-transparent to-[#180408]/45" />
+      </div>
+
       {/* Top Luxury Header with Atmosphere Toggle & Replay Control */}
       <BrandBar
         isOpened={!isIntroActive}
@@ -62,7 +74,7 @@ export default function Home() {
         Hero Section + Entire Invitation Suite
         Emerges smoothly from within the video's envelope opening and expands to cover the screen
       */}
-      <div className="relative w-full">
+      <div className="relative w-full z-10">
         {/* Continuous Hanging Botanical Vines cascading down to footer in sync with the website */}
         <ContinuousFloralVines />
 

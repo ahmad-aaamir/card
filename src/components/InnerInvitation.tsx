@@ -19,10 +19,10 @@ export function InnerInvitation() {
   return (
     <section
       id="inner-invitation"
-      className="relative py-14 sm:py-24 px-3.5 sm:px-4 bg-[#260B12] flex justify-center overflow-hidden"
+      className="relative pt-3 sm:pt-6 pb-12 sm:pb-20 px-3.5 sm:px-4 bg-[#260B12]/45 backdrop-blur-[1px] flex justify-center overflow-hidden"
     >
       {/* Decorative background light warmth */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(114,44,59,0.35)_0%,transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(114,44,59,0.3)_0%,transparent_70%)] pointer-events-none" />
 
       {/* Luxury Warm Ivory Paper Card */}
       <div className="relative z-10 w-full max-w-2xl mx-auto">
