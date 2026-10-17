@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Volume2, VolumeX, Sparkles, SkipForward } from "lucide-react";
+import { Volume2, VolumeX, SkipForward } from "lucide-react";
 import { romanticAudio } from "@/utils/romanticAudio";
 import { weddingData } from "@/data/invitationData";
 
@@ -23,10 +23,10 @@ export function CinematicVideoIntro({
   const [hasCompleted, setHasCompleted] = useState(false);
   const [isAudioActive, setIsAudioActive] = useState(false);
 
-  // Exact timestamp where the wax seal splits and doors begin to crack open (8.08s)
-  // Stops BEFORE the video's internal white paper appears, allowing the website's
-  // royal ivory stationery to emerge directly from within the opening.
-  const CROP_TIMESTAMP = 8.08;
+  // Exact timestamp where the card gatefold doors swing open wide (8.15s)
+  // Crops the video before the static blank page appears, allowing the
+  // royal hero section to emerge directly from within the opening as soon as the card opens.
+  const CROP_TIMESTAMP = 8.15;
 
   const triggerTransition = useCallback(() => {
     if (isFadingOut || hasCompleted) return;
@@ -39,19 +39,19 @@ export function CinematicVideoIntro({
       bgVideoRef.current.pause();
     }
 
-    // Immediately signal that the website hero should start emerging from within the opening
+    // Immediately signal that the hero section should emerge from the middle
     if (onStartEmerging) {
       onStartEmerging();
     }
 
-    // Smooth fade out of the video overlay
+    // Smooth seamless fade out as the hero section expands to fill the section
     setTimeout(() => {
       setHasCompleted(true);
       onComplete();
-    }, 950);
+    }, 650);
   }, [isFadingOut, hasCompleted, onComplete, onStartEmerging]);
 
-  // High-precision frame check (60fps) to catch the split second before the white page appears
+  // High-precision frame check (60fps) to catch the exact moment the card opens
   useEffect(() => {
     if (hasCompleted || isFadingOut) return;
 
@@ -119,53 +119,51 @@ export function CinematicVideoIntro({
       {!isFadingOut && (
         <motion.div
           key="cinematic-video-intro-overlay"
-          initial={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 1 }}
           exit={{
             opacity: 0,
-            scale: 1.1,
-            filter: "blur(8px)",
-            transition: { duration: 0.9, ease: [0.25, 1, 0.5, 1] },
+            transition: { duration: 0.8, ease: "easeInOut" },
           }}
-          className="fixed inset-0 z-[100] bg-[#1a060b] flex items-center justify-center overflow-hidden select-none"
+          className="fixed inset-0 z-[100] bg-[#180408] flex items-center justify-center overflow-hidden select-none pointer-events-auto"
         >
           {/* Ambient Blurred Video Background for Wide/Desktop Screens */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none hidden sm:block">
             <video
               ref={bgVideoRef}
-              src="/gemini_generated_video_3b2602ea.mp4"
+              src="/gemini_generated_video_115e7efe.mp4"
               autoPlay
               muted
               playsInline
               loop
-              className="w-full h-full object-cover filter blur-3xl opacity-30 scale-125"
+              className="w-full h-full object-cover filter blur-3xl opacity-35 scale-125"
             />
           </div>
 
-          {/* Deep Wine & Vignette Gradient Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#140407] via-transparent to-[#140407]/90 pointer-events-none z-10" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_45%,#0d0205_100%)] opacity-80 pointer-events-none z-10" />
+          {/* Deep Wine & Vignette Gradient Overlays matching Hero Background */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#140407] via-transparent to-[#140407]/80 pointer-events-none z-10" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_45%,#0d0205_100%)] opacity-75 pointer-events-none z-10" />
 
           {/* Main Focused Cinematic Video */}
           <div className="relative w-full h-full flex items-center justify-center z-15">
             <video
               ref={videoRef}
-              src="/gemini_generated_video_3b2602ea.mp4"
+              src="/gemini_generated_video_115e7efe.mp4"
               autoPlay
               muted
               playsInline
               onEnded={triggerTransition}
-              className="w-full h-full object-cover sm:object-contain sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto shadow-[0_0_80px_rgba(0,0,0,0.8)] filter contrast-[1.05] brightness-[0.98]"
+              className="w-full h-full object-cover sm:object-contain sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto shadow-[0_0_80px_rgba(0,0,0,0.85)] filter contrast-[1.05] brightness-[0.98]"
             />
 
             {/* Top Brand & Controls Header */}
             <header className="absolute top-0 left-0 right-0 p-4 sm:p-6 flex items-center justify-between z-30 pointer-events-auto">
               <div className="flex items-center gap-2">
                 <span className="font-display tracking-[0.3em] text-xs sm:text-sm text-[#F3DFB5] uppercase font-semibold drop-shadow-lg">
-                  Vowelle
+                  {weddingData.brand.name}
                 </span>
                 <span className="text-[#C5A05B]/60 text-xs hidden xs:inline">|</span>
                 <span className="font-serif italic text-xs tracking-wider text-[#D7A3A0] hidden xs:inline drop-shadow">
-                  The Romantic Bloom
+                  {weddingData.brand.collection}
                 </span>
               </div>
 
@@ -198,16 +196,6 @@ export function CinematicVideoIntro({
                 </button>
               </div>
             </header>
-
-            {/* Bottom Gentle Opening Cue */}
-            <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 text-center pointer-events-none z-30 px-4">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1e070d]/70 backdrop-blur-sm border border-[#C5A05B]/30 shadow-lg">
-                <Sparkles className="w-3.5 h-3.5 text-[#E7CF9B] animate-pulse" />
-                <span className="font-serif italic text-xs sm:text-sm text-[#F3DFB5] tracking-widest drop-shadow-md">
-                  Unveiling {weddingData.couple.groom.firstName} &amp; {weddingData.couple.bride.firstName}&apos;s Invitation...
-                </span>
-              </div>
-            </div>
           </div>
         </motion.div>
       )}

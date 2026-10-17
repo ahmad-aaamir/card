@@ -41,9 +41,10 @@ export default function Home() {
     <main className="relative min-h-screen bg-[#180408] text-[#45151F] overflow-x-hidden">
       {/* 
         Intro Animation: Fullscreen Cinematic Video
-        Autoplays and crops at 8.08s before the white page appears.
-        As the wax seal splits, onStartEmerging triggers the website hero 
-        to rise directly from within the opening, expanding to cover the whole screen.
+        Autoplays until the envelope gatefold doors fully open to reveal the blank white card.
+        As the video reaches the blank page, onStartEmerging triggers the magical
+        appearance of gold foil borders, botanical floral bouquets, Islamic calligraphy,
+        and royal couple names directly onto the very same white page.
       */}
       <CinematicVideoIntro
         key={replayKey}

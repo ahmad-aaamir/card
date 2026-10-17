@@ -1,19 +1,17 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React from "react";
 import Image from "next/image";
 import {
   motion,
-  AnimatePresence,
   useReducedMotion,
   useMotionValue,
   useSpring,
   useTransform,
 } from "framer-motion";
-import { ChevronDown, RotateCcw } from "lucide-react";
+import { ChevronDown, RotateCcw, Sparkles } from "lucide-react";
 import { weddingData } from "@/data/invitationData";
 import { CornerFiligree, OrnamentalDivider } from "./OrnamentalDivider";
-import { romanticAudio } from "@/utils/romanticAudio";
 
 export type AnimationState = "closed" | "opening" | "reveal" | "complete";
 
@@ -25,13 +23,9 @@ interface InvitationCoverProps {
 }
 
 export function InvitationCover({
-  initialState = "complete",
-  onStateChange,
+  isEmerging = true,
   onReplayRequest,
 }: InvitationCoverProps) {
-  const [animState, setAnimState] = useState<AnimationState>(initialState);
-  const [isGlowMoving, setIsGlowMoving] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
   // Desktop Pointer-Responsive 3D Parallax Tilt
@@ -63,59 +57,14 @@ export function InvitationCover({
     mouseY.set(0);
   };
 
-  const updateState = useCallback(
-    (newState: AnimationState) => {
-      setAnimState(newState);
-      if (onStateChange) {
-        onStateChange(newState);
-      }
-    },
-    [onStateChange]
-  );
-
-  // Trigger opening sequence for the physical envelope with state locking
-  const handleOpenInvitation = () => {
-    if (animState !== "closed" || isTransitioning) return;
-    setIsTransitioning(true);
-    setIsGlowMoving(true);
-
-    if (romanticAudio) {
-      romanticAudio.play();
+  const scrollToNext = () => {
+    const el = document.getElementById("inner-invitation");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
     }
-
-    if (shouldReduceMotion) {
-      updateState("complete");
-      setIsGlowMoving(false);
-      setIsTransitioning(false);
-      return;
-    }
-
-    const timerOpen = setTimeout(() => {
-      updateState("opening");
-    }, 800);
-
-    const timerReveal = setTimeout(() => {
-      updateState("reveal");
-    }, 2000);
-
-    const timerComplete = setTimeout(() => {
-      updateState("complete");
-      setIsGlowMoving(false);
-      setIsTransitioning(false);
-    }, 4400);
-
-    return () => {
-      clearTimeout(timerOpen);
-      clearTimeout(timerReveal);
-      clearTimeout(timerComplete);
-    };
   };
 
-  // Replay sequence
   const handleReplay = () => {
-    if (isTransitioning) return;
-    updateState("closed");
-    setIsGlowMoving(false);
     mouseX.set(0);
     mouseY.set(0);
     if (onReplayRequest) {
@@ -124,21 +73,11 @@ export function InvitationCover({
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const scrollToNext = () => {
-    const el = document.getElementById("inner-invitation");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const isCoveringWholeSection =
-    animState === "reveal" || animState === "complete";
-
   return (
     <section
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      className="relative w-full min-h-[100dvh] sm:min-h-screen flex items-center justify-center px-2 xs:px-3 sm:px-6 md:px-10 py-1.5 xs:py-2 sm:py-6 overflow-hidden bg-[#180408]"
+      className="relative w-full min-h-[100dvh] sm:min-h-screen flex items-center justify-center px-2.5 xs:px-3 sm:px-6 md:px-10 py-3 xs:py-4 sm:py-8 overflow-hidden bg-[#180408]"
     >
       {/* ============================================================= */}
       {/* 1. CINEMATIC LUXURY FLORAL & VELVET ENVIRONMENT               */}
@@ -159,9 +98,9 @@ export function InvitationCover({
           sizes="100vw"
           className="object-cover object-center scale-105 filter brightness-[0.92] contrast-[1.08]"
         />
-        {/* Soft studio ambient light framing the card without hiding the HD flowers */}
+        {/* Soft studio ambient light framing the card */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#180408]/35 via-transparent to-[#180408]/45" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,#0f0205_95%)] opacity-50" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,#0f0205_95%)] opacity-55" />
       </motion.div>
 
       {/* Directional studio lighting beam from top-left */}
@@ -173,7 +112,7 @@ export function InvitationCover({
         className="absolute inset-0 pointer-events-none z-1 bg-[radial-gradient(ellipse_75%_55%_at_12%_8%,rgba(243,223,181,0.22),transparent_65%)]"
       />
 
-      {/* Localized warm amber halo behind the invitation card for optical separation */}
+      {/* Localized warm amber halo behind the invitation card for optical depth */}
       <div
         aria-hidden="true"
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] max-w-full rounded-full bg-[radial-gradient(circle_at_center,rgba(215,163,160,0.14),rgba(197,160,91,0.08)_40%,transparent_70%)] pointer-events-none z-1 blur-2xl"
@@ -223,535 +162,434 @@ export function InvitationCover({
       </div>
 
       {/* ============================================================= */}
-      {/* 2. MAIN COMPOSITION: INVITATION SUITE + FLORAL EDITORIAL FLATLAY */}
+      {/* 2. MAIN COMPOSITION: HERO EMERGES FROM MIDDLE OF WHITE PAGE   */}
+      {/* AND GROWS SMOOTHLY TO FILL THE ENTIRE SECTION                 */}
       {/* ============================================================= */}
       <div className="relative z-10 w-full flex flex-col items-center justify-center my-auto">
-        <AnimatePresence mode="wait">
-          {!isCoveringWholeSection ? (
-            /* ======================================================= */
-            /* STATE 1 & 2: THE PHYSICAL VELVET & GOLD WAX ENVELOPE    */
-            /* ======================================================= */
-            <motion.div
-              key="envelope-stage"
-              initial={{ opacity: 0, scale: 0.94 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.5 } }}
-              className="relative w-full max-w-[340px] xs:max-w-[390px] sm:max-w-[480px] md:max-w-[530px] [perspective:1400px] mx-auto py-4"
-            >
-              {/* Asymmetric Opulent Florals framing the physical envelope */}
-              <motion.div
-                animate={
-                  shouldReduceMotion
-                    ? {}
-                    : { y: [0, -4, 0], rotate: [0, 0.8, -0.4, 0] }
+
+        {/* Radiant Golden Light Burst from the middle of the white page upon emergence */}
+        {isEmerging && (
+          <motion.div
+            initial={{ scale: 0.15, opacity: 0 }}
+            animate={{
+              scale: [0.15, 1.4, 2.0],
+              opacity: [0, 0.9, 0],
+            }}
+            transition={{ duration: 1.6, ease: "easeOut" }}
+            aria-hidden="true"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] rounded-full bg-[radial-gradient(circle_at_center,rgba(243,223,181,0.7),rgba(197,160,91,0.35)_40%,transparent_70%)] pointer-events-none z-30 blur-2xl"
+          />
+        )}
+
+        {/* Main Hero Container: Emerges from the middle of the white page and grows to fill the section */}
+        <motion.div
+          initial={{
+            scale: 0.22,
+            opacity: 0,
+            filter: "blur(6px)",
+          }}
+          animate={
+            isEmerging
+              ? {
+                  scale: 1,
+                  opacity: 1,
+                  filter: "blur(0px)",
                 }
-                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-                style={{ transformOrigin: "top right" }}
-                className="absolute -top-4 -right-1 xs:-top-6 xs:-right-2 sm:-top-14 sm:-right-8 md:-top-16 md:-right-12 w-24 h-24 xs:w-32 xs:h-32 sm:w-56 sm:h-56 md:w-64 md:h-64 pointer-events-none z-20 drop-shadow-[0_15px_20px_rgba(0,0,0,0.8)]"
-              >
-                <Image
-                  src="/images/floral-corner-garland.png"
-                  alt="Lush peonies and roses"
-                  fill
-                  sizes="(max-width: 640px) 130px, 260px"
-                  className="object-contain"
-                />
-              </motion.div>
-
-              <motion.div
-                animate={
-                  shouldReduceMotion
-                    ? {}
-                    : { y: [0, 4, 0], rotate: [0, -0.8, 0.4, 0] }
+              : {
+                  scale: 0.22,
+                  opacity: 0,
+                  filter: "blur(6px)",
                 }
-                transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
-                style={{ transformOrigin: "bottom left" }}
-                className="absolute -bottom-4 -left-1 xs:-bottom-6 xs:-left-2 sm:-bottom-14 sm:-left-8 md:-bottom-16 md:-left-12 w-24 h-24 xs:w-32 xs:h-32 sm:w-52 sm:h-52 md:w-60 md:h-60 pointer-events-none z-20 drop-shadow-[0_15px_20px_rgba(0,0,0,0.8)]"
-              >
-                <Image
-                  src="/images/floral-lower-cluster.png"
-                  alt="Deep wine roses and gold foliage"
-                  fill
-                  sizes="(max-width: 640px) 130px, 240px"
-                  className="object-contain"
-                />
-              </motion.div>
+          }
+          transition={{
+            duration: shouldReduceMotion ? 0.6 : 1.45,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          style={{
+            perspective: 1400,
+            rotateX: shouldReduceMotion ? 0 : tiltRotateX,
+            rotateY: shouldReduceMotion ? 0 : tiltRotateY,
+            transformStyle: "preserve-3d",
+            transformOrigin: "center center",
+          }}
+          className="relative z-10 w-full max-w-[390px] xs:max-w-[450px] sm:max-w-2xl md:max-w-3.5xl lg:max-w-4.5xl xl:max-w-5xl mx-auto flex items-center justify-center will-change-transform"
+        >
+          {/* ========================================================= */}
+          {/* ASYMMETRIC OPULENT BOTANICAL FLORALS (PICTURES & COLORS)   */}
+          {/* Bloom magically outward to the corners as card expands     */}
+          {/* ========================================================= */}
 
-              {/* Physical Burgundy Envelope Body */}
-              <div className="relative w-full aspect-[4/3] rounded-sm shadow-[0_30px_70px_rgba(0,0,0,0.9),0_15px_30px_rgba(0,0,0,0.7)] overflow-visible bg-gradient-to-br from-[#45151F] via-[#330c14] to-[#24080e] border border-[#C5A05B]/50">
-                {/* Envelope Interior Damask Lining */}
-                <div className="absolute inset-0 bg-[#290a12] overflow-hidden rounded-sm">
-                  <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#C5A05B_1px,transparent_1px)] [background-size:12px_12px]" />
-                  <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-[#C5A05B]/15 via-transparent to-transparent pointer-events-none" />
-                  <div className="absolute inset-4 border border-[#C5A05B]/20 pointer-events-none" />
-                </div>
+          {/* 1. Upper-Right Opulent Peonies & Garden Roses Garland */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.6, x: 20, y: -20, filter: "blur(4px)" }}
+            animate={{
+              opacity: isEmerging ? 1 : 0,
+              scale: isEmerging ? 1 : 0.6,
+              x: 0,
+              filter: isEmerging ? "blur(0px)" : "blur(4px)",
+              y: shouldReduceMotion ? 0 : (isEmerging ? [0, -4, 0] : 0),
+              rotate: shouldReduceMotion ? 0 : (isEmerging ? [0, 0.7, -0.3, 0] : 0),
+            }}
+            transition={{
+              opacity: { duration: 1.1, delay: 0.25, ease: "easeOut" },
+              scale: { duration: 1.3, delay: 0.25, ease: [0.16, 1, 0.3, 1] },
+              filter: { duration: 0.9, delay: 0.25 },
+              x: { duration: 1.2, delay: 0.25, ease: [0.16, 1, 0.3, 1] },
+              y: { duration: 11, repeat: Infinity, ease: "easeInOut", delay: 1.6 },
+              rotate: { duration: 11, repeat: Infinity, ease: "easeInOut", delay: 1.6 },
+            }}
+            style={{ transformOrigin: "top right" }}
+            className="absolute -top-3 -right-3 xs:-top-5 xs:-right-4 sm:-top-16 sm:-right-10 md:-top-20 md:-right-12 lg:-top-24 lg:-right-16 w-22 h-22 xs:w-28 xs:h-28 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px] pointer-events-none z-25 drop-shadow-[0_15px_25px_rgba(0,0,0,0.85)] filter contrast-[1.06]"
+          >
+            <Image
+              src="/images/floral-corner-garland.png"
+              alt="Opulent blush and ivory peonies with foliage"
+              fill
+              priority
+              sizes="(max-width: 640px) 110px, (max-width: 768px) 300px, 400px"
+              className="object-contain"
+            />
+          </motion.div>
 
-                {/* IVORY CARD (sits inside envelope, slides out during opening) */}
-                <motion.div
-                  initial={false}
-                  animate={
-                    animState === "closed"
-                      ? { y: 0, scale: 0.94, opacity: 0.95 }
-                      : { y: -90, scale: 0.98, opacity: 1, zIndex: 15 }
-                  }
-                  transition={{
-                    duration: 1.4,
-                    ease: [0.16, 1, 0.3, 1],
-                    delay: animState === "opening" ? 0.3 : 0,
-                  }}
-                  className="absolute inset-x-3 sm:inset-x-5 top-3 sm:top-5 h-[92%] bg-[#FAF6F0] rounded-sm border border-[#C5A05B]/50 shadow-2xl p-4 sm:p-6 flex flex-col items-center justify-center text-center overflow-hidden pointer-events-none"
-                >
-                  <div className="absolute inset-2 sm:inset-3 border border-[#C5A05B]/40 pointer-events-none" />
-                  <p dir="rtl" className="font-arabic text-xs sm:text-sm text-[#45151F] font-semibold mb-1">
-                    {weddingData.islamicHeading.bismillahArabic}
-                  </p>
-                  <span className="font-display tracking-[0.25em] text-[8px] sm:text-[9px] text-[#9D783E] uppercase font-semibold">
-                    The Wedding Celebration of
-                  </span>
-                  <div className="my-1.5 sm:my-2">
-                    <h3 className="font-script text-2xl sm:text-4xl text-[#45151F] leading-tight">
-                      {weddingData.couple.groom.firstName} &amp; {weddingData.couple.bride.firstName}
-                    </h3>
-                  </div>
-                  <p className="font-serif uppercase tracking-widest text-[9px] sm:text-[10px] text-[#722C3B] font-medium">
-                    {weddingData.event.formalDate}
-                  </p>
-                  <p className="font-serif italic text-[8px] sm:text-[9px] text-[#9D783E] mt-0.5">
-                    {weddingData.venue.hall} · Lahore
-                  </p>
-                </motion.div>
+          {/* 2. Lower-Left Deep Wine Velvet Rose & Foliage Bouquet */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.6, x: -20, y: 20, filter: "blur(4px)" }}
+            animate={{
+              opacity: isEmerging ? 1 : 0,
+              scale: isEmerging ? 1 : 0.6,
+              x: 0,
+              filter: isEmerging ? "blur(0px)" : "blur(4px)",
+              y: shouldReduceMotion ? 0 : (isEmerging ? [0, 4, 0] : 0),
+              rotate: shouldReduceMotion ? 0 : (isEmerging ? [0, -0.7, 0.3, 0] : 0),
+            }}
+            transition={{
+              opacity: { duration: 1.1, delay: 0.3, ease: "easeOut" },
+              scale: { duration: 1.3, delay: 0.3, ease: [0.16, 1, 0.3, 1] },
+              filter: { duration: 0.9, delay: 0.3 },
+              x: { duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] },
+              y: { duration: 13, repeat: Infinity, ease: "easeInOut", delay: 1.8 },
+              rotate: { duration: 13, repeat: Infinity, ease: "easeInOut", delay: 1.8 },
+            }}
+            style={{ transformOrigin: "bottom left" }}
+            className="absolute -bottom-3 -left-3 xs:-bottom-5 xs:-left-4 sm:-bottom-16 sm:-left-10 md:-bottom-20 md:-left-12 lg:-bottom-24 lg:-left-16 w-22 h-22 xs:w-28 xs:h-28 sm:w-60 sm:h-60 md:w-76 md:h-76 lg:w-[380px] lg:h-[380px] pointer-events-none z-25 drop-shadow-[0_15px_25px_rgba(0,0,0,0.85)] filter contrast-[1.06]"
+          >
+            <Image
+              src="/images/floral-lower-cluster.png"
+              alt="Deep wine roses and golden foliage"
+              fill
+              priority
+              sizes="(max-width: 640px) 110px, (max-width: 768px) 290px, 380px"
+              className="object-contain"
+            />
+          </motion.div>
 
-                {/* ENVELOPE FRONT POCKET (Triangular folds) */}
-                <div className="absolute inset-0 pointer-events-none z-20">
-                  <svg
-                    viewBox="0 0 520 390"
-                    className="w-full h-full filter drop-shadow-md"
-                    preserveAspectRatio="none"
-                  >
-                    <polygon
-                      points="0,0 260,200 0,390"
-                      fill="#3a111a"
-                      stroke="#C5A05B"
-                      strokeWidth="0.8"
-                      strokeOpacity="0.4"
-                    />
-                    <polygon
-                      points="520,0 260,200 520,390"
-                      fill="#330d15"
-                      stroke="#C5A05B"
-                      strokeWidth="0.8"
-                      strokeOpacity="0.4"
-                    />
-                    <polygon
-                      points="0,390 260,185 520,390"
-                      fill="#481520"
-                      stroke="#C5A05B"
-                      strokeWidth="1.2"
-                      strokeOpacity="0.6"
-                    />
-                    <line
-                      x1="0"
-                      y1="390"
-                      x2="260"
-                      y2="185"
-                      stroke="#1a0408"
-                      strokeWidth="2"
-                      opacity="0.35"
-                    />
-                    <line
-                      x1="520"
-                      y1="390"
-                      x2="260"
-                      y2="185"
-                      stroke="#1a0408"
-                      strokeWidth="2"
-                      opacity="0.35"
-                    />
-                  </svg>
-                </div>
+          {/* ========================================================= */}
+          {/* 3. THE HANDCRAFTED ROYAL STATIONERY CARD                  */}
+          {/* Fills the hero section with lavish gold & ivory presence  */}
+          {/* ========================================================= */}
+          <div className="relative z-10 w-full h-auto min-h-[540px] xs:min-h-[600px] sm:min-h-[660px] md:min-h-[720px] lg:min-h-[760px] flex flex-col justify-center bg-[#FAF6F0] rounded-sm p-3.5 xs:p-5 sm:p-10 md:p-14 lg:p-16 border border-[#C5A05B]/60 shadow-[0_35px_80px_-15px_rgba(0,0,0,0.88),0_15px_30px_-5px_rgba(0,0,0,0.6),inset_0_1px_2px_rgba(255,255,255,0.9),inset_0_0_50px_rgba(197,160,91,0.06)] overflow-hidden">
+            
+            {/* Fine cotton paper fiber micro-texture overlay */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 opacity-[0.035] bg-[radial-gradient(#45151F_1px,transparent_1px)] [background-size:14px_14px] pointer-events-none"
+            />
 
-                {/* 3D TOP FOLDING FLAP */}
-                <motion.div
-                  initial={false}
-                  animate={
-                    animState === "closed"
-                      ? { rotateX: 0, zIndex: 25 }
-                      : { rotateX: -180, zIndex: 5 }
-                  }
-                  transition={{
-                    duration: 1.2,
-                    ease: [0.45, 0.05, 0.55, 0.95],
-                  }}
-                  style={{ transformOrigin: "top center" }}
-                  className="absolute top-0 inset-x-0 h-1/2 [transform-style:preserve-3d] pointer-events-none"
-                >
-                  <svg
-                    viewBox="0 0 520 200"
-                    className="w-full h-full filter drop-shadow-lg"
-                    preserveAspectRatio="none"
-                  >
-                    <polygon
-                      points="0,0 520,0 260,185"
-                      fill="#501724"
-                      stroke="#C5A05B"
-                      strokeWidth="1.2"
-                      strokeOpacity="0.6"
-                    />
-                  </svg>
-                </motion.div>
-
-                {/* CENTRAL WAX SEAL INTERACTIVE BUTTON */}
-                <div className="absolute top-[46%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto flex flex-col items-center">
-                  <button
-                    onClick={handleOpenInvitation}
-                    aria-label="Open wedding invitation"
-                    className="group relative cursor-pointer focus:outline-none"
-                  >
-                    {isGlowMoving && (
-                      <div className="absolute -inset-4 rounded-full pointer-events-none flex items-center justify-center">
-                        <motion.svg
-                          className="w-28 h-28 sm:w-32 sm:h-32 text-[#E7CF9B]"
-                          viewBox="0 0 100 100"
-                          animate={{ rotate: 360 }}
-                          transition={{
-                            duration: 1.8,
-                            repeat: Infinity,
-                            ease: "linear",
-                          }}
-                        >
-                          <circle
-                            cx="50"
-                            cy="50"
-                            r="44"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2.5"
-                            strokeDasharray="60 216"
-                            strokeLinecap="round"
-                            className="filter drop-shadow-[0_0_8px_rgba(243,223,181,0.9)]"
-                          />
-                        </motion.svg>
-                      </div>
-                    )}
-
-                    <div className="relative w-18 h-18 sm:w-22 sm:h-22 rounded-full bg-gradient-to-br from-[#722C3B] via-[#521926] to-[#360f18] border-2 border-[#C5A05B] shadow-2xl flex items-center justify-center transition-transform group-hover:scale-105 active:scale-95">
-                      <div className="absolute inset-1 rounded-full border border-[#C5A05B]/40 border-dashed" />
-                      <span className="font-display text-xl sm:text-2xl tracking-widest text-[#F3DFB5] font-normal drop-shadow">
-                        {weddingData.couple.monogram}
-                      </span>
-                      <div className="absolute -bottom-2 bg-[#722C3B] border border-[#C5A05B] text-[8px] sm:text-[9px] font-display uppercase tracking-widest text-[#F3DFB5] px-2.5 py-0.5 rounded-full shadow-lg flex items-center justify-center group-hover:bg-[#893547] transition-colors">
-                        <span>Open</span>
-                      </div>
-                    </div>
-                  </button>
-
-                  <p className="mt-7 font-serif italic text-xs sm:text-sm text-[#D7A3A0] tracking-wider text-center drop-shadow">
-                    Tap the royal seal to open invitation
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          ) : (
-            /* ======================================================= */
-            /* STATE 3 & 4: THE ROYAL HANDCRAFTED IVORY INVITATION     */
-            /* EMERGING FROM WITHIN THE OPENING & COVERING WHOLE SCREEN*/
-            /* ======================================================= */
+            {/* Specular lighting sheen moving with desktop tilt */}
             <motion.div
-              key="royal-ivory-stage"
-              initial={
-                shouldReduceMotion
-                  ? { opacity: 0 }
-                  : {
-                      scale: 0.28,
-                      opacity: 0,
-                      y: 35,
-                      filter: "blur(6px)",
-                    }
-              }
+              style={{ opacity: shouldReduceMotion ? 0.25 : specularOpacity }}
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-br from-white/70 via-transparent to-black/[0.04] pointer-events-none"
+            />
+
+            {/* Magical Golden Light Sheen Sweep across the paper upon emergence */}
+            <motion.div
+              initial={{ x: "-120%", opacity: 0 }}
+              animate={isEmerging ? { x: "220%", opacity: [0, 0.55, 0] } : {}}
+              transition={{ duration: 1.8, delay: 0.1, ease: "easeInOut" }}
+              aria-hidden="true"
+              className="absolute inset-y-0 w-1/2 bg-gradient-to-r from-transparent via-[#FFF7DE]/75 to-transparent pointer-events-none z-20 skew-x-12"
+            />
+
+            {/* Double Antique-Gold Foil Ornamental Border that draws onto paper */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.985 }}
               animate={{
-                scale: 1,
-                opacity: 1,
-                y: 0,
-                filter: "blur(0px)",
+                opacity: isEmerging ? 1 : 0,
+                scale: isEmerging ? 1 : 0.985,
               }}
-              transition={{
-                duration: 1.45,
-                ease: [0.16, 1, 0.3, 1],
+              transition={{ duration: 0.9, delay: 0.3, ease: "easeOut" }}
+              className="absolute inset-1.5 xs:inset-2 sm:inset-4 md:inset-5 border sm:border-2 border-[#C5A05B] pointer-events-none shadow-[inset_0_0_10px_rgba(197,160,91,0.22),0_0_15px_rgba(197,160,91,0.25)]"
+            />
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: isEmerging ? 1 : 0 }}
+              transition={{ duration: 0.8, delay: 0.45, ease: "easeOut" }}
+              className="absolute inset-2.5 xs:inset-3 sm:inset-6 md:inset-7 border border-[#C5A05B]/50 border-dashed pointer-events-none"
+            />
+
+            {/* Antique Gold Corner Filigrees blooming into corners */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.2, rotate: -15 }}
+              animate={{
+                opacity: isEmerging ? 1 : 0,
+                scale: isEmerging ? 1 : 0.2,
+                rotate: isEmerging ? 0 : -15,
               }}
-              style={{
-                perspective: 1400,
-                rotateX: shouldReduceMotion ? 0 : tiltRotateX,
-                rotateY: shouldReduceMotion ? 0 : tiltRotateY,
-                transformStyle: "preserve-3d",
-              }}
-              className="relative w-full max-w-full sm:max-w-4xl md:max-w-5xl lg:max-w-6xl xl:max-w-7xl mx-auto flex items-center justify-center will-change-transform"
+              transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
             >
-              {/* ASYMMETRIC OPULENT FLORALS FRAMING THE CARD CORNERS */}
-
-              {/* 1. Upper-Right Opulent Peonies & Garden Roses Garland */}
-              <motion.div
-                initial={
-                  shouldReduceMotion
-                    ? {}
-                    : { scale: 0.6, opacity: 0, x: -15, y: 15 }
-                }
-                animate={{
-                  scale: 1,
-                  opacity: 1,
-                  x: 0,
-                  y: shouldReduceMotion ? 0 : [0, -4, 0],
-                  rotate: shouldReduceMotion ? 0 : [0, 0.7, -0.3, 0],
-                }}
-                transition={{
-                  scale: { duration: 1.4, ease: [0.16, 1, 0.3, 1] },
-                  opacity: { duration: 1.2 },
-                  y: { duration: 11, repeat: Infinity, ease: "easeInOut" },
-                  rotate: { duration: 11, repeat: Infinity, ease: "easeInOut" },
-                }}
-                style={{ transformOrigin: "top right" }}
-                className="absolute -top-2 -right-2 xs:-top-3 xs:-right-3 sm:-top-16 sm:-right-8 md:-top-20 md:-right-12 lg:-top-28 lg:-right-16 w-14 h-14 xs:w-18 xs:h-18 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[420px] lg:h-[420px] pointer-events-none z-15 drop-shadow-[0_15px_20px_rgba(0,0,0,0.85)] filter contrast-[1.05]"
-              >
-                <Image
-                  src="/images/floral-corner-garland.png"
-                  alt="Opulent blush and ivory peonies with foliage"
-                  fill
-                  priority
-                  sizes="(max-width: 640px) 90px, (max-width: 768px) 300px, 420px"
-                  className="object-contain"
-                />
-              </motion.div>
-
-              {/* 2. Lower-Left Deep Wine Velvet Rose & Foliage Bouquet */}
-              <motion.div
-                initial={
-                  shouldReduceMotion
-                    ? {}
-                    : { scale: 0.6, opacity: 0, x: 15, y: -15 }
-                }
-                animate={{
-                  scale: 1,
-                  opacity: 1,
-                  x: 0,
-                  y: shouldReduceMotion ? 0 : [0, 4, 0],
-                  rotate: shouldReduceMotion ? 0 : [0, -0.7, 0.3, 0],
-                }}
-                transition={{
-                  scale: { duration: 1.4, ease: [0.16, 1, 0.3, 1] },
-                  opacity: { duration: 1.2 },
-                  y: {
-                    duration: 13,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 0.8,
-                  },
-                  rotate: {
-                    duration: 13,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 0.8,
-                  },
-                }}
-                style={{ transformOrigin: "bottom left" }}
-                className="absolute -bottom-2 -left-2 sm:-bottom-16 sm:-left-8 md:-bottom-20 md:-left-12 lg:-bottom-28 lg:-left-16 w-14 h-14 xs:w-18 xs:h-18 sm:w-60 sm:h-60 md:w-76 md:h-76 lg:w-[400px] lg:h-[400px] pointer-events-none z-15 drop-shadow-[0_15px_20px_rgba(0,0,0,0.85)] filter contrast-[1.05]"
-              >
-                <Image
-                  src="/images/floral-lower-cluster.png"
-                  alt="Deep wine roses and golden foliage"
-                  fill
-                  priority
-                  sizes="(max-width: 640px) 90px, (max-width: 768px) 290px, 400px"
-                  className="object-contain"
-                />
-              </motion.div>
-
-              {/* 3. The Physical Handcrafted Warm Ivory Stationery Card Covering Whole Screen */}
-              <div className="relative z-10 w-full h-auto max-h-[97dvh] sm:max-h-none sm:min-h-[88vh] flex flex-col justify-center bg-[#FAF6F0] rounded-sm p-2.5 xs:p-3.5 sm:p-10 md:p-14 lg:p-18 border border-[#C5A05B]/60 shadow-[0_35px_80px_-15px_rgba(0,0,0,0.88),0_15px_30px_-5px_rgba(0,0,0,0.6),inset_0_1px_2px_rgba(255,255,255,0.9),inset_0_0_50px_rgba(197,160,91,0.06)] overflow-hidden">
-                {/* Fine cotton paper fiber micro-texture overlay */}
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 opacity-[0.035] bg-[radial-gradient(#45151F_1px,transparent_1px)] [background-size:14px_14px] pointer-events-none"
-                />
-
-                {/* Subtle studio directional specular lighting sheen moving with desktop tilt */}
-                <motion.div
-                  style={{ opacity: shouldReduceMotion ? 0.25 : specularOpacity }}
-                  aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-br from-white/70 via-transparent to-black/[0.04] pointer-events-none"
-                />
-
-                {/* Double Antique-Gold Foil Ornamental Border with Shimmer Accent */}
-                <div className="absolute inset-1.5 xs:inset-2 sm:inset-4 md:inset-5 border sm:border-2 border-[#C5A05B] pointer-events-none shadow-[inset_0_0_8px_rgba(197,160,91,0.15)]" />
-                <div className="absolute inset-2.5 xs:inset-3 sm:inset-6 md:inset-7 border border-[#C5A05B]/50 border-dashed pointer-events-none" />
-
-                {/* Antique Gold Corner Filigrees */}
-                <CornerFiligree
-                  position="top-left"
-                  className="top-2 left-2 sm:top-5 sm:left-5 md:top-6 md:left-6 text-[#C5A05B] scale-75 sm:scale-100"
-                />
-                <CornerFiligree
-                  position="top-right"
-                  className="top-2 right-2 sm:top-5 sm:right-5 md:top-6 md:right-6 text-[#C5A05B] scale-75 sm:scale-100"
-                />
-                <CornerFiligree
-                  position="bottom-left"
-                  className="bottom-2 left-2 sm:bottom-5 sm:left-5 md:bottom-6 md:left-6 text-[#C5A05B] scale-75 sm:scale-100"
-                />
-                <CornerFiligree
-                  position="bottom-right"
-                  className="bottom-2 right-2 sm:bottom-5 sm:right-5 md:bottom-6 md:right-6 text-[#C5A05B] scale-75 sm:scale-100"
-                />
-
-                {/* Card Interior Editorial Content with Timed Staggered Sequence */}
-                <div className="relative z-30 flex flex-col items-center text-center max-w-3xl mx-auto my-auto py-1 sm:py-3 px-1 sm:px-6">
-                  
-                  {/* 1. Small Refined Brand Wordmark Eyebrow */}
-                  <motion.div
-                    initial={{ opacity: 0, y: -6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.15, duration: 0.7 }}
-                    className="flex items-center justify-center gap-1.5 mb-0.5 xs:mb-1 sm:mb-2.5"
-                  >
-                    <span className="font-display tracking-[0.25em] sm:tracking-[0.4em] text-[8px] xs:text-[9px] sm:text-xs text-[#9D783E] uppercase font-semibold">
-                      {weddingData.brand.name}
-                    </span>
-                    <span className="text-[#C5A05B]/60 text-[10px] sm:text-xs">·</span>
-                    <span className="font-serif italic text-[10px] sm:text-xs tracking-wider text-[#722C3B]">
-                      {weddingData.brand.collection}
-                    </span>
-                  </motion.div>
-
-                  {/* 2. Islamic Bismillah Calligraphy in Deep Burgundy Ink */}
-                  <motion.div
-                    initial={{ opacity: 0, y: -8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3, duration: 0.8 }}
-                    className="w-full my-0.5 sm:my-1.5 px-1"
-                  >
-                    <p
-                      dir="rtl"
-                      className="font-arabic text-lg xs:text-xl sm:text-3xl md:text-4xl text-[#45151F] leading-tight font-semibold drop-shadow-[0_1px_1px_rgba(197,160,91,0.2)]"
-                    >
-                      {weddingData.islamicHeading.bismillahArabic}
-                    </p>
-                    <span className="font-serif italic text-[9px] xs:text-[10px] sm:text-xs text-[#722C3B] tracking-wide block mt-0.5">
-                      {weddingData.islamicHeading.bismillahTranslation}
-                    </span>
-                  </motion.div>
-
-                  {/* 3. Gold-Foiled Royal Monogram Crest */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.88 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.45, duration: 0.8, ease: "easeOut" }}
-                    className="relative my-0.5 xs:my-1 sm:my-2.5 flex items-center justify-center"
-                  >
-                    <div className="w-11 h-11 xs:w-13 xs:h-13 sm:w-20 sm:h-20 rounded-full border border-sm:border-2 border-[#C5A05B] flex items-center justify-center bg-gradient-to-br from-[#FFFDF9] via-[#FAF3E8] to-[#EFE5D5] shadow-[0_3px_12px_rgba(197,160,91,0.25)] relative group">
-                      <div className="absolute inset-1 sm:inset-1.5 rounded-full border border-[#C5A05B]/40 border-dashed" />
-                      <span className="font-display text-sm xs:text-base sm:text-2xl tracking-widest text-[#45151F] font-semibold drop-shadow-sm">
-                        {weddingData.couple.monogram}
-                      </span>
-                    </div>
-                  </motion.div>
-
-                  {/* 4. Elegant Invitation Announcement */}
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.6, duration: 0.8 }}
-                    className="font-serif italic text-[9px] xs:text-[11px] sm:text-sm md:text-base text-[#722C3B] tracking-normal sm:tracking-wide mt-0.5 px-2 max-w-lg leading-tight font-medium"
-                  >
-                    Together with their families, cordially invite you to celebrate the Nikkah &amp; Wedding reception of
-                  </motion.p>
-
-                  {/* 5. Couple's Names as the Emotional Focal Point */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.72, duration: 0.9 }}
-                    className="my-0.5 sm:my-2 w-full"
-                  >
-                    <h1 className="font-script text-3xl xs:text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-[#45151F] leading-none font-normal drop-shadow-[0_1px_1px_rgba(197,160,91,0.25)]">
-                      {weddingData.couple.groom.firstName}
-                    </h1>
-                    <div className="flex items-center justify-center gap-2 my-0 sm:my-0.5">
-                      <span className="h-[1px] w-6 sm:w-16 bg-gradient-to-r from-transparent to-[#C5A05B]" />
-                      <span className="font-display text-[10px] sm:text-sm tracking-[0.25em] sm:tracking-[0.35em] text-[#C5A05B] font-semibold">
-                        &amp;
-                      </span>
-                      <span className="h-[1px] w-6 sm:w-16 bg-gradient-to-l from-transparent to-[#C5A05B]" />
-                    </div>
-                    <h2 className="font-script text-3xl xs:text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-[#45151F] leading-none font-normal drop-shadow-[0_1px_1px_rgba(197,160,91,0.25)]">
-                      {weddingData.couple.bride.firstName}
-                    </h2>
-                  </motion.div>
-
-                  {/* Ornamental Crest Divider */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.85, duration: 0.7 }}
-                    className="w-full flex justify-center scale-75 sm:scale-100 origin-center"
-                  >
-                    <OrnamentalDivider variant="crest" className="my-0.5 sm:my-2" />
-                  </motion.div>
-
-                  {/* 6. Wedding Formal Date, Hijri & Venue Details */}
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.95, duration: 0.8 }}
-                    className="space-y-0.5 sm:space-y-1 px-1.5"
-                  >
-                    <p className="font-serif uppercase tracking-[0.14em] sm:tracking-[0.24em] text-[10px] xs:text-xs sm:text-sm text-[#45151F] font-semibold max-w-md leading-tight">
-                      {weddingData.event.formalDate}
-                    </p>
-                    <p className="font-serif italic text-[9px] xs:text-[11px] sm:text-sm text-[#9D783E] font-medium leading-tight">
-                      {weddingData.event.hijriDate}
-                    </p>
-                    <p className="font-serif italic text-[9px] xs:text-[11px] sm:text-sm text-[#722C3B] leading-tight font-medium">
-                      {weddingData.venue.hall} · {weddingData.venue.name} · {weddingData.venue.cityStateZip}
-                    </p>
-                  </motion.div>
-
-                  {/* 7. Action Controls: Details & Replay - Responsive row side-by-side */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.08, duration: 0.8 }}
-                    className="mt-2 xs:mt-2.5 sm:mt-5 flex flex-row items-center justify-center gap-1.5 xs:gap-2 sm:gap-3.5 w-full max-w-md px-1"
-                  >
-                    {/* View Details / Scroll Button with spring micro-interaction */}
-                    <motion.button
-                      type="button"
-                      whileHover={{ scale: 1.03, y: -1 }}
-                      whileTap={{ scale: 0.97 }}
-                      onClick={scrollToNext}
-                      className="flex-1 sm:flex-initial group flex items-center justify-center gap-1 sm:gap-2 px-2.5 xs:px-4 sm:px-6 py-1.5 xs:py-2 sm:py-2.5 rounded-full border border-[#C5A05B] bg-gradient-to-r from-[#722C3B] to-[#45151F] hover:from-[#893547] hover:to-[#571b27] text-[#FAF6F0] font-serif text-[9px] xs:text-[11px] sm:text-xs uppercase tracking-wider sm:tracking-widest transition-all cursor-pointer shadow-lg hover:shadow-[0_4px_20px_rgba(114,44,59,0.45)] whitespace-nowrap"
-                    >
-                      <span>View Wedding Details</span>
-                      <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#E7CF9B] group-hover:translate-y-0.5 transition-transform" />
-                    </motion.button>
-
-                    {/* Replay Cinematic Opening Button */}
-                    <motion.button
-                      type="button"
-                      whileHover={{ scale: 1.03, y: -1 }}
-                      whileTap={{ scale: 0.97 }}
-                      onClick={handleReplay}
-                      title="Replay cinematic video intro"
-                      className="flex-1 sm:flex-initial flex items-center justify-center gap-1 sm:gap-1.5 px-2 xs:px-3 sm:px-5 py-1.5 xs:py-2 sm:py-2.5 rounded-full border border-[#C5A05B]/60 hover:border-[#C5A05B] bg-[#FFFDF9]/85 text-[#722C3B] hover:text-[#45151F] font-serif text-[9px] xs:text-[11px] sm:text-xs tracking-normal sm:tracking-wider uppercase transition-all cursor-pointer shadow-sm hover:shadow-md whitespace-nowrap"
-                    >
-                      <RotateCcw className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#C5A05B]" />
-                      <span>Replay Opening</span>
-                    </motion.button>
-                  </motion.div>
-
-                </div>
-              </div>
-
+              <CornerFiligree
+                position="top-left"
+                className="top-2 left-2 sm:top-5 sm:left-5 md:top-6 md:left-6 text-[#C5A05B] scale-75 sm:scale-100"
+              />
             </motion.div>
-          )}
-        </AnimatePresence>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.2, rotate: 15 }}
+              animate={{
+                opacity: isEmerging ? 1 : 0,
+                scale: isEmerging ? 1 : 0.2,
+                rotate: isEmerging ? 0 : 15,
+              }}
+              transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <CornerFiligree
+                position="top-right"
+                className="top-2 right-2 sm:top-5 sm:right-5 md:top-6 md:right-6 text-[#C5A05B] scale-75 sm:scale-100"
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.2, rotate: 15 }}
+              animate={{
+                opacity: isEmerging ? 1 : 0,
+                scale: isEmerging ? 1 : 0.2,
+                rotate: isEmerging ? 0 : 15,
+              }}
+              transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <CornerFiligree
+                position="bottom-left"
+                className="bottom-2 left-2 sm:bottom-5 sm:left-5 md:bottom-6 md:left-6 text-[#C5A05B] scale-75 sm:scale-100"
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.2, rotate: -15 }}
+              animate={{
+                opacity: isEmerging ? 1 : 0,
+                scale: isEmerging ? 1 : 0.2,
+                rotate: isEmerging ? 0 : -15,
+              }}
+              transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <CornerFiligree
+                position="bottom-right"
+                className="bottom-2 right-2 sm:bottom-5 sm:right-5 md:bottom-6 md:right-6 text-[#C5A05B] scale-75 sm:scale-100"
+              />
+            </motion.div>
+
+            {/* ======================================================= */}
+            {/* 4. CHOREOGRAPHED EDITORIAL CONTENT ON THE WHITE PAGE     */}
+            {/* Colors, Islamic Calligraphy, Monogram Crest & Text      */}
+            {/* ======================================================= */}
+            <div className="relative z-30 flex flex-col items-center text-center max-w-2xl mx-auto my-auto py-1 sm:py-3 px-1 sm:px-4">
+              
+              {/* 1. Small Refined Brand Wordmark Eyebrow */}
+              <motion.div
+                initial={{ opacity: 0, y: -8 }}
+                animate={{
+                  opacity: isEmerging ? 1 : 0,
+                  y: isEmerging ? 0 : -8,
+                }}
+                transition={{ delay: 0.45, duration: 0.75, ease: "easeOut" }}
+                className="flex items-center justify-center gap-1.5 mb-1 sm:mb-2.5"
+              >
+                <span className="font-display tracking-[0.25em] sm:tracking-[0.4em] text-[8px] xs:text-[9px] sm:text-xs text-[#9D783E] uppercase font-semibold">
+                  {weddingData.brand.name}
+                </span>
+                <span className="text-[#C5A05B]/60 text-[10px] sm:text-xs">·</span>
+                <span className="font-serif italic text-[10px] sm:text-xs tracking-wider text-[#722C3B]">
+                  {weddingData.brand.collection}
+                </span>
+              </motion.div>
+
+              {/* 2. Islamic Bismillah Calligraphy writing onto paper in Deep Burgundy Ink */}
+              <motion.div
+                initial={{ opacity: 0, y: 12, filter: "blur(3px)" }}
+                animate={{
+                  opacity: isEmerging ? 1 : 0,
+                  y: isEmerging ? 0 : 12,
+                  filter: isEmerging ? "blur(0px)" : "blur(3px)",
+                }}
+                transition={{ delay: 0.6, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                className="w-full my-0.5 sm:my-1 px-1"
+              >
+                <p
+                  dir="rtl"
+                  className="font-arabic text-xl xs:text-2xl sm:text-3xl md:text-4xl text-[#45151F] leading-tight font-semibold drop-shadow-[0_1px_1px_rgba(197,160,91,0.2)]"
+                >
+                  {weddingData.islamicHeading.bismillahArabic}
+                </p>
+                <span className="font-serif italic text-[9px] xs:text-[10px] sm:text-xs text-[#722C3B] tracking-wide block mt-0.5 font-medium">
+                  {weddingData.islamicHeading.bismillahTranslation}
+                </span>
+              </motion.div>
+
+              {/* 3. Gold-Foiled Royal Monogram Crest Stamp with pulsating aura */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.75 }}
+                animate={{
+                  opacity: isEmerging ? 1 : 0,
+                  scale: isEmerging ? 1 : 0.75,
+                }}
+                transition={{ delay: 0.75, duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                className="relative my-1.5 xs:my-2 sm:my-3 flex items-center justify-center"
+              >
+                {/* Golden pulsing ring that radiates when monogram appears */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={
+                    isEmerging
+                      ? {
+                          opacity: [0, 0.7, 0],
+                          scale: [0.85, 1.4, 1.6],
+                        }
+                      : {}
+                  }
+                  transition={{ delay: 0.8, duration: 1.4, ease: "easeOut" }}
+                  className="absolute inset-0 rounded-full border border-[#C5A05B] pointer-events-none"
+                />
+
+                <div className="w-12 h-12 xs:w-14 xs:h-14 sm:w-18 sm:h-18 rounded-full border border-sm:border-2 border-[#C5A05B] flex items-center justify-center bg-gradient-to-br from-[#FFFDF9] via-[#FAF3E8] to-[#EFE5D5] shadow-[0_4px_16px_rgba(197,160,91,0.3)] relative group">
+                  <div className="absolute inset-1 sm:inset-1.5 rounded-full border border-[#C5A05B]/40 border-dashed" />
+                  <span className="font-display text-sm xs:text-base sm:text-xl tracking-widest text-[#45151F] font-semibold drop-shadow-sm">
+                    {weddingData.couple.monogram}
+                  </span>
+                </div>
+              </motion.div>
+
+              {/* 4. Elegant Invitation Announcement Text */}
+              <motion.p
+                initial={{ opacity: 0, y: 8 }}
+                animate={{
+                  opacity: isEmerging ? 1 : 0,
+                  y: isEmerging ? 0 : 8,
+                }}
+                transition={{ delay: 0.95, duration: 0.8, ease: "easeOut" }}
+                className="font-serif italic text-[10px] xs:text-xs sm:text-sm md:text-base text-[#722C3B] tracking-normal sm:tracking-wide mt-0.5 px-2 max-w-lg leading-tight font-medium"
+              >
+                Together with their families, cordially invite you to celebrate the Nikkah &amp; Wedding reception of
+              </motion.p>
+
+              {/* 5. Couple's Names as the Emotional Focal Point */}
+              <motion.div
+                initial={{ opacity: 0, y: 16, filter: "blur(4px)" }}
+                animate={{
+                  opacity: isEmerging ? 1 : 0,
+                  y: isEmerging ? 0 : 16,
+                  filter: isEmerging ? "blur(0px)" : "blur(4px)",
+                }}
+                transition={{ delay: 1.1, duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+                className="my-1 sm:my-2 w-full"
+              >
+                <h1 className="font-script text-3.5xl xs:text-4.5xl sm:text-6xl md:text-7xl lg:text-7.5xl text-[#45151F] leading-none font-normal drop-shadow-[0_1px_2px_rgba(197,160,91,0.25)]">
+                  {weddingData.couple.groom.firstName}
+                </h1>
+                <div className="flex items-center justify-center gap-2 my-0.5 sm:my-1">
+                  <motion.span
+                    initial={{ width: 0 }}
+                    animate={{ width: isEmerging ? undefined : 0 }}
+                    transition={{ delay: 1.25, duration: 0.8 }}
+                    className="h-[1px] w-8 sm:w-16 bg-gradient-to-r from-transparent to-[#C5A05B]"
+                  />
+                  <span className="font-display text-[10px] sm:text-sm tracking-[0.25em] sm:tracking-[0.35em] text-[#C5A05B] font-semibold">
+                    &amp;
+                  </span>
+                  <motion.span
+                    initial={{ width: 0 }}
+                    animate={{ width: isEmerging ? undefined : 0 }}
+                    transition={{ delay: 1.25, duration: 0.8 }}
+                    className="h-[1px] w-8 sm:w-16 bg-gradient-to-l from-transparent to-[#C5A05B]"
+                  />
+                </div>
+                <h2 className="font-script text-3.5xl xs:text-4.5xl sm:text-6xl md:text-7xl lg:text-7.5xl text-[#45151F] leading-none font-normal drop-shadow-[0_1px_2px_rgba(197,160,91,0.25)]">
+                  {weddingData.couple.bride.firstName}
+                </h2>
+              </motion.div>
+
+              {/* 6. Ornamental Crest Divider */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{
+                  opacity: isEmerging ? 1 : 0,
+                  scale: isEmerging ? 1 : 0.85,
+                }}
+                transition={{ delay: 1.25, duration: 0.75, ease: "easeOut" }}
+                className="w-full flex justify-center scale-80 sm:scale-100 origin-center"
+              >
+                <OrnamentalDivider variant="crest" className="my-0.5 sm:my-1.5" />
+              </motion.div>
+
+              {/* 7. Formal Date, Hijri & Venue Details */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{
+                  opacity: isEmerging ? 1 : 0,
+                  y: isEmerging ? 0 : 10,
+                }}
+                transition={{ delay: 1.4, duration: 0.8, ease: "easeOut" }}
+                className="space-y-0.5 sm:space-y-1 px-1.5"
+              >
+                <p className="font-serif uppercase tracking-[0.14em] sm:tracking-[0.22em] text-[10px] xs:text-xs sm:text-sm text-[#45151F] font-semibold max-w-md leading-tight">
+                  {weddingData.event.formalDate}
+                </p>
+                <p className="font-serif italic text-[9px] xs:text-[11px] sm:text-xs text-[#9D783E] font-medium leading-tight">
+                  {weddingData.event.hijriDate}
+                </p>
+                <p className="font-serif italic text-[9px] xs:text-[11px] sm:text-xs text-[#722C3B] leading-tight font-medium">
+                  {weddingData.venue.hall} · {weddingData.venue.name} · {weddingData.venue.cityStateZip}
+                </p>
+              </motion.div>
+
+              {/* 8. Action Controls: Details & Replay Opening */}
+              <motion.div
+                initial={{ opacity: 0, y: 14 }}
+                animate={{
+                  opacity: isEmerging ? 1 : 0,
+                  y: isEmerging ? 0 : 14,
+                }}
+                transition={{ delay: 1.55, duration: 0.8, ease: "easeOut" }}
+                className="mt-2.5 xs:mt-3 sm:mt-5 flex flex-row items-center justify-center gap-2 sm:gap-3.5 w-full max-w-md px-1"
+              >
+                {/* View Details / Scroll Button */}
+                <motion.button
+                  type="button"
+                  whileHover={{ scale: 1.03, y: -1 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={scrollToNext}
+                  className="flex-1 sm:flex-initial group flex items-center justify-center gap-1 sm:gap-2 px-3 xs:px-4 sm:px-6 py-1.5 xs:py-2 sm:py-2.5 rounded-full border border-[#C5A05B] bg-gradient-to-r from-[#722C3B] to-[#45151F] hover:from-[#893547] hover:to-[#571b27] text-[#FAF6F0] font-serif text-[9px] xs:text-[11px] sm:text-xs uppercase tracking-wider sm:tracking-widest transition-all cursor-pointer shadow-lg hover:shadow-[0_4px_20px_rgba(114,44,59,0.45)] whitespace-nowrap"
+                >
+                  <Sparkles className="w-3 h-3 text-[#E7CF9B] animate-pulse" />
+                  <span>View Wedding Details</span>
+                  <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#E7CF9B] group-hover:translate-y-0.5 transition-transform" />
+                </motion.button>
+
+                {/* Replay Cinematic Opening Button */}
+                <motion.button
+                  type="button"
+                  whileHover={{ scale: 1.03, y: -1 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={handleReplay}
+                  title="Replay cinematic video intro"
+                  className="flex-1 sm:flex-initial flex items-center justify-center gap-1 sm:gap-1.5 px-2.5 xs:px-3.5 sm:px-5 py-1.5 xs:py-2 sm:py-2.5 rounded-full border border-[#C5A05B]/60 hover:border-[#C5A05B] bg-[#FFFDF9]/90 text-[#722C3B] hover:text-[#45151F] font-serif text-[9px] xs:text-[11px] sm:text-xs tracking-normal sm:tracking-wider uppercase transition-all cursor-pointer shadow-sm hover:shadow-md whitespace-nowrap"
+                >
+                  <RotateCcw className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#C5A05B]" />
+                  <span>Replay Opening</span>
+                </motion.button>
+              </motion.div>
+
+            </div>
+          </div>
+
+        </motion.div>
       </div>
     </section>
   );
