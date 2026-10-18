@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { BrandBar } from "@/components/BrandBar";
 import { InvitationCover, AnimationState } from "@/components/InvitationCover";
 import { InnerInvitation } from "@/components/InnerInvitation";

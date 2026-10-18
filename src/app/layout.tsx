@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Cinzel, Pinyon_Script, Montserrat, Amiri } from "next/font/google";
 import "./globals.css";
+import { SmoothScroll } from "@/components/SmoothScroll";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -59,9 +60,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${cinzel.variable} ${pinyon.variable} ${montserrat.variable} ${amiri.variable} scroll-smooth antialiased`}
+      className={`${cormorant.variable} ${cinzel.variable} ${pinyon.variable} ${montserrat.variable} ${amiri.variable} antialiased`}
     >
       <body className="min-h-screen bg-[#240B10] text-[#45151F] selection:bg-[#C5A05B]/30 selection:text-[#45151F] overflow-x-hidden">
+        <SmoothScroll />
         {children}
       </body>
     </html>

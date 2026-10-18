@@ -9,7 +9,6 @@ import { CornerFiligree, OrnamentalDivider } from "./OrnamentalDivider";
 
 export function VenueSection() {
   const [activeTab, setActiveTab] = useState<"photo" | "map">("map");
-  const [isMapInteractive, setIsMapInteractive] = useState(false);
 
   return (
     <section className="relative py-12 sm:py-20 px-3.5 sm:px-4 bg-[#1b050a]/85 text-[#FAF6F0] overflow-hidden">
@@ -171,7 +170,6 @@ export function VenueSection() {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.5 }}
                     className="relative w-full h-full"
-                    onClick={() => setIsMapInteractive(true)}
                   >
                     <iframe
                       title="Marquee Location - The Nishat Hotel, Gulberg Lahore"
@@ -182,20 +180,8 @@ export function VenueSection() {
                       allowFullScreen={false}
                       loading="lazy"
                       referrerPolicy="no-referrer-when-downgrade"
-                      className={`w-full h-full filter contrast-[1.05] opacity-95 transition-all ${
-                        isMapInteractive ? "pointer-events-auto" : "pointer-events-none sm:pointer-events-auto"
-                      }`}
+                      className="w-full h-full filter contrast-[1.05] opacity-95 pointer-events-auto"
                     />
-
-                    {/* Mobile Tap-To-Interact Protection Overlay (Prevents scroll lock while swiping) */}
-                    {!isMapInteractive && (
-                      <div className="sm:hidden absolute inset-0 bg-black/15 flex items-center justify-center cursor-pointer transition-opacity">
-                        <span className="bg-[#240B10]/90 backdrop-blur-md border border-[#C5A05B]/70 text-[#F3DFB5] px-3.5 py-1.5 rounded-full text-[10px] font-serif uppercase tracking-wider shadow-lg flex items-center gap-1.5">
-                          <Compass className="w-3 h-3 text-[#E7CF9B]" />
-                          Tap to explore map
-                        </span>
-                      </div>
-                    )}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -207,7 +193,7 @@ export function VenueSection() {
               <CornerFiligree position="bottom-right" className="bottom-1.5 right-1.5 sm:bottom-2.5 sm:right-2.5 text-[#C5A05B]/80" />
 
               {/* In-view Location Badge */}
-              <div className="absolute top-2.5 left-2.5 sm:top-4 sm:left-4 bg-[#240B10]/90 backdrop-blur-sm border border-[#C5A05B]/50 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full flex items-center gap-1.5 shadow-md z-10 pointer-events-none">
+              <div className="absolute top-2.5 left-2.5 sm:top-4 sm:left-4 bg-[#240B10]/95 border border-[#C5A05B]/50 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full flex items-center gap-1.5 shadow-md z-10 pointer-events-none">
                 <Compass className="w-3 h-3 text-[#E7CF9B]" />
                 <span className="font-display text-[9px] sm:text-[10px] uppercase tracking-widest text-[#F3DFB5]">
                   Gulberg III · Lahore

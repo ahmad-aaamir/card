@@ -634,10 +634,7 @@ export function ContinuousFloralVines() {
         className="absolute inset-y-0 inset-x-0 pointer-events-none z-25 overflow-hidden"
       >
         {/* Left Side Continuous Trailing Vine */}
-        <div
-          className="absolute top-0 left-1.5 xs:left-3 sm:left-2 md:left-4 lg:left-6 bottom-0 w-16 xs:w-20 sm:w-28 md:w-34 lg:w-40 flex flex-col items-start opacity-90 sm:opacity-95 origin-top-left transform-gpu"
-          style={{ animation: "vineWindSwayLeft 14s ease-in-out infinite alternate" }}
-        >
+        <div className="absolute top-0 left-1.5 xs:left-3 sm:left-2 md:left-4 lg:left-6 bottom-0 w-16 xs:w-20 sm:w-28 md:w-34 lg:w-40 flex flex-col items-start opacity-90 sm:opacity-95">
           {totalSegments.map((i) => (
             <div
               key={`vine-left-${i}`}
@@ -649,10 +646,7 @@ export function ContinuousFloralVines() {
         </div>
 
         {/* Right Side Continuous Trailing Vine */}
-        <div
-          className="absolute top-0 right-1.5 xs:right-3 sm:right-2 md:right-4 lg:right-6 bottom-0 w-16 xs:w-20 sm:w-28 md:w-34 lg:w-40 flex flex-col items-end opacity-90 sm:opacity-95 origin-top-right transform-gpu"
-          style={{ animation: "vineWindSwayRight 15s ease-in-out infinite alternate" }}
-        >
+        <div className="absolute top-0 right-1.5 xs:right-3 sm:right-2 md:right-4 lg:right-6 bottom-0 w-16 xs:w-20 sm:w-28 md:w-34 lg:w-40 flex flex-col items-end opacity-90 sm:opacity-95">
           {totalSegments.map((i) => (
             <div
               key={`vine-right-${i}`}
