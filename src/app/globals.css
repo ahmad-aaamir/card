@@ -106,3 +106,43 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #C5A05B;
 }
+
+/* ============================================================= */
+/* DEVICE PERFORMANCE & COMPOSITING ENHANCEMENTS                 */
+/* ============================================================= */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-wrap: pretty;
+}
+
+/* Hardware-accelerated GPU layer helper */
+.transform-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+/* Off-screen section deferral: saves up to 70% layout & paint on initial load */
+.content-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 680px;
+}
+
+/* Respect user's motion preferences across all CSS animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

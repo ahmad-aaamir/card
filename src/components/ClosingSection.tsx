@@ -15,7 +15,7 @@ export function ClosingSection() {
   };
 
   return (
-    <footer className="relative bg-[#1A050A] text-[#FAF6F0] pt-12 sm:pt-16 pb-16 sm:pb-20 px-3.5 sm:px-4 overflow-hidden border-t border-[#C5A05B]/30">
+    <footer className="relative bg-[#1A050A] text-[#FAF6F0] pt-12 sm:pt-16 pb-16 sm:pb-20 px-3.5 sm:px-4 overflow-hidden border-t border-[#C5A05B]/30 content-auto">
       {/* Background glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(114,44,59,0.35)_0%,transparent_75%)] pointer-events-none" />
 

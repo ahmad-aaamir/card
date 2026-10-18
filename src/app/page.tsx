@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { BrandBar } from "@/components/BrandBar";
 import { InvitationCover, AnimationState } from "@/components/InvitationCover";
@@ -55,11 +56,14 @@ export default function Home() {
 
       {/* HD Luxury Floral Background Layer flowing in sync across the entire website */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src="/images/hd-flower-background.jpg"
           alt="Luxury wedding floral background"
-          className="w-full h-full object-cover object-center filter brightness-[0.92] contrast-[1.08]"
+          fill
+          priority
+          quality={80}
+          sizes="100vw"
+          className="object-cover object-center filter brightness-[0.92] contrast-[1.08]"
         />
         {/* Soft luxury wine veil allowing the HD florals to fill background spaces */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#180408]/30 via-transparent to-[#180408]/45" />

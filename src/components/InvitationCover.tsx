@@ -77,37 +77,17 @@ export function InvitationCover({
     <section
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      className="relative w-full min-h-[100dvh] sm:min-h-screen flex items-center justify-center px-2.5 xs:px-3 sm:px-6 md:px-10 py-3 xs:py-4 sm:py-8 overflow-hidden bg-[#180408]"
+      className="relative w-full min-h-[100dvh] sm:min-h-screen flex items-center justify-center px-2.5 xs:px-3 sm:px-6 md:px-10 py-3 xs:py-4 sm:py-8 overflow-hidden bg-transparent"
     >
       {/* ============================================================= */}
       {/* 1. CINEMATIC LUXURY FLORAL & VELVET ENVIRONMENT               */}
       {/* ============================================================= */}
 
-      {/* Synchronized HD Luxury Floral Backdrop */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.2 }}
-        className="absolute inset-0 z-0 pointer-events-none"
-      >
-        <Image
-          src="/images/hd-flower-background.jpg"
-          alt="Luxury royal floral wedding backdrop"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center scale-105 filter brightness-[0.92] contrast-[1.08]"
-        />
-        {/* Soft studio ambient light framing the card */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#180408]/35 via-transparent to-[#180408]/45" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,#0f0205_95%)] opacity-55" />
-      </motion.div>
-
       {/* Directional studio lighting beam from top-left */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1.6, delay: 0.3 }}
+        transition={{ duration: 1.4, delay: 0.2 }}
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none z-1 bg-[radial-gradient(ellipse_75%_55%_at_12%_8%,rgba(243,223,181,0.22),transparent_65%)]"
       />
@@ -221,25 +201,23 @@ export function InvitationCover({
 
           {/* 1. Upper-Right Opulent Peonies & Garden Roses Garland */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.6, x: 20, y: -20, filter: "blur(4px)" }}
+            initial={{ opacity: 0, scale: 0.7, x: 18, y: -18 }}
             animate={{
               opacity: isEmerging ? 1 : 0,
-              scale: isEmerging ? 1 : 0.6,
+              scale: isEmerging ? 1 : 0.7,
               x: 0,
-              filter: isEmerging ? "blur(0px)" : "blur(4px)",
-              y: shouldReduceMotion ? 0 : (isEmerging ? [0, -4, 0] : 0),
-              rotate: shouldReduceMotion ? 0 : (isEmerging ? [0, 0.7, -0.3, 0] : 0),
+              y: shouldReduceMotion ? 0 : (isEmerging ? [0, -3, 0] : 0),
+              rotate: shouldReduceMotion ? 0 : (isEmerging ? [0, 0.6, -0.3, 0] : 0),
             }}
             transition={{
-              opacity: { duration: 1.1, delay: 0.25, ease: "easeOut" },
-              scale: { duration: 1.3, delay: 0.25, ease: [0.16, 1, 0.3, 1] },
-              filter: { duration: 0.9, delay: 0.25 },
-              x: { duration: 1.2, delay: 0.25, ease: [0.16, 1, 0.3, 1] },
-              y: { duration: 11, repeat: Infinity, ease: "easeInOut", delay: 1.6 },
-              rotate: { duration: 11, repeat: Infinity, ease: "easeInOut", delay: 1.6 },
+              opacity: { duration: 0.9, delay: 0.2, ease: "easeOut" },
+              scale: { duration: 1.1, delay: 0.2, ease: [0.16, 1, 0.3, 1] },
+              x: { duration: 1.0, delay: 0.2, ease: [0.16, 1, 0.3, 1] },
+              y: { duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1.4 },
+              rotate: { duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1.4 },
             }}
             style={{ transformOrigin: "top right" }}
-            className="absolute -top-3 -right-3 xs:-top-5 xs:-right-4 sm:-top-16 sm:-right-10 md:-top-20 md:-right-12 lg:-top-24 lg:-right-16 w-22 h-22 xs:w-28 xs:h-28 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px] pointer-events-none z-25 drop-shadow-[0_15px_25px_rgba(0,0,0,0.85)] filter contrast-[1.06]"
+            className="absolute -top-3 -right-3 xs:-top-5 xs:-right-4 sm:-top-16 sm:-right-10 md:-top-20 md:-right-12 lg:-top-24 lg:-right-16 w-22 h-22 xs:w-28 xs:h-28 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px] pointer-events-none z-25 drop-shadow-[0_15px_25px_rgba(0,0,0,0.85)] filter contrast-[1.06] transform-gpu"
           >
             <Image
               src="/images/floral-corner-garland.png"
@@ -253,25 +231,23 @@ export function InvitationCover({
 
           {/* 2. Lower-Left Deep Wine Velvet Rose & Foliage Bouquet */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.6, x: -20, y: 20, filter: "blur(4px)" }}
+            initial={{ opacity: 0, scale: 0.7, x: -18, y: 18 }}
             animate={{
               opacity: isEmerging ? 1 : 0,
-              scale: isEmerging ? 1 : 0.6,
+              scale: isEmerging ? 1 : 0.7,
               x: 0,
-              filter: isEmerging ? "blur(0px)" : "blur(4px)",
-              y: shouldReduceMotion ? 0 : (isEmerging ? [0, 4, 0] : 0),
-              rotate: shouldReduceMotion ? 0 : (isEmerging ? [0, -0.7, 0.3, 0] : 0),
+              y: shouldReduceMotion ? 0 : (isEmerging ? [0, 3, 0] : 0),
+              rotate: shouldReduceMotion ? 0 : (isEmerging ? [0, -0.6, 0.3, 0] : 0),
             }}
             transition={{
-              opacity: { duration: 1.1, delay: 0.3, ease: "easeOut" },
-              scale: { duration: 1.3, delay: 0.3, ease: [0.16, 1, 0.3, 1] },
-              filter: { duration: 0.9, delay: 0.3 },
-              x: { duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] },
-              y: { duration: 13, repeat: Infinity, ease: "easeInOut", delay: 1.8 },
-              rotate: { duration: 13, repeat: Infinity, ease: "easeInOut", delay: 1.8 },
+              opacity: { duration: 0.9, delay: 0.25, ease: "easeOut" },
+              scale: { duration: 1.1, delay: 0.25, ease: [0.16, 1, 0.3, 1] },
+              x: { duration: 1.0, delay: 0.25, ease: [0.16, 1, 0.3, 1] },
+              y: { duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1.6 },
+              rotate: { duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1.6 },
             }}
             style={{ transformOrigin: "bottom left" }}
-            className="absolute -bottom-3 -left-3 xs:-bottom-5 xs:-left-4 sm:-bottom-16 sm:-left-10 md:-bottom-20 md:-left-12 lg:-bottom-24 lg:-left-16 w-22 h-22 xs:w-28 xs:h-28 sm:w-60 sm:h-60 md:w-76 md:h-76 lg:w-[380px] lg:h-[380px] pointer-events-none z-25 drop-shadow-[0_15px_25px_rgba(0,0,0,0.85)] filter contrast-[1.06]"
+            className="absolute -bottom-3 -left-3 xs:-bottom-5 xs:-left-4 sm:-bottom-16 sm:-left-10 md:-bottom-20 md:-left-12 lg:-bottom-24 lg:-left-16 w-22 h-22 xs:w-28 xs:h-28 sm:w-60 sm:h-60 md:w-76 md:h-76 lg:w-[380px] lg:h-[380px] pointer-events-none z-25 drop-shadow-[0_15px_25px_rgba(0,0,0,0.85)] filter contrast-[1.06] transform-gpu"
           >
             <Image
               src="/images/floral-lower-cluster.png"

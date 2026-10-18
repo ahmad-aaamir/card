@@ -12,7 +12,7 @@ export function VenueSection() {
   const [isMapInteractive, setIsMapInteractive] = useState(false);
 
   return (
-    <section className="relative py-12 sm:py-20 px-3.5 sm:px-4 bg-[#240B10]/55 backdrop-blur-[1px] text-[#FAF6F0] overflow-hidden">
+    <section className="relative py-12 sm:py-20 px-3.5 sm:px-4 bg-[#240B10]/55 backdrop-blur-[1px] text-[#FAF6F0] overflow-hidden content-auto">
       {/* Background glow */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(114,44,59,0.3)_0%,transparent_70%)] pointer-events-none" />
 
@@ -91,7 +91,7 @@ export function VenueSection() {
               src="/images/floral-corner-garland.png"
               alt="Blush peonies and golden foliage garland"
               fill
-              priority
+              loading="lazy"
               sizes="(max-width: 640px) 128px, (max-width: 768px) 176px, 208px"
               className="object-contain"
             />
@@ -109,7 +109,7 @@ export function VenueSection() {
               src="/images/floral-lower-cluster.png"
               alt="Velvet wine roses and golden foliage cluster"
               fill
-              priority
+              loading="lazy"
               sizes="(max-width: 640px) 128px, (max-width: 768px) 176px, 208px"
               className="object-contain"
             />

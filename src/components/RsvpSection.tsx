@@ -24,7 +24,7 @@ export function RsvpSection() {
   return (
     <section
       id="rsvp-section"
-      className="relative py-12 sm:py-20 px-3.5 sm:px-4 bg-[#260B12]/50 backdrop-blur-[1px] flex justify-center overflow-hidden"
+      className="relative py-12 sm:py-20 px-3.5 sm:px-4 bg-[#260B12]/50 backdrop-blur-[1px] flex justify-center overflow-hidden content-auto"
     >
       {/* Background soft glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(114,44,59,0.3)_0%,transparent_70%)] pointer-events-none" />

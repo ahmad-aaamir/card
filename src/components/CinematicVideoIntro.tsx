@@ -18,14 +18,11 @@ export function CinematicVideoIntro({
   replayTrigger = 0,
 }: CinematicVideoIntroProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const bgVideoRef = useRef<HTMLVideoElement>(null);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [hasCompleted, setHasCompleted] = useState(false);
   const [isAudioActive, setIsAudioActive] = useState(false);
 
   // Exact timestamp where the card gatefold doors swing open wide (8.15s)
-  // Crops the video before the static blank page appears, allowing the
-  // royal hero section to emerge directly from within the opening as soon as the card opens.
   const CROP_TIMESTAMP = 8.15;
 
   const triggerTransition = useCallback(() => {
@@ -34,9 +31,6 @@ export function CinematicVideoIntro({
 
     if (videoRef.current) {
       videoRef.current.pause();
-    }
-    if (bgVideoRef.current) {
-      bgVideoRef.current.pause();
     }
 
     // Immediately signal that the hero section should emerge from the middle
@@ -48,35 +42,20 @@ export function CinematicVideoIntro({
     setTimeout(() => {
       setHasCompleted(true);
       onComplete();
-    }, 650);
+    }, 600);
   }, [isFadingOut, hasCompleted, onComplete, onStartEmerging]);
 
-  // High-precision frame check (60fps) to catch the exact moment the card opens
-  useEffect(() => {
-    if (hasCompleted || isFadingOut) return;
-
-    let animId: number;
-    const checkPlaybackTime = () => {
-      if (videoRef.current) {
-        if (videoRef.current.currentTime >= CROP_TIMESTAMP) {
-          triggerTransition();
-          return;
-        }
-      }
-      animId = requestAnimationFrame(checkPlaybackTime);
-    };
-
-    animId = requestAnimationFrame(checkPlaybackTime);
-    return () => cancelAnimationFrame(animId);
-  }, [hasCompleted, isFadingOut, triggerTransition]);
+  // High-efficiency native timeupdate handler (replaces 60fps requestAnimationFrame polling)
+  const handleTimeUpdate = () => {
+    if (videoRef.current && videoRef.current.currentTime >= CROP_TIMESTAMP) {
+      triggerTransition();
+    }
+  };
 
   // Attempt autoPlay reliably across mobile & desktop
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.play().catch(() => {});
-    }
-    if (bgVideoRef.current) {
-      bgVideoRef.current.play().catch(() => {});
     }
   }, [replayTrigger]);
 
@@ -103,10 +82,6 @@ export function CinematicVideoIntro({
         videoRef.current.currentTime = 0;
         videoRef.current.play().catch(() => {});
       }
-      if (bgVideoRef.current) {
-        bgVideoRef.current.currentTime = 0;
-        bgVideoRef.current.play().catch(() => {});
-      }
     }
   }, [replayTrigger]);
 
@@ -122,28 +97,21 @@ export function CinematicVideoIntro({
           initial={{ opacity: 1 }}
           exit={{
             opacity: 0,
-            transition: { duration: 0.8, ease: "easeInOut" },
+            transition: { duration: 0.7, ease: "easeInOut" },
           }}
           className="fixed inset-0 z-[100] bg-[#180408] flex items-center justify-center overflow-hidden select-none pointer-events-auto"
         >
-          {/* Ambient Blurred Video Background for Wide/Desktop Screens */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none hidden sm:block">
-            <video
-              ref={bgVideoRef}
-              src="/gemini_generated_video_115e7efe.mp4"
-              autoPlay
-              muted
-              playsInline
-              loop
-              className="w-full h-full object-cover filter blur-3xl opacity-35 scale-125"
-            />
-          </div>
+          {/* Ambient Warm Velvet Glow Backdrop for Wide Screens (Zero decode overhead) */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 overflow-hidden pointer-events-none hidden sm:block bg-[radial-gradient(ellipse_at_center,rgba(114,44,59,0.45)_0%,rgba(36,11,16,0.85)_55%,#140407_100%)] opacity-80"
+          />
 
           {/* Deep Wine & Vignette Gradient Overlays matching Hero Background */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#140407] via-transparent to-[#140407]/80 pointer-events-none z-10" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_45%,#0d0205_100%)] opacity-75 pointer-events-none z-10" />
 
-          {/* Main Focused Cinematic Video */}
+          {/* Main Focused Cinematic Video - Single efficient hardware-decoded stream */}
           <div className="relative w-full h-full flex items-center justify-center z-15">
             <video
               ref={videoRef}
@@ -151,8 +119,10 @@ export function CinematicVideoIntro({
               autoPlay
               muted
               playsInline
+              preload="auto"
+              onTimeUpdate={handleTimeUpdate}
               onEnded={triggerTransition}
-              className="w-full h-full object-cover sm:object-contain sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto shadow-[0_0_80px_rgba(0,0,0,0.85)] filter contrast-[1.05] brightness-[0.98]"
+              className="w-full h-full object-cover sm:object-contain sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto shadow-[0_0_60px_rgba(0,0,0,0.85)] filter contrast-[1.05] brightness-[0.98]"
             />
 
             {/* Top Brand & Controls Header */}
