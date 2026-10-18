@@ -107,12 +107,12 @@ export function CinematicVideoIntro({
             className="absolute inset-0 overflow-hidden pointer-events-none hidden sm:block bg-[radial-gradient(ellipse_at_center,rgba(114,44,59,0.45)_0%,rgba(36,11,16,0.85)_55%,#140407_100%)] opacity-80"
           />
 
-          {/* Deep Wine & Vignette Gradient Overlays matching Hero Background */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#140407] via-transparent to-[#140407]/80 pointer-events-none z-10" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_45%,#0d0205_100%)] opacity-75 pointer-events-none z-10" />
+          {/* Deep Wine & Vignette Gradient Backdrop (positioned behind the video) */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#140407] via-transparent to-[#140407]/70 pointer-events-none z-5" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_55%,#0d0205_100%)] opacity-60 pointer-events-none z-5" />
 
-          {/* Main Focused Cinematic Video - Single efficient hardware-decoded stream */}
-          <div className="relative w-full h-full flex items-center justify-center z-15">
+          {/* Main Focused Cinematic Video - Native crisp resolution */}
+          <div className="relative w-full h-full flex items-center justify-center p-2 sm:p-4 z-15">
             <video
               ref={videoRef}
               src="/gemini_generated_video_115e7efe.mp4"
@@ -122,7 +122,7 @@ export function CinematicVideoIntro({
               preload="auto"
               onTimeUpdate={handleTimeUpdate}
               onEnded={triggerTransition}
-              className="w-full h-full object-cover sm:object-contain sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto shadow-[0_0_60px_rgba(0,0,0,0.85)] filter contrast-[1.05] brightness-[0.98]"
+              className="w-auto h-auto max-w-[94vw] max-h-[84vh] sm:max-w-xl md:max-w-2xl lg:max-w-3xl object-contain mx-auto rounded shadow-2xl"
             />
 
             {/* Top Brand & Controls Header */}

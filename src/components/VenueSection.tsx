@@ -12,7 +12,7 @@ export function VenueSection() {
   const [isMapInteractive, setIsMapInteractive] = useState(false);
 
   return (
-    <section className="relative py-12 sm:py-20 px-3.5 sm:px-4 bg-[#240B10]/55 backdrop-blur-[1px] text-[#FAF6F0] overflow-hidden content-auto">
+    <section className="relative py-12 sm:py-20 px-3.5 sm:px-4 bg-[#1b050a]/85 text-[#FAF6F0] overflow-hidden">
       {/* Background glow */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(114,44,59,0.3)_0%,transparent_70%)] pointer-events-none" />
 

@@ -45,9 +45,8 @@ export function InvitationCover({
     if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) {
       return;
     }
-    const rect = e.currentTarget.getBoundingClientRect();
-    const xPct = (e.clientX - rect.left) / rect.width - 0.5;
-    const yPct = (e.clientY - rect.top) / rect.height - 0.5;
+    const xPct = e.clientX / window.innerWidth - 0.5;
+    const yPct = e.clientY / window.innerHeight - 0.5;
     mouseX.set(xPct);
     mouseY.set(yPct);
   };

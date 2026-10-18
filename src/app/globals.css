@@ -128,11 +128,6 @@ body {
   backface-visibility: hidden;
 }
 
-/* Off-screen section deferral: saves up to 70% layout & paint on initial load */
-.content-auto {
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 680px;
-}
 
 /* Respect user's motion preferences across all CSS animations */
 @media (prefers-reduced-motion: reduce) {

@@ -262,15 +262,9 @@ function VineSegment({
 
   return (
     <div
-      className={`relative w-full h-[640px] pointer-events-none transform-gpu ${
+      className={`relative w-full h-[640px] pointer-events-none ${
         isLeft ? "origin-top-left" : "origin-top-right"
       }`}
-      style={{
-        animation: `${isLeft ? "vineWindSwayLeft" : "vineWindSwayRight"} ${
-          8 + (segmentIndex % 3) * 2
-        }s ease-in-out infinite alternate`,
-        animationDelay: `${segmentIndex * 0.45}s`,
-      }}
     >
       <svg
         viewBox="0 0 160 640"
@@ -381,28 +375,16 @@ function VineSegment({
         )}
       </svg>
 
-      {/* Curated Luxury Blossoms per segment - GPU transform animated */}
+      {/* Curated Luxury Blossoms per segment */}
       {isLeft ? (
         <>
           {/* Peony / Rose Blossom */}
-          <div
-            className="absolute top-[90px] left-[34px] xs:left-[44px] sm:left-[48px] transform-gpu"
-            style={{
-              animation: "vineFlowerBreathe 5.2s ease-in-out infinite alternate",
-              animationDelay: `${segmentIndex * 0.3}s`,
-            }}
-          >
+          <div className="absolute top-[90px] left-[34px] xs:left-[44px] sm:left-[48px]">
             <BotanicalBlossom size={isEven ? 36 : 42} rotation={isEven ? 18 : -24} variant="peony" />
           </div>
 
           {/* Alternating Jasmine or Bud */}
-          <div
-            className="absolute top-[380px] left-[36px] xs:left-[46px] sm:left-[48px] transform-gpu"
-            style={{
-              animation: "vineFlowerBreathe 5.6s ease-in-out infinite alternate",
-              animationDelay: `${segmentIndex * 0.4 + 1.2}s`,
-            }}
-          >
+          <div className="absolute top-[380px] left-[36px] xs:left-[46px] sm:left-[48px]">
             {isEven ? (
               <BotanicalBlossom size={26} rotation={45} variant="jasmine" />
             ) : (
@@ -413,24 +395,12 @@ function VineSegment({
       ) : (
         <>
           {/* Peony / Rose Blossom */}
-          <div
-            className="absolute top-[90px] right-[34px] xs:right-[44px] sm:right-[48px] transform-gpu"
-            style={{
-              animation: "vineFlowerBreathe 5.2s ease-in-out infinite alternate",
-              animationDelay: `${segmentIndex * 0.3 + 0.4}s`,
-            }}
-          >
+          <div className="absolute top-[90px] right-[34px] xs:right-[44px] sm:right-[48px]">
             <BotanicalBlossom size={isEven ? 40 : 34} rotation={isEven ? -18 : 24} variant="peony" />
           </div>
 
           {/* Alternating Jasmine or Bud */}
-          <div
-            className="absolute top-[380px] right-[36px] xs:right-[46px] sm:right-[48px] transform-gpu"
-            style={{
-              animation: "vineFlowerBreathe 5.6s ease-in-out infinite alternate",
-              animationDelay: `${segmentIndex * 0.4 + 0.9}s`,
-            }}
-          >
+          <div className="absolute top-[380px] right-[36px] xs:right-[46px] sm:right-[48px]">
             {isEven ? (
               <BotanicalBlossom size={28} rotation={15} variant="bud" />
             ) : (
@@ -608,49 +578,25 @@ export function ContinuousFloralVines() {
       <style jsx global>{`
         @keyframes vineWindSwayLeft {
           0% {
-            transform: translate3d(0, 0, 0) rotate(0deg) skewX(0deg);
-          }
-          25% {
-            transform: translate3d(2px, -2px, 0) rotate(2deg) skewX(1deg);
+            transform: rotate(0deg);
           }
           50% {
-            transform: translate3d(-1px, 1px, 0) rotate(-1deg) skewX(-0.5deg);
-          }
-          75% {
-            transform: translate3d(2px, -1px, 0) rotate(2.4deg) skewX(1.2deg);
+            transform: rotate(0.8deg);
           }
           100% {
-            transform: translate3d(0, 0, 0) rotate(0deg) skewX(0deg);
+            transform: rotate(0deg);
           }
         }
 
         @keyframes vineWindSwayRight {
           0% {
-            transform: translate3d(0, 0, 0) rotate(0deg) skewX(0deg);
-          }
-          25% {
-            transform: translate3d(-2px, -2px, 0) rotate(-2deg) skewX(-1deg);
+            transform: rotate(0deg);
           }
           50% {
-            transform: translate3d(1px, 1px, 0) rotate(1deg) skewX(0.5deg);
-          }
-          75% {
-            transform: translate3d(-2px, -1px, 0) rotate(-2.4deg) skewX(-1.2deg);
+            transform: rotate(-0.8deg);
           }
           100% {
-            transform: translate3d(0, 0, 0) rotate(0deg) skewX(0deg);
-          }
-        }
-
-        @keyframes vineFlowerBreathe {
-          0% {
-            transform: translate3d(-50%, -50%, 0) rotate(0deg) scale(1);
-          }
-          50% {
-            transform: translate3d(-50%, -50%, 0) rotate(4deg) scale(1.06);
-          }
-          100% {
-            transform: translate3d(-50%, -50%, 0) rotate(0deg) scale(1);
+            transform: rotate(0deg);
           }
         }
 
@@ -688,7 +634,10 @@ export function ContinuousFloralVines() {
         className="absolute inset-y-0 inset-x-0 pointer-events-none z-25 overflow-hidden"
       >
         {/* Left Side Continuous Trailing Vine */}
-        <div className="absolute top-0 left-1.5 xs:left-3 sm:left-2 md:left-4 lg:left-6 bottom-0 w-16 xs:w-20 sm:w-28 md:w-34 lg:w-40 flex flex-col items-start opacity-90 sm:opacity-95">
+        <div
+          className="absolute top-0 left-1.5 xs:left-3 sm:left-2 md:left-4 lg:left-6 bottom-0 w-16 xs:w-20 sm:w-28 md:w-34 lg:w-40 flex flex-col items-start opacity-90 sm:opacity-95 origin-top-left transform-gpu"
+          style={{ animation: "vineWindSwayLeft 14s ease-in-out infinite alternate" }}
+        >
           {totalSegments.map((i) => (
             <div
               key={`vine-left-${i}`}
@@ -700,7 +649,10 @@ export function ContinuousFloralVines() {
         </div>
 
         {/* Right Side Continuous Trailing Vine */}
-        <div className="absolute top-0 right-1.5 xs:right-3 sm:right-2 md:right-4 lg:right-6 bottom-0 w-16 xs:w-20 sm:w-28 md:w-34 lg:w-40 flex flex-col items-end opacity-90 sm:opacity-95">
+        <div
+          className="absolute top-0 right-1.5 xs:right-3 sm:right-2 md:right-4 lg:right-6 bottom-0 w-16 xs:w-20 sm:w-28 md:w-34 lg:w-40 flex flex-col items-end opacity-90 sm:opacity-95 origin-top-right transform-gpu"
+          style={{ animation: "vineWindSwayRight 15s ease-in-out infinite alternate" }}
+        >
           {totalSegments.map((i) => (
             <div
               key={`vine-right-${i}`}

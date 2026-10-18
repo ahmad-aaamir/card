@@ -92,10 +92,10 @@ export default function Home() {
         />
 
         {/* Complete Vertically Scrolling Invitation Sections */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isEmerging || !isIntroActive ? 1 : 0 }}
-          transition={{ duration: 1.0, delay: 0.4 }}
+        <div
+          className={`transition-opacity duration-1000 delay-300 ease-out ${
+            isEmerging || !isIntroActive ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
         >
           <InnerInvitation />
           <CountdownSection />
@@ -103,7 +103,7 @@ export default function Home() {
           <VenueSection />
           <RsvpSection />
           <ClosingSection />
-        </motion.div>
+        </div>
       </div>
     </main>
   );
