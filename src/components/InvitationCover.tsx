@@ -388,11 +388,11 @@ export function InvitationCover({
 
             {/* ======================================================= */}
             {/* 4. CHOREOGRAPHED EDITORIAL CONTENT ON THE WHITE PAGE     */}
-            {/* Colors, Islamic Calligraphy, Monogram Crest & Text      */}
+            {/* Prominent, easily readable typography and streamlined text */}
             {/* ======================================================= */}
-            <div className="relative z-30 flex flex-col items-center text-center max-w-2xl mx-auto my-auto py-1 sm:py-3 px-1 sm:px-4">
+            <div className="relative z-30 flex flex-col items-center text-center max-w-xl mx-auto my-auto py-3 sm:py-5 px-3 sm:px-6">
               
-              {/* 1. Small Refined Brand Wordmark Eyebrow */}
+              {/* 1. Brand Wordmark Eyebrow */}
               <motion.div
                 initial={{ opacity: 0, y: -8 }}
                 animate={{
@@ -400,18 +400,18 @@ export function InvitationCover({
                   y: isEmerging ? 0 : -8,
                 }}
                 transition={{ delay: 0.45, duration: 0.75, ease: "easeOut" }}
-                className="flex items-center justify-center gap-1.5 mb-1 sm:mb-2.5"
+                className="flex items-center justify-center gap-2 mb-2"
               >
-                <span className="font-display tracking-[0.25em] sm:tracking-[0.4em] text-[8px] xs:text-[9px] sm:text-xs text-[#9D783E] uppercase font-semibold">
+                <span className="font-display tracking-[0.28em] sm:tracking-[0.38em] text-[11px] sm:text-xs text-[#9D783E] uppercase font-bold">
                   {weddingData.brand.name}
                 </span>
-                <span className="text-[#C5A05B]/60 text-[10px] sm:text-xs">·</span>
-                <span className="font-serif italic text-[10px] sm:text-xs tracking-wider text-[#722C3B]">
+                <span className="text-[#C5A05B] text-xs">·</span>
+                <span className="font-serif italic text-xs sm:text-sm tracking-wider text-[#722C3B] font-medium">
                   {weddingData.brand.collection}
                 </span>
               </motion.div>
 
-              {/* 2. Islamic Bismillah Calligraphy writing onto paper in Deep Burgundy Ink */}
+              {/* 2. Islamic Bismillah Calligraphy (Large & Clear) */}
               <motion.div
                 initial={{ opacity: 0, y: 12, filter: "blur(3px)" }}
                 animate={{
@@ -420,20 +420,17 @@ export function InvitationCover({
                   filter: isEmerging ? "blur(0px)" : "blur(3px)",
                 }}
                 transition={{ delay: 0.6, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                className="w-full my-0.5 sm:my-1 px-1"
+                className="w-full my-1 sm:my-2 px-1"
               >
                 <p
                   dir="rtl"
-                  className="font-arabic text-xl xs:text-2xl sm:text-3xl md:text-4xl text-[#45151F] leading-tight font-semibold drop-shadow-[0_1px_1px_rgba(197,160,91,0.2)]"
+                  className="font-arabic text-2xl xs:text-3xl sm:text-4xl md:text-5xl text-[#45151F] leading-relaxed font-bold drop-shadow-sm"
                 >
                   {weddingData.islamicHeading.bismillahArabic}
                 </p>
-                <span className="font-serif italic text-[9px] xs:text-[10px] sm:text-xs text-[#722C3B] tracking-wide block mt-0.5 font-medium">
-                  {weddingData.islamicHeading.bismillahTranslation}
-                </span>
               </motion.div>
 
-              {/* 3. Gold-Foiled Royal Monogram Crest Stamp with pulsating aura */}
+              {/* 3. Gold-Foiled Royal Monogram Crest Stamp */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.75 }}
                 animate={{
@@ -441,32 +438,17 @@ export function InvitationCover({
                   scale: isEmerging ? 1 : 0.75,
                 }}
                 transition={{ delay: 0.75, duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-                className="relative my-1.5 xs:my-2 sm:my-3 flex items-center justify-center"
+                className="relative my-2 sm:my-3 flex items-center justify-center"
               >
-                {/* Golden pulsing ring that radiates when monogram appears */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={
-                    isEmerging
-                      ? {
-                          opacity: [0, 0.7, 0],
-                          scale: [0.85, 1.4, 1.6],
-                        }
-                      : {}
-                  }
-                  transition={{ delay: 0.8, duration: 1.4, ease: "easeOut" }}
-                  className="absolute inset-0 rounded-full border border-[#C5A05B] pointer-events-none"
-                />
-
-                <div className="w-12 h-12 xs:w-14 xs:h-14 sm:w-18 sm:h-18 rounded-full border border-sm:border-2 border-[#C5A05B] flex items-center justify-center bg-gradient-to-br from-[#FFFDF9] via-[#FAF3E8] to-[#EFE5D5] shadow-[0_4px_16px_rgba(197,160,91,0.3)] relative group">
+                <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-full border-2 border-[#C5A05B] flex items-center justify-center bg-gradient-to-br from-[#FFFDF9] via-[#FAF3E8] to-[#EFE5D5] shadow-[0_4px_16px_rgba(197,160,91,0.3)] relative">
                   <div className="absolute inset-1 sm:inset-1.5 rounded-full border border-[#C5A05B]/40 border-dashed" />
-                  <span className="font-display text-sm xs:text-base sm:text-xl tracking-widest text-[#45151F] font-semibold drop-shadow-sm">
+                  <span className="font-display text-base sm:text-2xl tracking-widest text-[#45151F] font-bold drop-shadow-sm">
                     {weddingData.couple.monogram}
                   </span>
                 </div>
               </motion.div>
 
-              {/* 4. Elegant Invitation Announcement Text */}
+              {/* 4. Invitation Announcement Text (Clear & Legible) */}
               <motion.p
                 initial={{ opacity: 0, y: 8 }}
                 animate={{
@@ -474,9 +456,9 @@ export function InvitationCover({
                   y: isEmerging ? 0 : 8,
                 }}
                 transition={{ delay: 0.95, duration: 0.8, ease: "easeOut" }}
-                className="font-serif italic text-[10px] xs:text-xs sm:text-sm md:text-base text-[#722C3B] tracking-normal sm:tracking-wide mt-0.5 px-2 max-w-lg leading-tight font-medium"
+                className="font-serif italic text-xs sm:text-sm md:text-base text-[#722C3B] tracking-wide my-1 px-2 max-w-md leading-relaxed font-medium"
               >
-                Together with their families, cordially invite you to celebrate the Nikkah &amp; Wedding reception of
+                Cordially invite you to celebrate the marriage of
               </motion.p>
 
               {/* 5. Couple's Names as the Emotional Focal Point */}
@@ -488,29 +470,29 @@ export function InvitationCover({
                   filter: isEmerging ? "blur(0px)" : "blur(4px)",
                 }}
                 transition={{ delay: 1.1, duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-                className="my-1 sm:my-2 w-full"
+                className="my-1.5 sm:my-3 w-full"
               >
-                <h1 className="font-script text-3.5xl xs:text-4.5xl sm:text-6xl md:text-7xl lg:text-7.5xl text-[#45151F] leading-none font-normal drop-shadow-[0_1px_2px_rgba(197,160,91,0.25)]">
+                <h1 className="font-script text-4xl xs:text-5xl sm:text-6xl md:text-7xl text-[#45151F] leading-none font-normal drop-shadow-[0_1px_2px_rgba(197,160,91,0.25)]">
                   {weddingData.couple.groom.firstName}
                 </h1>
-                <div className="flex items-center justify-center gap-2 my-0.5 sm:my-1">
+                <div className="flex items-center justify-center gap-3 my-1">
                   <motion.span
                     initial={{ width: 0 }}
                     animate={{ width: isEmerging ? undefined : 0 }}
                     transition={{ delay: 1.25, duration: 0.8 }}
-                    className="h-[1px] w-8 sm:w-16 bg-gradient-to-r from-transparent to-[#C5A05B]"
+                    className="h-[1px] w-10 sm:w-20 bg-gradient-to-r from-transparent to-[#C5A05B]"
                   />
-                  <span className="font-display text-[10px] sm:text-sm tracking-[0.25em] sm:tracking-[0.35em] text-[#C5A05B] font-semibold">
+                  <span className="font-display text-xs sm:text-sm tracking-[0.3em] text-[#C5A05B] font-bold">
                     &amp;
                   </span>
                   <motion.span
                     initial={{ width: 0 }}
                     animate={{ width: isEmerging ? undefined : 0 }}
                     transition={{ delay: 1.25, duration: 0.8 }}
-                    className="h-[1px] w-8 sm:w-16 bg-gradient-to-l from-transparent to-[#C5A05B]"
+                    className="h-[1px] w-10 sm:w-20 bg-gradient-to-l from-transparent to-[#C5A05B]"
                   />
                 </div>
-                <h2 className="font-script text-3.5xl xs:text-4.5xl sm:text-6xl md:text-7xl lg:text-7.5xl text-[#45151F] leading-none font-normal drop-shadow-[0_1px_2px_rgba(197,160,91,0.25)]">
+                <h2 className="font-script text-4xl xs:text-5xl sm:text-6xl md:text-7xl text-[#45151F] leading-none font-normal drop-shadow-[0_1px_2px_rgba(197,160,91,0.25)]">
                   {weddingData.couple.bride.firstName}
                 </h2>
               </motion.div>
@@ -523,12 +505,12 @@ export function InvitationCover({
                   scale: isEmerging ? 1 : 0.85,
                 }}
                 transition={{ delay: 1.25, duration: 0.75, ease: "easeOut" }}
-                className="w-full flex justify-center scale-80 sm:scale-100 origin-center"
+                className="w-full flex justify-center origin-center my-1"
               >
-                <OrnamentalDivider variant="crest" className="my-0.5 sm:my-1.5" />
+                <OrnamentalDivider variant="crest" />
               </motion.div>
 
-              {/* 7. Formal Date, Hijri & Venue Details */}
+              {/* 7. Formal Date & Venue (Clean, Readable & Uncluttered) */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{
@@ -536,20 +518,17 @@ export function InvitationCover({
                   y: isEmerging ? 0 : 10,
                 }}
                 transition={{ delay: 1.4, duration: 0.8, ease: "easeOut" }}
-                className="space-y-0.5 sm:space-y-1 px-1.5"
+                className="space-y-1 my-1 px-2"
               >
-                <p className="font-serif uppercase tracking-[0.14em] sm:tracking-[0.22em] text-[10px] xs:text-xs sm:text-sm text-[#45151F] font-semibold max-w-md leading-tight">
+                <p className="font-serif uppercase tracking-[0.16em] sm:tracking-[0.24em] text-xs sm:text-sm md:text-base text-[#45151F] font-bold leading-normal">
                   {weddingData.event.formalDate}
                 </p>
-                <p className="font-serif italic text-[9px] xs:text-[11px] sm:text-xs text-[#9D783E] font-medium leading-tight">
-                  {weddingData.event.hijriDate}
-                </p>
-                <p className="font-serif italic text-[9px] xs:text-[11px] sm:text-xs text-[#722C3B] leading-tight font-medium">
-                  {weddingData.venue.hall} · {weddingData.venue.name} · {weddingData.venue.cityStateZip}
+                <p className="font-serif italic text-xs sm:text-sm text-[#722C3B] leading-normal font-semibold">
+                  {weddingData.venue.hall} · {weddingData.venue.name}
                 </p>
               </motion.div>
 
-              {/* 8. Action Controls: Details & Replay Opening */}
+              {/* 8. Action Controls: Primary Details Button & Replay Link */}
               <motion.div
                 initial={{ opacity: 0, y: 14 }}
                 animate={{
@@ -557,33 +536,30 @@ export function InvitationCover({
                   y: isEmerging ? 0 : 14,
                 }}
                 transition={{ delay: 1.55, duration: 0.8, ease: "easeOut" }}
-                className="mt-2.5 xs:mt-3 sm:mt-5 flex flex-row items-center justify-center gap-2 sm:gap-3.5 w-full max-w-md px-1"
+                className="mt-4 sm:mt-6 flex flex-col items-center justify-center gap-2.5 w-full max-w-sm px-2"
               >
-                {/* View Details / Scroll Button */}
+                {/* View Details Button (Generously Sized & Readable) */}
                 <motion.button
                   type="button"
                   whileHover={{ scale: 1.03, y: -1 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={scrollToNext}
-                  className="flex-1 sm:flex-initial group flex items-center justify-center gap-1 sm:gap-2 px-3 xs:px-4 sm:px-6 py-1.5 xs:py-2 sm:py-2.5 rounded-full border border-[#C5A05B] bg-gradient-to-r from-[#722C3B] to-[#45151F] hover:from-[#893547] hover:to-[#571b27] text-[#FAF6F0] font-serif text-[9px] xs:text-[11px] sm:text-xs uppercase tracking-wider sm:tracking-widest transition-all cursor-pointer shadow-lg hover:shadow-[0_4px_20px_rgba(114,44,59,0.45)] whitespace-nowrap"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full border border-[#C5A05B] bg-gradient-to-r from-[#722C3B] to-[#45151F] hover:from-[#893547] hover:to-[#571b27] text-[#FAF6F0] font-serif text-xs sm:text-sm uppercase tracking-[0.2em] transition-all cursor-pointer shadow-lg hover:shadow-[0_4px_20px_rgba(114,44,59,0.45)]"
                 >
-                  <Sparkles className="w-3 h-3 text-[#E7CF9B] animate-pulse" />
+                  <Sparkles className="w-3.5 h-3.5 text-[#E7CF9B] animate-pulse" />
                   <span>View Wedding Details</span>
-                  <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#E7CF9B] group-hover:translate-y-0.5 transition-transform" />
+                  <ChevronDown className="w-3.5 h-3.5 text-[#E7CF9B] group-hover:translate-y-0.5 transition-transform" />
                 </motion.button>
 
-                {/* Replay Cinematic Opening Button */}
-                <motion.button
+                {/* Subtle Replay Link */}
+                <button
                   type="button"
-                  whileHover={{ scale: 1.03, y: -1 }}
-                  whileTap={{ scale: 0.97 }}
                   onClick={handleReplay}
-                  title="Replay cinematic video intro"
-                  className="flex-1 sm:flex-initial flex items-center justify-center gap-1 sm:gap-1.5 px-2.5 xs:px-3.5 sm:px-5 py-1.5 xs:py-2 sm:py-2.5 rounded-full border border-[#C5A05B]/60 hover:border-[#C5A05B] bg-[#FFFDF9]/90 text-[#722C3B] hover:text-[#45151F] font-serif text-[9px] xs:text-[11px] sm:text-xs tracking-normal sm:tracking-wider uppercase transition-all cursor-pointer shadow-sm hover:shadow-md whitespace-nowrap"
+                  className="inline-flex items-center gap-1.5 text-xs font-serif text-[#722C3B] hover:text-[#45151F] transition-colors cursor-pointer pt-0.5 opacity-80 hover:opacity-100"
                 >
-                  <RotateCcw className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#C5A05B]" />
-                  <span>Replay Opening</span>
-                </motion.button>
+                  <RotateCcw className="w-3 h-3 text-[#C5A05B]" />
+                  <span>Replay Envelope Unveiling</span>
+                </button>
               </motion.div>
 
             </div>

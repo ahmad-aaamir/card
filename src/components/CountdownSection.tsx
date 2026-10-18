@@ -73,7 +73,7 @@ export function CountdownSection() {
         className="relative z-10 max-w-3xl mx-auto text-center"
       >
         {/* Section title */}
-        <p className="font-display tracking-[0.28em] text-[10px] sm:text-xs text-[#E7CF9B] uppercase font-medium mb-1.5">
+        <p className="font-display tracking-[0.28em] text-xs sm:text-sm text-[#E7CF9B] uppercase font-bold mb-1.5">
           Counting Down to the Nikkah
         </p>
         <h3 className="font-serif italic text-2xl sm:text-4xl text-[#FAF7F2] font-normal mb-3 sm:mb-4">
@@ -118,8 +118,8 @@ export function CountdownSection() {
                 </AnimatePresence>
               </div>
 
-              {/* Unit label */}
-              <div className="font-display uppercase tracking-[0.22em] text-[9px] sm:text-xs text-[#D7A3A0] font-medium">
+              {/* Unit label (Large & Clear) */}
+              <div className="font-display uppercase tracking-[0.2em] text-xs sm:text-sm text-[#D7A3A0] font-bold">
                 {unit.label}
               </div>
 
@@ -134,10 +134,10 @@ export function CountdownSection() {
 
         {/* Date confirmation footnote */}
         <div className="mt-8 sm:mt-10 space-y-1">
-          <p className="font-serif italic text-xs sm:text-sm text-[#D7A3A0]/90 tracking-wide">
+          <p className="font-serif italic text-sm sm:text-base text-[#D7A3A0] tracking-wide font-medium">
             Saturday, November 28, 2026 · Lahore, Pakistan
           </p>
-          <p className="font-serif text-[11px] sm:text-xs text-[#E7CF9B]/70">
+          <p className="font-serif text-xs sm:text-sm text-[#E7CF9B] font-medium">
             {weddingData.event.hijriDate}
           </p>
         </div>

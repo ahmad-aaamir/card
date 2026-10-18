@@ -231,18 +231,18 @@ export function RsvpSection() {
 
             {/* Direct RSVP Contacts */}
             <div className="mt-8 pt-6 border-t border-[#C5A05B]/25 text-center">
-              <span className="font-display uppercase tracking-[0.2em] text-[10px] text-[#722C3B] font-semibold block mb-2">
+              <span className="font-display uppercase tracking-[0.2em] text-xs sm:text-sm text-[#722C3B] font-bold block mb-2">
                 For Inquiries &amp; Coordination
               </span>
-              <div className="flex flex-wrap justify-center gap-4 sm:gap-8 text-xs font-serif text-[#45151F]">
+              <div className="flex flex-wrap justify-center gap-4 sm:gap-8 text-xs sm:text-sm font-serif text-[#45151F]">
                 {weddingData.rsvpContacts.map((contact, idx) => (
-                  <div key={idx} className="flex items-center gap-1.5">
-                    <Phone className="w-3 h-3 text-[#C5A05B]" />
-                    <span className="font-semibold">{contact.name}</span>
+                  <div key={idx} className="flex items-center gap-1.5 font-medium">
+                    <Phone className="w-3.5 h-3.5 text-[#C5A05B]" />
+                    <span className="font-bold">{contact.name}</span>
                     <span className="text-[#C5A05B]">({contact.relation}):</span>
                     <a
                       href={`tel:${contact.phone}`}
-                      className="text-[#722C3B] hover:text-[#45151F] hover:underline"
+                      className="text-[#722C3B] hover:text-[#45151F] hover:underline font-semibold"
                     >
                       {contact.phone}
                     </a>

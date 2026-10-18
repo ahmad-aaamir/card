@@ -46,14 +46,14 @@ export function InnerInvitation() {
           {/* Inner Content */}
           <div className="relative z-10 flex flex-col items-center text-center">
             
-            {/* Bismillah Calligraphy */}
+            {/* Bismillah Calligraphy (Large & Legible) */}
             <motion.p
               dir="rtl"
               initial={{ opacity: 0, y: -8 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1, duration: 0.8 }}
-              className="font-arabic text-xl sm:text-2xl text-[#722C3B] font-semibold leading-relaxed mb-1"
+              className="font-arabic text-2xl sm:text-3xl md:text-4xl text-[#722C3B] font-bold leading-relaxed mb-2"
             >
               {weddingData.islamicHeading.bismillahArabic}
             </motion.p>
@@ -64,18 +64,18 @@ export function InnerInvitation() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2, duration: 0.8 }}
-              className="max-w-lg mx-auto my-3 px-4 py-3.5 rounded bg-[#FAF7F2]/80 border border-[#C5A05B]/30 shadow-sm"
+              className="max-w-lg mx-auto my-3 px-4 py-4 rounded bg-[#FAF7F2]/90 border border-[#C5A05B]/35 shadow-sm"
             >
               <p
                 dir="rtl"
-                className="font-arabic text-base sm:text-lg text-[#722C3B] leading-relaxed mb-1.5 font-medium"
+                className="font-arabic text-lg sm:text-xl md:text-2xl text-[#722C3B] leading-relaxed mb-2 font-medium"
               >
                 {weddingData.islamicHeading.quranicVerseArabic}
               </p>
-              <p className="font-serif italic text-xs sm:text-sm text-[#45151F]/85 leading-relaxed">
+              <p className="font-serif italic text-sm sm:text-base text-[#45151F] leading-relaxed font-medium">
                 {weddingData.islamicHeading.quranicVerseTranslation}
               </p>
-              <span className="font-display tracking-widest text-[9px] sm:text-[10px] text-[#C5A05B] uppercase block mt-1 font-semibold">
+              <span className="font-display tracking-widest text-[11px] sm:text-xs text-[#C5A05B] uppercase block mt-1.5 font-bold">
                 {weddingData.islamicHeading.quranicReference}
               </span>
             </motion.div>
@@ -88,7 +88,7 @@ export function InnerInvitation() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.7 }}
-              className="font-serif uppercase tracking-[0.16em] sm:tracking-[0.2em] text-[11px] sm:text-xs text-[#722C3B] font-semibold max-w-md leading-relaxed mb-4"
+              className="font-serif uppercase tracking-[0.16em] sm:tracking-[0.2em] text-xs sm:text-sm md:text-base text-[#722C3B] font-bold max-w-md leading-relaxed mb-4"
             >
               {weddingData.event.parentsBlurb}
             </motion.p>
@@ -102,21 +102,21 @@ export function InnerInvitation() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.4, duration: 0.8 }}
               >
-                <h2 className="font-script text-4xl sm:text-6xl text-[#45151F] tracking-wide leading-none font-normal drop-shadow-sm">
+                <h2 className="font-script text-5xl sm:text-6xl md:text-7xl text-[#45151F] tracking-wide leading-none font-normal drop-shadow-sm">
                   {weddingData.couple.groom.fullName}
                 </h2>
-                <p className="font-serif italic text-xs sm:text-sm text-[#722C3B] mt-1">
+                <p className="font-serif italic text-sm sm:text-base text-[#722C3B] mt-1.5 font-medium">
                   ({weddingData.couple.groom.parents})
                 </p>
               </motion.div>
 
               {/* Connecting Ampersand / "Weds" */}
               <div className="flex items-center justify-center gap-3 my-1">
-                <div className="h-[1px] w-8 sm:w-12 bg-[#C5A05B]/40" />
-                <span className="font-display uppercase tracking-widest text-xs sm:text-sm text-[#C5A05B] font-semibold">
+                <div className="h-[1px] w-8 sm:w-14 bg-[#C5A05B]/50" />
+                <span className="font-display uppercase tracking-widest text-xs sm:text-sm text-[#C5A05B] font-bold">
                   Weds
                 </span>
-                <div className="h-[1px] w-8 sm:w-12 bg-[#C5A05B]/40" />
+                <div className="h-[1px] w-8 sm:w-14 bg-[#C5A05B]/50" />
               </div>
 
               {/* Bride */}
@@ -126,10 +126,10 @@ export function InnerInvitation() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.5, duration: 0.8 }}
               >
-                <h2 className="font-script text-4xl sm:text-6xl text-[#45151F] tracking-wide leading-none font-normal drop-shadow-sm">
+                <h2 className="font-script text-5xl sm:text-6xl md:text-7xl text-[#45151F] tracking-wide leading-none font-normal drop-shadow-sm">
                   {weddingData.couple.bride.fullName}
                 </h2>
-                <p className="font-serif italic text-xs sm:text-sm text-[#722C3B] mt-1">
+                <p className="font-serif italic text-sm sm:text-base text-[#722C3B] mt-1.5 font-medium">
                   ({weddingData.couple.bride.parents})
                 </p>
               </motion.div>
@@ -144,7 +144,7 @@ export function InnerInvitation() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.6, duration: 0.8 }}
-              className="font-serif text-xs sm:text-sm md:text-base text-[#45151F]/90 max-w-lg leading-relaxed mb-6 font-medium"
+              className="font-serif text-sm sm:text-base md:text-lg text-[#45151F] max-w-lg leading-relaxed mb-6 font-medium"
             >
               {weddingData.event.invitationMessage}
             </motion.p>
@@ -155,41 +155,41 @@ export function InnerInvitation() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.7, duration: 0.8 }}
-              className="w-full max-w-lg py-4 sm:py-5 px-4 sm:px-6 border border-[#C5A05B]/40 bg-[#FAF7F2]/80 rounded-sm mb-6 space-y-2.5 shadow-sm"
+              className="w-full max-w-lg py-4 sm:py-5 px-4 sm:px-6 border border-[#C5A05B]/40 bg-[#FAF7F2]/80 rounded-sm mb-6 space-y-3 shadow-sm"
             >
               <div className="flex items-center justify-center gap-2 text-[#722C3B]">
                 <Calendar className="w-4 h-4 text-[#C5A05B] shrink-0" />
                 <div className="text-center">
-                  <p className="font-serif text-sm sm:text-base font-semibold tracking-wide">
+                  <p className="font-serif text-base sm:text-lg font-bold tracking-wide">
                     {weddingData.event.formalDate}
                   </p>
-                  <p className="font-serif italic text-xs text-[#C5A05B] font-medium">
+                  <p className="font-serif italic text-xs sm:text-sm text-[#C5A05B] font-medium">
                     {weddingData.event.hijriDate}
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center justify-center gap-2 text-[#45151F]/90">
+              <div className="flex items-center justify-center gap-2 text-[#45151F]">
                 <Clock className="w-4 h-4 text-[#C5A05B] shrink-0" />
-                <p className="font-serif italic text-xs sm:text-sm">
+                <p className="font-serif text-sm sm:text-base font-medium">
                   Reception at {weddingData.event.time}
                 </p>
               </div>
 
-              <div className="flex items-center justify-center gap-2 text-[#45151F]/90 pt-1 border-t border-[#C5A05B]/20">
+              <div className="flex items-center justify-center gap-2 text-[#45151F] pt-2 border-t border-[#C5A05B]/20">
                 <MapPin className="w-4 h-4 text-[#C5A05B] shrink-0" />
-                <p className="font-serif text-[11px] sm:text-xs tracking-wider uppercase text-center font-medium">
-                  {weddingData.venue.hall} · {weddingData.venue.name}, {weddingData.venue.cityStateZip}
+                <p className="font-serif text-xs sm:text-sm tracking-wide uppercase text-center font-semibold">
+                  {weddingData.venue.hall} · {weddingData.venue.name}
                 </p>
               </div>
             </motion.div>
 
             {/* Attire note */}
-            <div className="mb-5">
-              <span className="font-display tracking-[0.2em] text-[10px] sm:text-xs text-[#722C3B] uppercase font-semibold block mb-0.5">
+            <div className="mb-6">
+              <span className="font-display tracking-[0.2em] text-xs sm:text-sm text-[#722C3B] uppercase font-bold block mb-1">
                 Dress Code
               </span>
-              <p className="font-serif italic text-xs sm:text-sm text-[#45151F]/80">
+              <p className="font-serif italic text-sm sm:text-base text-[#45151F] font-medium">
                 {weddingData.event.attire}
               </p>
             </div>
@@ -201,9 +201,9 @@ export function InnerInvitation() {
               href={googleCalendarUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#C5A05B] bg-[#FFFDF9] text-[#45151F] hover:bg-[#FAF3E8] hover:border-[#8C6B2B] transition-all font-serif text-[11px] sm:text-xs tracking-widest uppercase cursor-pointer shadow-sm hover:shadow"
+              className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 rounded-full border border-[#C5A05B] bg-[#FFFDF9] text-[#45151F] hover:bg-[#FAF3E8] hover:border-[#8C6B2B] transition-all font-serif text-xs sm:text-sm tracking-widest uppercase cursor-pointer shadow-sm hover:shadow font-semibold"
             >
-              <Calendar className="w-3.5 h-3.5 text-[#C5A05B]" />
+              <Calendar className="w-4 h-4 text-[#C5A05B]" />
               <span>Add to Calendar</span>
             </motion.a>
           </div>

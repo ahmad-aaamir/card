@@ -47,7 +47,7 @@ export function EventSchedule() {
           <div className="relative z-10">
             {/* Header */}
             <div className="text-center mb-8 sm:mb-10">
-              <span className="font-display tracking-[0.28em] text-[10px] sm:text-xs text-[#722C3B] uppercase font-semibold block mb-1">
+              <span className="font-display tracking-[0.28em] text-xs sm:text-sm text-[#722C3B] uppercase font-bold block mb-1">
                 Order of Celebrations
               </span>
               <h3 className="font-serif italic text-2xl sm:text-4xl text-[#45151F]">
@@ -84,21 +84,21 @@ export function EventSchedule() {
 
                   {/* Timeline content */}
                   <div>
-                    <div className="flex flex-wrap items-baseline gap-1.5 sm:gap-2 mb-1">
-                      <span className="font-display text-xs sm:text-sm font-semibold tracking-wider text-[#722C3B]">
+                    <div className="flex flex-wrap items-baseline gap-2 mb-1.5">
+                      <span className="font-display text-sm sm:text-base font-bold tracking-wider text-[#722C3B]">
                         {item.time}
                       </span>
                       <span className="text-[#C5A05B] text-xs">·</span>
-                      <h4 className="font-serif text-base sm:text-xl text-[#45151F] font-semibold tracking-wide">
+                      <h4 className="font-serif text-lg sm:text-2xl text-[#45151F] font-bold tracking-wide">
                         {item.title}
                       </h4>
                     </div>
 
-                    <p className="font-serif text-xs sm:text-sm text-[#45151F]/80 leading-relaxed mb-1.5">
+                    <p className="font-serif text-sm sm:text-base text-[#45151F]/90 leading-relaxed mb-2 font-medium">
                       {item.description}
                     </p>
 
-                    <div className="flex items-center gap-1.5 text-[11px] sm:text-xs text-[#722C3B]/80 font-serif italic">
+                    <div className="flex items-center gap-1.5 text-xs sm:text-sm text-[#722C3B] font-serif font-medium italic">
                       <MapPin className="w-3.5 h-3.5 text-[#C5A05B] shrink-0" />
                       <span>{item.location}</span>
                     </div>
@@ -113,12 +113,12 @@ export function EventSchedule() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="mt-8 p-4 sm:p-5 rounded-sm bg-[#FAF7F2]/80 border border-[#C5A05B]/30 text-center space-y-1 shadow-sm"
+              className="mt-8 p-4 sm:p-5 rounded-sm bg-[#FAF7F2]/90 border border-[#C5A05B]/35 text-center space-y-1.5 shadow-sm"
             >
-              <span className="font-display uppercase tracking-[0.2em] text-[10px] sm:text-[11px] text-[#722C3B] font-semibold block">
+              <span className="font-display uppercase tracking-[0.2em] text-xs sm:text-sm text-[#722C3B] font-bold block">
                 Hospitality &amp; Traditional Etiquette
               </span>
-              <p className="font-serif italic text-xs sm:text-sm text-[#45151F]/85">
+              <p className="font-serif italic text-sm sm:text-base text-[#45151F] leading-relaxed">
                 All food served is 100% certified Halal gourmet cuisine. Separate dining &amp; seating arrangements are also accommodated upon request.
               </p>
             </motion.div>
