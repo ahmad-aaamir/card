@@ -8,7 +8,7 @@ import React, {
   useSyncExternalStore,
 } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { Sparkles, Calendar, RotateCcw, Hand } from "lucide-react";
+import { Sparkles, Calendar, RotateCcw, Hand, Scissors } from "lucide-react";
 import { weddingData } from "@/data/invitationData";
 import { OrnamentalDivider } from "./OrnamentalDivider";
 
@@ -48,21 +48,57 @@ function calculateDifference(): TimeLeft {
   return { days: 0, hours: 0, minutes: 0, seconds: 0 };
 }
 
+// Jagged deckled torn paper edge SVG for realistic rip seam
+function TornEdge({ side = "right" }: { side: "right" | "left" }) {
+  const isRight = side === "right";
+  return (
+    <svg
+      viewBox="0 0 24 600"
+      preserveAspectRatio="none"
+      className={`absolute top-0 bottom-0 h-full w-4 sm:w-6 pointer-events-none z-30 drop-shadow-[0_0_8px_rgba(0,0,0,0.8)] ${
+        isRight ? "-right-2 sm:-right-3" : "-left-2 sm:-left-3"
+      }`}
+    >
+      {/* White cotton paper fiber tear core */}
+      <path
+        d={
+          isRight
+            ? "M 0 0 L 14 30 L 4 60 L 18 95 L 6 130 L 20 170 L 5 210 L 18 250 L 4 290 L 19 330 L 6 370 L 22 410 L 5 450 L 18 490 L 4 530 L 16 570 L 0 600 Z"
+            : "M 24 0 L 10 30 L 20 60 L 6 95 L 18 130 L 4 170 L 19 210 L 6 250 L 20 290 L 5 330 L 18 370 L 2 410 L 19 450 L 6 490 L 20 530 L 8 570 L 24 600 Z"
+        }
+        fill="#FAF6F0"
+      />
+      {/* Antique gold foil fringe on torn edge */}
+      <path
+        d={
+          isRight
+            ? "M 0 0 L 12 30 L 2 60 L 16 95 L 4 130 L 17 170 L 3 210 L 15 250 L 2 290 L 16 330 L 4 370 L 19 410 L 3 450 L 15 490 L 2 530 L 13 570 L 0 600 Z"
+            : "M 24 0 L 12 30 L 22 60 L 8 95 L 20 130 L 7 170 L 21 210 L 9 250 L 22 290 L 8 330 L 20 370 L 5 410 L 21 450 L 9 490 L 22 530 L 11 570 L 24 600 Z"
+        }
+        fill="#3a0e18"
+      />
+    </svg>
+  );
+}
+
 export function CountdownSection() {
   const isClient = useIsClient();
   const [timeLeft, setTimeLeft] = useState<TimeLeft>(calculateDifference);
   const shouldReduceMotion = useReducedMotion();
 
-  // Scratch card states
+  // Scratch & Paper Tear State
   const [isRevealed, setIsRevealed] = useState(false);
+  const [isTearing, setIsTearing] = useState(false);
+  const [swipeCount, setSwipeCount] = useState(0);
   const [scratchPercent, setScratchPercent] = useState(0);
-  const [isScratching, setIsScratching] = useState(false);
   const [scratchKey, setScratchKey] = useState(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isDrawingRef = useRef(false);
   const lastPointRef = useRef<{ x: number; y: number } | null>(null);
+  const swipeDistanceRef = useRef(0);
+  const swipeRegisteredRef = useRef(false);
 
   // Live countdown clock
   useEffect(() => {
@@ -103,7 +139,7 @@ export function CountdownSection() {
     ctx.fillRect(0, 0, w, h);
 
     // Subtle golden brocade pattern
-    ctx.fillStyle = "rgba(197, 160, 91, 0.06)";
+    ctx.fillStyle = "rgba(197, 160, 91, 0.08)";
     const dotSpacing = 24;
     for (let x = 12; x < w; x += dotSpacing) {
       for (let y = 12; y < h; y += dotSpacing) {
@@ -117,7 +153,7 @@ export function CountdownSection() {
     const shimmer = ctx.createLinearGradient(0, 0, w, h);
     shimmer.addColorStop(0, "rgba(255, 242, 214, 0)");
     shimmer.addColorStop(0.48, "rgba(255, 242, 214, 0.08)");
-    shimmer.addColorStop(0.5, "rgba(255, 242, 214, 0.18)");
+    shimmer.addColorStop(0.5, "rgba(255, 242, 214, 0.22)");
     shimmer.addColorStop(0.52, "rgba(255, 242, 214, 0.08)");
     shimmer.addColorStop(1, "rgba(255, 242, 214, 0)");
     ctx.fillStyle = shimmer;
@@ -155,17 +191,29 @@ export function CountdownSection() {
   }, []);
 
   useEffect(() => {
-    if (isClient && !isRevealed) {
+    if (isClient && !isRevealed && !isTearing) {
       initCanvas();
       const handleResize = () => {
-        if (!isRevealed) {
+        if (!isRevealed && !isTearing) {
           initCanvas();
         }
       };
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
     }
-  }, [isClient, isRevealed, initCanvas, scratchKey]);
+  }, [isClient, isRevealed, isTearing, initCanvas, scratchKey]);
+
+  // Trigger the dramatic paper tear animation
+  const triggerPaperTear = useCallback(() => {
+    if (isTearing || isRevealed) return;
+    setIsTearing(true);
+
+    // Once paper halves rip and fly away, finalize reveal
+    setTimeout(() => {
+      setIsRevealed(true);
+      setIsTearing(false);
+    }, 700);
+  }, [isTearing, isRevealed]);
 
   // Check how much surface has been scratched off
   const checkScratchPercentage = useCallback(() => {
@@ -178,8 +226,7 @@ export function CountdownSection() {
     try {
       const w = canvas.width;
       const h = canvas.height;
-      // Sample a coarse grid (50x50) for maximum 60fps performance
-      const sampleStep = Math.max(1, Math.floor(Math.min(w, h) / 45));
+      const sampleStep = Math.max(1, Math.floor(Math.min(w, h) / 40));
       const imgData = ctx.getImageData(0, 0, w, h);
       const data = imgData.data;
 
@@ -188,7 +235,7 @@ export function CountdownSection() {
 
       for (let y = 0; y < h; y += sampleStep) {
         for (let x = 0; x < w; x += sampleStep) {
-          const index = (y * w + x) * 4 + 3; // Alpha channel
+          const index = (y * w + x) * 4 + 3;
           if (data[index] < 128) {
             transparentCount++;
           }
@@ -199,16 +246,16 @@ export function CountdownSection() {
       const percent = totalSamples > 0 ? (transparentCount / totalSamples) * 100 : 0;
       setScratchPercent(Math.round(percent));
 
-      // Auto-reveal once scratched past 38%
-      if (percent >= 38) {
-        setIsRevealed(true);
+      // Quick trigger once ~18% is scratched
+      if (percent >= 18) {
+        triggerPaperTear();
       }
     } catch {
       // Fallback
     }
-  }, []);
+  }, [triggerPaperTear]);
 
-  // Scratch action handler
+  // Scratch action handler with generous brush radius
   const scratch = (clientX: number, clientY: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -228,10 +275,27 @@ export function CountdownSection() {
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
 
-    // Adaptive brush size for mobile vs desktop
-    const brushRadius = window.innerWidth < 640 ? 30 : 42;
+    // Generous torn brush radius (55px desktop, 45px mobile) so 3-4 swipes easily unveil
+    const brushRadius = window.innerWidth < 640 ? 46 : 58;
 
     if (lastPointRef.current) {
+      const dx = x - lastPointRef.current.x;
+      const dy = y - lastPointRef.current.y;
+      swipeDistanceRef.current += Math.hypot(dx, dy);
+
+      // Register a swipe once the pointer has traveled 70px
+      if (swipeDistanceRef.current > 70 && !swipeRegisteredRef.current) {
+        swipeRegisteredRef.current = true;
+        setSwipeCount((prev) => {
+          const next = prev + 1;
+          // Trigger paper tear immediately upon 3-4 swipes!
+          if (next >= 3) {
+            triggerPaperTear();
+          }
+          return next;
+        });
+      }
+
       ctx.beginPath();
       ctx.moveTo(lastPointRef.current.x, lastPointRef.current.y);
       ctx.lineTo(x, y);
@@ -246,15 +310,20 @@ export function CountdownSection() {
     ctx.restore();
     lastPointRef.current = { x, y };
 
-    setIsScratching(true);
     checkScratchPercentage();
   };
 
-  // Pointer event listeners (unifies mouse and touch seamlessly)
+  // Pointer event listeners (unified mouse and touch with touch-action: none)
   const handlePointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
     isDrawingRef.current = true;
     lastPointRef.current = null;
-    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+    swipeDistanceRef.current = 0;
+    swipeRegisteredRef.current = false;
+    try {
+      (e.target as HTMLElement).setPointerCapture(e.pointerId);
+    } catch {
+      // Ignore
+    }
     scratch(e.clientX, e.clientY);
   };
 
@@ -266,6 +335,8 @@ export function CountdownSection() {
   const handlePointerUp = (e: React.PointerEvent<HTMLCanvasElement>) => {
     isDrawingRef.current = false;
     lastPointRef.current = null;
+    swipeDistanceRef.current = 0;
+    swipeRegisteredRef.current = false;
     try {
       (e.target as HTMLElement).releasePointerCapture(e.pointerId);
     } catch {
@@ -273,16 +344,12 @@ export function CountdownSection() {
     }
   };
 
-  // Instant reveal button handler
-  const handleRevealAll = () => {
-    setIsRevealed(true);
-  };
-
   // Reset to scratch again
   const handleReset = () => {
     setIsRevealed(false);
+    setIsTearing(false);
+    setSwipeCount(0);
     setScratchPercent(0);
-    setIsScratching(false);
     setScratchKey((prev) => prev + 1);
   };
 
@@ -322,7 +389,7 @@ export function CountdownSection() {
           ref={containerRef}
           className="relative max-w-2xl mx-auto rounded-sm overflow-hidden border-2 border-[#C5A05B]/60 shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_0_30px_rgba(197,160,91,0.12)] bg-[#1e050b]"
         >
-          {/* UNDERLYING CONTENT: PROMINENT DATE & COUNTDOWN (Revealed upon scratching) */}
+          {/* UNDERLYING CONTENT: PROMINENT DATE & COUNTDOWN */}
           <div className="relative p-5 sm:p-8 md:p-10 flex flex-col items-center justify-center space-y-6 sm:space-y-8">
             
             {/* 1. PROMINENT MAJESTIC WEDDING DATE */}
@@ -433,75 +500,159 @@ export function CountdownSection() {
           </div>
 
           {/* ============================================================ */}
-          {/* INTERACTIVE GOLD-FOIL SCRATCH CANVAS OVERLAY                 */}
+          {/* REALISTIC PAPER TEAR & SCRATCH CARD OVERLAY                  */}
           {/* ============================================================ */}
           <AnimatePresence>
             {!isRevealed && (
-              <motion.div
-                key="scratch-layer"
-                initial={{ opacity: 1 }}
-                exit={{
-                  opacity: 0,
-                  scale: 1.02,
-                  transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
-                }}
-                className="absolute inset-0 z-20 cursor-grab active:cursor-grabbing touch-none select-none"
-              >
-                {/* HTML5 Scratch Canvas */}
-                <canvas
-                  ref={canvasRef}
-                  onPointerDown={handlePointerDown}
-                  onPointerMove={handlePointerMove}
-                  onPointerUp={handlePointerUp}
-                  className="absolute inset-0 w-full h-full block touch-none z-10"
-                />
+              <div className="absolute inset-0 z-20 overflow-hidden pointer-events-auto">
+                
+                {/* 1. INTERACTIVE SCRATCH CANVAS (Active during Swipes 1 & 2) */}
+                {!isTearing && (
+                  <motion.div
+                    key="scratch-canvas-wrap"
+                    initial={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute inset-0 cursor-grab active:cursor-grabbing touch-none select-none z-10"
+                  >
+                    <canvas
+                      ref={canvasRef}
+                      onPointerDown={handlePointerDown}
+                      onPointerMove={handlePointerMove}
+                      onPointerUp={handlePointerUp}
+                      style={{ touchAction: "none" }}
+                      className="absolute inset-0 w-full h-full block touch-none z-10"
+                    />
 
-                {/* Floating Centered Scratch Guidance Badge (fades when scratching begins) */}
-                <div
-                  className={`absolute inset-0 z-20 flex flex-col items-center justify-center p-4 text-center pointer-events-none transition-opacity duration-300 ${
-                    scratchPercent > 18 ? "opacity-0" : "opacity-100"
-                  }`}
-                >
-                  {/* Glowing luxury badge */}
-                  <div className="py-4 px-6 sm:px-8 rounded-full bg-[#180408]/85 backdrop-blur-md border border-[#C5A05B] shadow-[0_10px_30px_rgba(0,0,0,0.8),0_0_20px_rgba(197,160,91,0.3)] flex flex-col items-center max-w-sm">
-                    <div className="w-10 h-10 rounded-full border border-[#C5A05B] flex items-center justify-center bg-gradient-to-br from-[#722C3B] to-[#45151F] shadow-inner mb-2 animate-bounce">
-                      <Hand className="w-5 h-5 text-[#E7CF9B]" />
+                    {/* Interactive Swipe Guidance Badge */}
+                    <div
+                      className={`absolute inset-0 z-20 flex flex-col items-center justify-center p-4 text-center pointer-events-none transition-opacity duration-300 ${
+                        swipeCount >= 2 ? "opacity-20" : "opacity-100"
+                      }`}
+                    >
+                      <div className="py-3 px-5 sm:px-7 rounded-full bg-[#180408]/90 backdrop-blur-md border border-[#C5A05B] shadow-[0_10px_30px_rgba(0,0,0,0.8),0_0_20px_rgba(197,160,91,0.3)] flex flex-col items-center max-w-sm">
+                        <div className="w-9 h-9 rounded-full border border-[#C5A05B] flex items-center justify-center bg-gradient-to-br from-[#722C3B] to-[#45151F] shadow-inner mb-1.5 animate-bounce">
+                          <Hand className="w-4 h-4 text-[#E7CF9B]" />
+                        </div>
+
+                        <span className="font-display tracking-[0.24em] text-xs sm:text-sm text-[#F3DFB5] uppercase font-bold drop-shadow">
+                          Scratch &amp; Tear to Unveil
+                        </span>
+                        <p className="font-serif italic text-[11px] sm:text-xs text-[#D7A3A0] mt-0.5 tracking-wide">
+                          {swipeCount === 0 && "Swipe 3–4 times to tear open the card"}
+                          {swipeCount === 1 && "Swipe 1/3 complete — keep swiping!"}
+                          {swipeCount === 2 && "Swipe 2/3 complete — one more to tear!"}
+                          {swipeCount >= 3 && "Tearing open..."}
+                        </p>
+
+                        {/* Swipe dots indicator */}
+                        <div className="flex items-center gap-2 mt-2">
+                          {[1, 2, 3].map((step) => (
+                            <div
+                              key={step}
+                              className={`h-1.5 rounded-full transition-all duration-300 ${
+                                swipeCount >= step
+                                  ? "w-6 bg-gradient-to-r from-[#C5A05B] to-[#FFF2D6]"
+                                  : "w-2 bg-[#FAF6F0]/25"
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </div>
                     </div>
 
-                    <span className="font-display tracking-[0.26em] text-xs sm:text-sm text-[#F3DFB5] uppercase font-bold drop-shadow">
-                      Scratch to Unveil Date
-                    </span>
-                    <p className="font-serif italic text-xs text-[#D7A3A0] mt-1 tracking-wide">
-                      Rub with finger or mouse to expose the date &amp; countdown
-                    </p>
+                    {/* Quick Tear Button */}
+                    <div className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-30 pointer-events-auto">
+                      <button
+                        type="button"
+                        onClick={triggerPaperTear}
+                        title="Tear & Reveal"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#240B10]/95 backdrop-blur-md border border-[#C5A05B] text-[#E7CF9B] hover:text-[#FAF6F0] text-xs font-serif tracking-wider uppercase transition-all shadow-lg hover:shadow-[0_0_15px_rgba(197,160,91,0.4)] active:scale-95 cursor-pointer"
+                      >
+                        <Scissors className="w-3.5 h-3.5 text-[#E7CF9B]" />
+                        <span className="text-[10px] font-medium tracking-widest">
+                          Tear &amp; Reveal
+                        </span>
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
 
-                    {scratchPercent > 0 && (
-                      <div className="w-full bg-[#180408] rounded-full h-1.5 border border-[#C5A05B]/40 mt-3 overflow-hidden">
-                        <div
-                          className="bg-gradient-to-r from-[#C5A05B] to-[#FFF2D6] h-full transition-all duration-150"
-                          style={{ width: `${Math.min(100, (scratchPercent / 38) * 100)}%` }}
-                        />
-                      </div>
-                    )}
+                {/* 2. REALISTIC TORN PAPER ANIMATION (Plays on 3rd-4th Swipe) */}
+                {isTearing && (
+                  <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden">
+                    
+                    {/* Left Torn Half: Rips, curls, and flies left */}
+                    <motion.div
+                      initial={{ x: 0, rotateZ: 0, opacity: 1 }}
+                      animate={{
+                        x: "-120%",
+                        rotateZ: -14,
+                        opacity: 0,
+                      }}
+                      transition={{ duration: 0.65, ease: [0.65, 0, 0.35, 1] }}
+                      style={{ transformOrigin: "top left" }}
+                      className="absolute top-0 bottom-0 left-0 w-1/2 bg-gradient-to-br from-[#3a0e18] via-[#4a121e] to-[#22060d] border-t-2 border-b-2 border-l-2 border-[#C5A05B] shadow-[15px_0_30px_rgba(0,0,0,0.9)]"
+                    >
+                      {/* Jagged Deckled Paper Tear Right Seam */}
+                      <TornEdge side="right" />
+                      {/* Inner gold frame remnant */}
+                      <div className="absolute inset-2 border-t border-b border-l border-[#C5A05B]/30 border-dashed" />
+                    </motion.div>
+
+                    {/* Right Torn Half: Rips, curls, and flies right */}
+                    <motion.div
+                      initial={{ x: 0, rotateZ: 0, opacity: 1 }}
+                      animate={{
+                        x: "120%",
+                        rotateZ: 14,
+                        opacity: 0,
+                      }}
+                      transition={{ duration: 0.65, ease: [0.65, 0, 0.35, 1] }}
+                      style={{ transformOrigin: "top right" }}
+                      className="absolute top-0 bottom-0 right-0 w-1/2 bg-gradient-to-bl from-[#3a0e18] via-[#4a121e] to-[#22060d] border-t-2 border-b-2 border-r-2 border-[#C5A05B] shadow-[-15px_0_30px_rgba(0,0,0,0.9)]"
+                    >
+                      {/* Jagged Deckled Paper Tear Left Seam */}
+                      <TornEdge side="left" />
+                      {/* Inner gold frame remnant */}
+                      <div className="absolute inset-2 border-t border-b border-r border-[#C5A05B]/30 border-dashed" />
+                    </motion.div>
+
+                    {/* Bursting Gold Paper Confetti & Particles along the tear seam */}
+                    {[
+                      { x: -70, y: -40, rot: 180, delay: 0 },
+                      { x: 80, y: -60, rot: -220, delay: 0.05 },
+                      { x: -90, y: 30, rot: 340, delay: 0.08 },
+                      { x: 95, y: 50, rot: -300, delay: 0.02 },
+                      { x: -30, y: -80, rot: 210, delay: 0.04 },
+                      { x: 40, y: 80, rot: -190, delay: 0.06 },
+                      { x: 0, y: -95, rot: 360, delay: 0.03 },
+                      { x: -60, y: 70, rot: -270, delay: 0.07 },
+                    ].map((p, idx) => (
+                      <motion.div
+                        key={idx}
+                        initial={{
+                          x: "50%",
+                          y: "50%",
+                          scale: 0.2,
+                          opacity: 1,
+                        }}
+                        animate={{
+                          x: `calc(50% + ${p.x}px)`,
+                          y: `calc(50% + ${p.y}px)`,
+                          scale: [0.2, 1.2, 0.8],
+                          rotate: p.rot,
+                          opacity: [1, 1, 0],
+                        }}
+                        transition={{ duration: 0.65, delay: p.delay, ease: "easeOut" }}
+                        className="absolute w-3.5 h-3.5 bg-gradient-to-br from-[#FFF5DE] via-[#E7CF9B] to-[#C5A05B] rounded-xs shadow-md border border-[#FAF6F0]"
+                      />
+                    ))}
+
                   </div>
-                </div>
+                )}
 
-                {/* Bottom Quick-Reveal Action (clickable even through canvas) */}
-                <div className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-30 pointer-events-auto">
-                  <button
-                    type="button"
-                    onClick={handleRevealAll}
-                    title="Instant Reveal"
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#240B10]/90 backdrop-blur-md border border-[#C5A05B]/60 hover:border-[#C5A05B] text-[#E7CF9B] hover:text-[#FAF6F0] text-xs font-serif tracking-wider uppercase transition-all shadow-lg hover:shadow-[0_0_15px_rgba(197,160,91,0.35)] active:scale-95 cursor-pointer"
-                  >
-                    <Sparkles className="w-3.5 h-3.5 text-[#E7CF9B] animate-pulse" />
-                    <span className="text-[10px] font-medium tracking-widest">
-                      Reveal Date
-                    </span>
-                  </button>
-                </div>
-
-              </motion.div>
+              </div>
             )}
           </AnimatePresence>
 
