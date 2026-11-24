@@ -5,10 +5,10 @@ import React, {
   useEffect,
   useRef,
   useCallback,
-  useSyncExternalStore,
+  memo,
 } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { Sparkles, Calendar, RotateCcw, Hand, Scissors } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Calendar, RotateCcw, Hand, Scissors } from "lucide-react";
 import { weddingData } from "@/data/invitationData";
 import { OrnamentalDivider } from "./OrnamentalDivider";
 
@@ -19,22 +19,12 @@ interface TimeLeft {
   seconds: number;
 }
 
-const emptySubscribe = () => () => {};
-
-function useIsClient() {
-  return useSyncExternalStore(
-    emptySubscribe,
-    () => true,
-    () => false
-  );
-}
-
 function calculateDifference(): TimeLeft {
   if (typeof window === "undefined") {
     return { days: 227, hours: 18, minutes: 45, seconds: 22 };
   }
   const target = new Date(weddingData.event.isoDate).getTime();
-  const now = new Date().getTime();
+  const now = Date.now();
   const difference = target - now;
 
   if (difference > 0) {
@@ -48,14 +38,70 @@ function calculateDifference(): TimeLeft {
   return { days: 0, hours: 0, minutes: 0, seconds: 0 };
 }
 
-// Jagged deckled torn paper edge SVG for realistic rip seam
+// Lightweight isolated countdown grid that updates its digits smoothly without re-rendering parent
+const LiveCountdownGrid = memo(function LiveCountdownGrid() {
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>(calculateDifference);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeLeft(calculateDifference());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const timeUnits = [
+    { label: "Days", value: timeLeft.days },
+    { label: "Hours", value: timeLeft.hours },
+    { label: "Minutes", value: timeLeft.minutes },
+    { label: "Seconds", value: timeLeft.seconds },
+  ];
+
+  return (
+    <div className="w-full">
+      <span className="font-display tracking-[0.25em] text-[10px] sm:text-xs text-[#D7A3A0] uppercase font-semibold block mb-3">
+        Live Countdown to Celebration
+      </span>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 max-w-xl mx-auto">
+        {timeUnits.map((unit) => (
+          <div
+            key={unit.label}
+            className="relative p-3 sm:p-5 rounded-sm bg-gradient-to-b from-[#3a121b] to-[#20080e] border border-[#C5A05B]/40 shadow-lg group transform-gpu"
+          >
+            {/* Inner delicate frame */}
+            <div className="absolute inset-1 border border-[#C5A05B]/15 pointer-events-none" />
+
+            {/* Hardware-accelerated number display (zero layout reflow) */}
+            <div className="relative h-9 sm:h-12 overflow-hidden flex items-center justify-center mb-0.5">
+              <span className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#F3DFB5] font-light tracking-tight drop-shadow-sm inline-block tabular-nums">
+                {String(unit.value).padStart(2, "0")}
+              </span>
+            </div>
+
+            {/* Unit label */}
+            <div className="font-display uppercase tracking-[0.2em] text-[11px] sm:text-xs text-[#D7A3A0] font-bold">
+              {unit.label}
+            </div>
+
+            {/* Corner gold accents */}
+            <div className="absolute top-1 left-1 w-1 h-1 bg-[#C5A05B]/60" />
+            <div className="absolute top-1 right-1 w-1 h-1 bg-[#C5A05B]/60" />
+            <div className="absolute bottom-1 left-1 w-1 h-1 bg-[#C5A05B]/60" />
+            <div className="absolute bottom-1 right-1 w-1 h-1 bg-[#C5A05B]/60" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+});
+
+// Authentic jagged deckled paper edge SVG for realistic paper tear seam
 function TornEdge({ side = "right" }: { side: "right" | "left" }) {
   const isRight = side === "right";
   return (
     <svg
       viewBox="0 0 24 600"
       preserveAspectRatio="none"
-      className={`absolute top-0 bottom-0 h-full w-4 sm:w-6 pointer-events-none z-30 drop-shadow-[0_0_8px_rgba(0,0,0,0.8)] ${
+      className={`absolute top-0 bottom-0 h-full w-4 sm:w-6 pointer-events-none z-30 ${
         isRight ? "-right-2 sm:-right-3" : "-left-2 sm:-left-3"
       }`}
     >
@@ -68,45 +114,33 @@ function TornEdge({ side = "right" }: { side: "right" | "left" }) {
         }
         fill="#FAF6F0"
       />
-      {/* Antique gold foil fringe on torn edge */}
+      {/* Deep velvet torn shadow edge */}
       <path
         d={
           isRight
             ? "M 0 0 L 12 30 L 2 60 L 16 95 L 4 130 L 17 170 L 3 210 L 15 250 L 2 290 L 16 330 L 4 370 L 19 410 L 3 450 L 15 490 L 2 530 L 13 570 L 0 600 Z"
             : "M 24 0 L 12 30 L 22 60 L 8 95 L 20 130 L 7 170 L 21 210 L 9 250 L 22 290 L 8 330 L 20 370 L 5 410 L 21 450 L 9 490 L 22 530 L 11 570 L 24 600 Z"
         }
-        fill="#3a0e18"
+        fill="#26060e"
       />
     </svg>
   );
 }
 
 export function CountdownSection() {
-  const isClient = useIsClient();
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>(calculateDifference);
-  const shouldReduceMotion = useReducedMotion();
-
   // Scratch & Paper Tear State
   const [isRevealed, setIsRevealed] = useState(false);
   const [isTearing, setIsTearing] = useState(false);
   const [swipeCount, setSwipeCount] = useState(0);
-  const [scratchPercent, setScratchPercent] = useState(0);
   const [scratchKey, setScratchKey] = useState(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isDrawingRef = useRef(false);
   const lastPointRef = useRef<{ x: number; y: number } | null>(null);
-  const swipeDistanceRef = useRef(0);
-  const swipeRegisteredRef = useRef(false);
-
-  // Live countdown clock
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimeLeft(calculateDifference());
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+  const swipeTravelRef = useRef(0);
+  const swipeRegisteredInStrokeRef = useRef(false);
+  const activePointerIdRef = useRef<number | null>(null);
 
   // Initialize and paint the luxury scratch canvas surface
   const initCanvas = useCallback(() => {
@@ -121,7 +155,7 @@ export function CountdownSection() {
     canvas.width = rect.width * dpr;
     canvas.height = rect.height * dpr;
 
-    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     ctx.scale(dpr, dpr);
@@ -191,7 +225,7 @@ export function CountdownSection() {
   }, []);
 
   useEffect(() => {
-    if (isClient && !isRevealed && !isTearing) {
+    if (!isRevealed && !isTearing) {
       initCanvas();
       const handleResize = () => {
         if (!isRevealed && !isTearing) {
@@ -201,61 +235,39 @@ export function CountdownSection() {
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
     }
-  }, [isClient, isRevealed, isTearing, initCanvas, scratchKey]);
+  }, [isRevealed, isTearing, initCanvas, scratchKey]);
+
+  // Clean pointer release helper
+  const releasePointer = useCallback(() => {
+    isDrawingRef.current = false;
+    lastPointRef.current = null;
+    swipeTravelRef.current = 0;
+    swipeRegisteredInStrokeRef.current = false;
+    const canvas = canvasRef.current;
+    if (canvas && activePointerIdRef.current !== null) {
+      try {
+        canvas.releasePointerCapture(activePointerIdRef.current);
+      } catch {
+        // Ignore
+      }
+      activePointerIdRef.current = null;
+    }
+  }, []);
 
   // Trigger the dramatic paper tear animation
   const triggerPaperTear = useCallback(() => {
     if (isTearing || isRevealed) return;
+    releasePointer();
     setIsTearing(true);
 
     // Once paper halves rip and fly away, finalize reveal
     setTimeout(() => {
       setIsRevealed(true);
       setIsTearing(false);
-    }, 700);
-  }, [isTearing, isRevealed]);
+    }, 650);
+  }, [isTearing, isRevealed, releasePointer]);
 
-  // Check how much surface has been scratched off
-  const checkScratchPercentage = useCallback(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d", { willReadFrequently: true });
-    if (!ctx) return;
-
-    try {
-      const w = canvas.width;
-      const h = canvas.height;
-      const sampleStep = Math.max(1, Math.floor(Math.min(w, h) / 40));
-      const imgData = ctx.getImageData(0, 0, w, h);
-      const data = imgData.data;
-
-      let transparentCount = 0;
-      let totalSamples = 0;
-
-      for (let y = 0; y < h; y += sampleStep) {
-        for (let x = 0; x < w; x += sampleStep) {
-          const index = (y * w + x) * 4 + 3;
-          if (data[index] < 128) {
-            transparentCount++;
-          }
-          totalSamples++;
-        }
-      }
-
-      const percent = totalSamples > 0 ? (transparentCount / totalSamples) * 100 : 0;
-      setScratchPercent(Math.round(percent));
-
-      // Quick trigger once ~18% is scratched
-      if (percent >= 18) {
-        triggerPaperTear();
-      }
-    } catch {
-      // Fallback
-    }
-  }, [triggerPaperTear]);
-
-  // Scratch action handler with generous brush radius
+  // High-performance scratch drawing (pure 2D path, 0ms overhead, no GPU stalls)
   const scratch = (clientX: number, clientY: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -264,7 +276,7 @@ export function CountdownSection() {
     const x = clientX - rect.left;
     const y = clientY - rect.top;
 
-    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -275,17 +287,17 @@ export function CountdownSection() {
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
 
-    // Generous torn brush radius (55px desktop, 45px mobile) so 3-4 swipes easily unveil
-    const brushRadius = window.innerWidth < 640 ? 46 : 58;
+    // Generous torn brush radius so 3-4 swipes easily carve wide paths
+    const brushRadius = window.innerWidth < 640 ? 46 : 60;
 
     if (lastPointRef.current) {
       const dx = x - lastPointRef.current.x;
       const dy = y - lastPointRef.current.y;
-      swipeDistanceRef.current += Math.hypot(dx, dy);
+      swipeTravelRef.current += Math.hypot(dx, dy);
 
-      // Register a swipe once the pointer has traveled 70px
-      if (swipeDistanceRef.current > 70 && !swipeRegisteredRef.current) {
-        swipeRegisteredRef.current = true;
+      // Register a swipe once pointer has traveled 65px (pure math, zero DOM reads!)
+      if (swipeTravelRef.current > 65 && !swipeRegisteredInStrokeRef.current) {
+        swipeRegisteredInStrokeRef.current = true;
         setSwipeCount((prev) => {
           const next = prev + 1;
           // Trigger paper tear immediately upon 3-4 swipes!
@@ -309,16 +321,15 @@ export function CountdownSection() {
 
     ctx.restore();
     lastPointRef.current = { x, y };
-
-    checkScratchPercentage();
   };
 
   // Pointer event listeners (unified mouse and touch with touch-action: none)
   const handlePointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
     isDrawingRef.current = true;
     lastPointRef.current = null;
-    swipeDistanceRef.current = 0;
-    swipeRegisteredRef.current = false;
+    swipeTravelRef.current = 0;
+    swipeRegisteredInStrokeRef.current = false;
+    activePointerIdRef.current = e.pointerId;
     try {
       (e.target as HTMLElement).setPointerCapture(e.pointerId);
     } catch {
@@ -332,16 +343,8 @@ export function CountdownSection() {
     scratch(e.clientX, e.clientY);
   };
 
-  const handlePointerUp = (e: React.PointerEvent<HTMLCanvasElement>) => {
-    isDrawingRef.current = false;
-    lastPointRef.current = null;
-    swipeDistanceRef.current = 0;
-    swipeRegisteredRef.current = false;
-    try {
-      (e.target as HTMLElement).releasePointerCapture(e.pointerId);
-    } catch {
-      // Ignore
-    }
+  const handlePointerUp = () => {
+    releasePointer();
   };
 
   // Reset to scratch again
@@ -349,29 +352,15 @@ export function CountdownSection() {
     setIsRevealed(false);
     setIsTearing(false);
     setSwipeCount(0);
-    setScratchPercent(0);
     setScratchKey((prev) => prev + 1);
   };
-
-  const timeUnits = [
-    { label: "Days", value: isClient ? timeLeft.days : 227 },
-    { label: "Hours", value: isClient ? timeLeft.hours : 18 },
-    { label: "Minutes", value: isClient ? timeLeft.minutes : 45 },
-    { label: "Seconds", value: isClient ? timeLeft.seconds : 22 },
-  ];
 
   return (
     <section className="relative py-12 sm:py-20 px-3.5 sm:px-4 bg-[#1b050a]/85 text-[#FAF6F0] overflow-hidden select-none">
       {/* Background soft ambient burgundy glow */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(114,44,59,0.3)_0%,transparent_70%)] pointer-events-none" />
 
-      <motion.div
-        initial={{ opacity: 0, y: 35 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 max-w-3xl mx-auto text-center"
-      >
+      <div className="relative z-10 max-w-3xl mx-auto text-center">
         {/* Section title */}
         <p className="font-display tracking-[0.28em] text-xs sm:text-sm text-[#E7CF9B] uppercase font-bold mb-1.5">
           Save The Sacred Union
@@ -387,7 +376,7 @@ export function CountdownSection() {
         {/* ============================================================ */}
         <div
           ref={containerRef}
-          className="relative max-w-2xl mx-auto rounded-sm overflow-hidden border-2 border-[#C5A05B]/60 shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_0_30px_rgba(197,160,91,0.12)] bg-[#1e050b]"
+          className="relative max-w-2xl mx-auto rounded-sm overflow-hidden border-2 border-[#C5A05B]/60 shadow-[0_20px_50px_rgba(0,0,0,0.8)] bg-[#1e050b] transform-gpu"
         >
           {/* UNDERLYING CONTENT: PROMINENT DATE & COUNTDOWN */}
           <div className="relative p-5 sm:p-8 md:p-10 flex flex-col items-center justify-center space-y-6 sm:space-y-8">
@@ -438,63 +427,19 @@ export function CountdownSection() {
               </p>
             </div>
 
-            {/* 2. GILDED LIVE COUNTDOWN GRID */}
-            <div className="w-full">
-              <span className="font-display tracking-[0.25em] text-[10px] sm:text-xs text-[#D7A3A0] uppercase font-semibold block mb-3">
-                Live Countdown to Celebration
-              </span>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 max-w-xl mx-auto">
-                {timeUnits.map((unit) => (
-                  <div
-                    key={unit.label}
-                    className="relative p-3 sm:p-5 rounded-sm bg-gradient-to-b from-[#3a121b] to-[#20080e] border border-[#C5A05B]/40 shadow-lg group"
-                  >
-                    {/* Inner delicate frame */}
-                    <div className="absolute inset-1 border border-[#C5A05B]/15 pointer-events-none" />
-
-                    {/* Number display */}
-                    <div className="relative h-9 sm:h-12 overflow-hidden flex items-center justify-center mb-0.5">
-                      <AnimatePresence mode="popLayout" initial={false}>
-                        <motion.span
-                          key={unit.value}
-                          initial={shouldReduceMotion ? { opacity: 0 } : { y: -14, opacity: 0 }}
-                          animate={{ y: 0, opacity: 1 }}
-                          exit={shouldReduceMotion ? { opacity: 0 } : { y: 14, opacity: 0 }}
-                          transition={{ duration: 0.3, ease: "easeOut" }}
-                          className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#F3DFB5] font-light tracking-tight drop-shadow-sm inline-block will-change-transform"
-                        >
-                          {String(unit.value).padStart(2, "0")}
-                        </motion.span>
-                      </AnimatePresence>
-                    </div>
-
-                    {/* Unit label */}
-                    <div className="font-display uppercase tracking-[0.2em] text-[11px] sm:text-xs text-[#D7A3A0] font-bold">
-                      {unit.label}
-                    </div>
-
-                    {/* Corner gold accents */}
-                    <div className="absolute top-1 left-1 w-1 h-1 bg-[#C5A05B]/60" />
-                    <div className="absolute top-1 right-1 w-1 h-1 bg-[#C5A05B]/60" />
-                    <div className="absolute bottom-1 left-1 w-1 h-1 bg-[#C5A05B]/60" />
-                    <div className="absolute bottom-1 right-1 w-1 h-1 bg-[#C5A05B]/60" />
-                  </div>
-                ))}
-              </div>
-            </div>
+            {/* 2. ISOLATED LIVE COUNTDOWN GRID (Smooth, 0ms lag) */}
+            <LiveCountdownGrid />
 
             {/* Replay / Re-scratch prompt */}
             {isRevealed && (
-              <motion.button
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+              <button
+                type="button"
                 onClick={handleReset}
                 className="inline-flex items-center gap-1.5 text-xs font-serif tracking-wider text-[#E7CF9B] hover:text-[#FAF6F0] underline underline-offset-4 cursor-pointer transition-colors pt-1"
               >
                 <RotateCcw className="w-3.5 h-3.5 text-[#C5A05B]" />
                 <span>Scratch Card Again</span>
-              </motion.button>
+              </button>
             )}
 
           </div>
@@ -508,18 +453,13 @@ export function CountdownSection() {
                 
                 {/* 1. INTERACTIVE SCRATCH CANVAS (Active during Swipes 1 & 2) */}
                 {!isTearing && (
-                  <motion.div
-                    key="scratch-canvas-wrap"
-                    initial={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute inset-0 cursor-grab active:cursor-grabbing touch-none select-none z-10"
-                  >
+                  <div className="absolute inset-0 cursor-grab active:cursor-grabbing touch-none select-none z-10">
                     <canvas
                       ref={canvasRef}
                       onPointerDown={handlePointerDown}
                       onPointerMove={handlePointerMove}
                       onPointerUp={handlePointerUp}
+                      onPointerCancel={handlePointerUp}
                       style={{ touchAction: "none" }}
                       className="absolute inset-0 w-full h-full block touch-none z-10"
                     />
@@ -575,7 +515,7 @@ export function CountdownSection() {
                         </span>
                       </button>
                     </div>
-                  </motion.div>
+                  </div>
                 )}
 
                 {/* 2. REALISTIC TORN PAPER ANIMATION (Plays on 3rd-4th Swipe) */}
@@ -587,12 +527,12 @@ export function CountdownSection() {
                       initial={{ x: 0, rotateZ: 0, opacity: 1 }}
                       animate={{
                         x: "-120%",
-                        rotateZ: -14,
+                        rotateZ: -12,
                         opacity: 0,
                       }}
-                      transition={{ duration: 0.65, ease: [0.65, 0, 0.35, 1] }}
+                      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                       style={{ transformOrigin: "top left" }}
-                      className="absolute top-0 bottom-0 left-0 w-1/2 bg-gradient-to-br from-[#3a0e18] via-[#4a121e] to-[#22060d] border-t-2 border-b-2 border-l-2 border-[#C5A05B] shadow-[15px_0_30px_rgba(0,0,0,0.9)]"
+                      className="absolute top-0 bottom-0 left-0 w-1/2 bg-gradient-to-br from-[#3a0e18] via-[#4a121e] to-[#22060d] border-t-2 border-b-2 border-l-2 border-[#C5A05B] shadow-2xl transform-gpu will-change-transform"
                     >
                       {/* Jagged Deckled Paper Tear Right Seam */}
                       <TornEdge side="right" />
@@ -605,12 +545,12 @@ export function CountdownSection() {
                       initial={{ x: 0, rotateZ: 0, opacity: 1 }}
                       animate={{
                         x: "120%",
-                        rotateZ: 14,
+                        rotateZ: 12,
                         opacity: 0,
                       }}
-                      transition={{ duration: 0.65, ease: [0.65, 0, 0.35, 1] }}
+                      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                       style={{ transformOrigin: "top right" }}
-                      className="absolute top-0 bottom-0 right-0 w-1/2 bg-gradient-to-bl from-[#3a0e18] via-[#4a121e] to-[#22060d] border-t-2 border-b-2 border-r-2 border-[#C5A05B] shadow-[-15px_0_30px_rgba(0,0,0,0.9)]"
+                      className="absolute top-0 bottom-0 right-0 w-1/2 bg-gradient-to-bl from-[#3a0e18] via-[#4a121e] to-[#22060d] border-t-2 border-b-2 border-r-2 border-[#C5A05B] shadow-2xl transform-gpu will-change-transform"
                     >
                       {/* Jagged Deckled Paper Tear Left Seam */}
                       <TornEdge side="left" />
@@ -620,32 +560,30 @@ export function CountdownSection() {
 
                     {/* Bursting Gold Paper Confetti & Particles along the tear seam */}
                     {[
-                      { x: -70, y: -40, rot: 180, delay: 0 },
-                      { x: 80, y: -60, rot: -220, delay: 0.05 },
-                      { x: -90, y: 30, rot: 340, delay: 0.08 },
-                      { x: 95, y: 50, rot: -300, delay: 0.02 },
-                      { x: -30, y: -80, rot: 210, delay: 0.04 },
-                      { x: 40, y: 80, rot: -190, delay: 0.06 },
-                      { x: 0, y: -95, rot: 360, delay: 0.03 },
-                      { x: -60, y: 70, rot: -270, delay: 0.07 },
+                      { x: -60, y: -30, rot: 180, delay: 0 },
+                      { x: 70, y: -50, rot: -220, delay: 0.04 },
+                      { x: -80, y: 30, rot: 340, delay: 0.06 },
+                      { x: 80, y: 40, rot: -300, delay: 0.02 },
+                      { x: -25, y: -70, rot: 210, delay: 0.03 },
+                      { x: 35, y: 70, rot: -190, delay: 0.05 },
                     ].map((p, idx) => (
                       <motion.div
                         key={idx}
                         initial={{
-                          x: "50%",
-                          y: "50%",
-                          scale: 0.2,
+                          x: 0,
+                          y: 0,
+                          scale: 0.3,
                           opacity: 1,
                         }}
                         animate={{
-                          x: `calc(50% + ${p.x}px)`,
-                          y: `calc(50% + ${p.y}px)`,
-                          scale: [0.2, 1.2, 0.8],
+                          x: p.x,
+                          y: p.y,
+                          scale: [0.3, 1.2, 0.8],
                           rotate: p.rot,
                           opacity: [1, 1, 0],
                         }}
-                        transition={{ duration: 0.65, delay: p.delay, ease: "easeOut" }}
-                        className="absolute w-3.5 h-3.5 bg-gradient-to-br from-[#FFF5DE] via-[#E7CF9B] to-[#C5A05B] rounded-xs shadow-md border border-[#FAF6F0]"
+                        transition={{ duration: 0.55, delay: p.delay, ease: "easeOut" }}
+                        className="absolute left-1/2 top-1/2 -ml-2 -mt-2 w-3.5 h-3.5 bg-gradient-to-br from-[#FFF5DE] via-[#E7CF9B] to-[#C5A05B] rounded-xs shadow-md border border-[#FAF6F0] transform-gpu will-change-transform"
                       />
                     ))}
 
@@ -664,7 +602,7 @@ export function CountdownSection() {
           <span>Formal Invitations &amp; Reception Schedule Follow Below</span>
         </div>
 
-      </motion.div>
+      </div>
     </section>
   );
 }
