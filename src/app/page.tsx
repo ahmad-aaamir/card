@@ -41,7 +41,7 @@ export default function Home() {
     <main className="relative min-h-screen bg-[#180408] text-[#45151F] overflow-x-hidden">
       {/* 
         Intro Animation: Fullscreen Cinematic Video
-        Autoplays until the envelope gatefold doors fully open to reveal the blank white card.
+        Plays the 6s card animation (names reveal) and zooms softly through the finished card.
         As the video reaches the blank page, onStartEmerging triggers the magical
         appearance of gold foil borders, botanical floral bouquets, Islamic calligraphy,
         and royal couple names directly onto the very same white page.

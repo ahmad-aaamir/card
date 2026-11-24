@@ -22,8 +22,11 @@ export function CinematicVideoIntro({
   const [hasCompleted, setHasCompleted] = useState(false);
   const [isAudioActive, setIsAudioActive] = useState(false);
 
-  // Exact timestamp where the card gatefold doors swing open wide (8.15s)
-  const CROP_TIMESTAMP = 8.15;
+  // Hand off once the names have finished their final gold shimmer (video is 6.0s).
+  // The last frame is the finished card, so we hold it and zoom softly through it.
+  const CROP_TIMESTAMP = 5.9;
+  // Must match the overlay exit duration below so the hero settles as the video clears.
+  const EXIT_MS = 850;
 
   const triggerTransition = useCallback(() => {
     if (isFadingOut || hasCompleted) return;
@@ -42,10 +45,44 @@ export function CinematicVideoIntro({
     setTimeout(() => {
       setHasCompleted(true);
       onComplete();
-    }, 600);
+    }, EXIT_MS);
   }, [isFadingOut, hasCompleted, onComplete, onStartEmerging]);
 
-  // High-efficiency native timeupdate handler (replaces 60fps requestAnimationFrame polling)
+  // Frame-accurate hardware-accelerated time check (rVFC) with zero jank
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    let callbackId: number | null = null;
+    let isActive = true;
+
+    // Use modern requestVideoFrameCallback for exact frame presentation timing
+    const checkFrame = (_now: DOMHighResTimeStamp, metadata: { mediaTime: number }) => {
+      if (!isActive) return;
+      if (metadata.mediaTime >= CROP_TIMESTAMP) {
+        triggerTransition();
+        return;
+      }
+      if ("requestVideoFrameCallback" in video) {
+        callbackId = (video as unknown as { requestVideoFrameCallback: (cb: typeof checkFrame) => number })
+          .requestVideoFrameCallback(checkFrame);
+      }
+    };
+
+    if ("requestVideoFrameCallback" in video) {
+      callbackId = (video as unknown as { requestVideoFrameCallback: (cb: typeof checkFrame) => number })
+        .requestVideoFrameCallback(checkFrame);
+    }
+
+    return () => {
+      isActive = false;
+      if (callbackId !== null && "cancelVideoFrameCallback" in video) {
+        (video as unknown as { cancelVideoFrameCallback: (id: number) => void }).cancelVideoFrameCallback(callbackId);
+      }
+    };
+  }, [triggerTransition, replayTrigger]);
+
+  // Fallback coarse timeupdate handler for legacy browsers
   const handleTimeUpdate = () => {
     if (videoRef.current && videoRef.current.currentTime >= CROP_TIMESTAMP) {
       triggerTransition();
@@ -55,7 +92,10 @@ export function CinematicVideoIntro({
   // Attempt autoPlay reliably across mobile & desktop
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.play().catch(() => {});
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {});
+      }
     }
   }, [replayTrigger]);
 
@@ -80,7 +120,10 @@ export function CinematicVideoIntro({
     if (replayTrigger > 0) {
       if (videoRef.current) {
         videoRef.current.currentTime = 0;
-        videoRef.current.play().catch(() => {});
+        const playPromise = videoRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {});
+        }
       }
     }
   }, [replayTrigger]);
@@ -94,12 +137,13 @@ export function CinematicVideoIntro({
       {!isFadingOut && (
         <motion.div
           key="cinematic-video-intro-overlay"
-          initial={{ opacity: 1 }}
+          initial={{ opacity: 1, scale: 1 }}
           exit={{
             opacity: 0,
-            transition: { duration: 0.7, ease: "easeInOut" },
+            scale: 1.035,
+            transition: { duration: EXIT_MS / 1000, ease: [0.22, 1, 0.36, 1] },
           }}
-          className="fixed inset-0 z-[100] bg-[#180408] flex items-center justify-center overflow-hidden select-none pointer-events-auto"
+          className="fixed inset-0 z-[100] bg-[#180408] flex items-center justify-center overflow-hidden select-none pointer-events-auto transform-gpu will-change-[opacity,transform]"
         >
           {/* Ambient Warm Velvet Glow Backdrop for Wide Screens (Zero decode overhead) */}
           <div
@@ -111,32 +155,26 @@ export function CinematicVideoIntro({
           <div className="absolute inset-0 bg-gradient-to-t from-[#140407] via-transparent to-[#140407]/70 pointer-events-none z-5" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_55%,#0d0205_100%)] opacity-60 pointer-events-none z-5" />
 
-          {/* Main Focused Cinematic Video - Native crisp resolution */}
+          {/* Main Focused Cinematic Video - Hardware-accelerated lightweight dual-source */}
           <div className="relative w-full h-full flex items-center justify-center p-2 sm:p-4 z-15">
             <video
               ref={videoRef}
-              src="/gemini_generated_video_115e7efe.mp4"
               autoPlay
               muted
               playsInline
               preload="auto"
+              disablePictureInPicture
+              disableRemotePlayback
               onTimeUpdate={handleTimeUpdate}
               onEnded={triggerTransition}
-              className="w-auto h-auto max-w-[94vw] max-h-[84vh] sm:max-w-xl md:max-w-2xl lg:max-w-3xl object-contain mx-auto rounded shadow-2xl"
-            />
+              className="w-auto h-auto max-w-[94vw] max-h-[84vh] sm:max-w-xl md:max-w-2xl lg:max-w-3xl object-contain mx-auto rounded shadow-2xl transform-gpu will-change-transform pointer-events-none"
+            >
+              <source src="/intro-zonaib-yashal.webm" type="video/webm" />
+              <source src="/intro-zonaib-yashal.mp4" type="video/mp4" />
+            </video>
 
-            {/* Top Brand & Controls Header */}
-            <header className="absolute top-0 left-0 right-0 p-4 sm:p-6 flex items-center justify-between z-30 pointer-events-auto">
-              <div className="flex items-center gap-2">
-                <span className="font-display tracking-[0.3em] text-xs sm:text-sm text-[#F3DFB5] uppercase font-semibold drop-shadow-lg">
-                  {weddingData.brand.name}
-                </span>
-                <span className="text-[#C5A05B]/60 text-xs hidden xs:inline">|</span>
-                <span className="font-serif italic text-xs tracking-wider text-[#D7A3A0] hidden xs:inline drop-shadow">
-                  {weddingData.brand.collection}
-                </span>
-              </div>
-
+            {/* Top Controls Header */}
+            <header className="absolute top-0 left-0 right-0 p-4 sm:p-6 flex items-center justify-end z-30 pointer-events-auto">
               {/* Sound & Skip Buttons */}
               <div className="flex items-center gap-2 sm:gap-3">
                 <button

@@ -160,28 +160,26 @@ export function InvitationCover({
           />
         )}
 
-        {/* Main Hero Container: Emerges from the middle of the white page and grows to fill the section */}
+        {/* Main Hero Container: settles in softly as the intro video zooms through its finished card */}
         <motion.div
           initial={{
-            scale: 0.22,
+            scale: 0.94,
             opacity: 0,
-            filter: "blur(6px)",
           }}
           animate={
             isEmerging
               ? {
                   scale: 1,
                   opacity: 1,
-                  filter: "blur(0px)",
                 }
               : {
-                  scale: 0.22,
+                  scale: 0.94,
                   opacity: 0,
-                  filter: "blur(6px)",
                 }
           }
           transition={{
-            duration: shouldReduceMotion ? 0.6 : 1.45,
+            duration: shouldReduceMotion ? 0.6 : 1.15,
+            delay: shouldReduceMotion ? 0 : 0.08,
             ease: [0.16, 1, 0.3, 1],
           }}
           style={{
@@ -191,7 +189,7 @@ export function InvitationCover({
             transformStyle: "preserve-3d",
             transformOrigin: "center center",
           }}
-          className="relative z-10 w-full max-w-[390px] xs:max-w-[450px] sm:max-w-2xl md:max-w-3.5xl lg:max-w-4.5xl xl:max-w-5xl mx-auto flex items-center justify-center will-change-transform"
+          className="relative z-10 w-full max-w-[390px] xs:max-w-[450px] sm:max-w-2xl md:max-w-3.5xl lg:max-w-4.5xl xl:max-w-5xl mx-auto flex items-center justify-center transform-gpu will-change-[transform,opacity]"
         >
           {/* ========================================================= */}
           {/* ASYMMETRIC OPULENT BOTANICAL FLORALS (PICTURES & COLORS)   */}
@@ -388,13 +386,12 @@ export function InvitationCover({
 
               {/* 2. Islamic Bismillah Calligraphy (Large & Clear) */}
               <motion.div
-                initial={{ opacity: 0, y: 12, filter: "blur(3px)" }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{
                   opacity: isEmerging ? 1 : 0,
-                  y: isEmerging ? 0 : 12,
-                  filter: isEmerging ? "blur(0px)" : "blur(3px)",
+                  y: isEmerging ? 0 : 10,
                 }}
-                transition={{ delay: 0.6, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ delay: 0.5, duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
                 className="w-full my-1 sm:my-2 px-1"
               >
                 <p
@@ -438,13 +435,12 @@ export function InvitationCover({
 
               {/* 5. Couple's Names as the Emotional Focal Point */}
               <motion.div
-                initial={{ opacity: 0, y: 16, filter: "blur(4px)" }}
+                initial={{ opacity: 0, y: 14 }}
                 animate={{
                   opacity: isEmerging ? 1 : 0,
-                  y: isEmerging ? 0 : 16,
-                  filter: isEmerging ? "blur(0px)" : "blur(4px)",
+                  y: isEmerging ? 0 : 14,
                 }}
-                transition={{ delay: 1.1, duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ delay: 0.9, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
                 className="my-1.5 sm:my-3 w-full"
               >
                 <h1 className="font-script text-4xl xs:text-5xl sm:text-6xl md:text-7xl text-[#45151F] leading-none font-normal drop-shadow-[0_1px_2px_rgba(197,160,91,0.25)]">

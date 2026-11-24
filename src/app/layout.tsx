@@ -42,11 +42,11 @@ const amiri = Amiri({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://vowelle.com"),
-  title: "Ayla & Zayan — The Romantic Bloom | Vowelle",
+  title: "Zonaib & Yashal — Wedding & Nikkah Invitation",
   description:
-    "In the name of Allah, the Most Gracious, the Most Merciful. Wedding & Nikkah celebrations of Ayla Noor & Zayan Ahmed in Lahore, Pakistan.",
+    "In the name of Allah, the Most Gracious, the Most Merciful. Wedding & Nikkah celebrations of Zonaib Siddiqui & Yashal Pervaiz in Lahore, Pakistan.",
   openGraph: {
-    title: "Ayla & Zayan — The Romantic Bloom | Vowelle",
+    title: "Zonaib & Yashal — Wedding & Nikkah Invitation",
     description: "Every love story deserves an entrance.",
     images: ["/images/cover-blooms.jpg"],
   },

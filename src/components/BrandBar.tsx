@@ -30,18 +30,7 @@ export function BrandBar({ onReplay, isOpened = false }: BrandBarProps) {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#1e070d]/90 backdrop-blur-md border-b border-[#C5A05B]/25 text-[#F7F0E7] transition-all">
-      <div className="max-w-5xl mx-auto px-3 sm:px-6 py-2 sm:py-2.5 flex items-center justify-between">
-        {/* Brand identity */}
-        <div className="flex items-center gap-2">
-          <span className="font-display tracking-[0.28em] text-xs sm:text-sm text-[#E7CF9B] uppercase font-semibold">
-            {weddingData.brand.name}
-          </span>
-          <span className="text-[#C5A05B]/40 text-xs hidden sm:inline">|</span>
-          <span className="font-serif italic text-xs tracking-wider text-[#D7A3A0] hidden sm:inline">
-            {weddingData.brand.collection}
-          </span>
-        </div>
-
+      <div className="max-w-5xl mx-auto px-3 sm:px-6 py-2 sm:py-2.5 flex items-center justify-end">
         {/* Action buttons */}
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Replay button when opened */}

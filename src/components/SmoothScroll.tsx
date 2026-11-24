@@ -10,13 +10,13 @@ export function SmoothScroll() {
     if (prefersReducedMotion) return;
 
     const lenis = new Lenis({
-      duration: 1.15,
+      duration: 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      wheelMultiplier: 0.95,
-      touchMultiplier: 1.1,
+      wheelMultiplier: 0.9,
+      touchMultiplier: 1.0,
       infinite: false,
     });
 

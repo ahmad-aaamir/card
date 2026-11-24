@@ -82,16 +82,16 @@ export const weddingData: WeddingData = {
   },
   couple: {
     bride: {
-      firstName: "Ayla",
-      fullName: "Ayla Noor",
+      firstName: "Yashal",
+      fullName: "Yashal Pervaiz",
       parents: "Daughter of Mr. & Mrs. Tariq Mahmood",
     },
     groom: {
-      firstName: "Zayan",
-      fullName: "Zayan Ahmed",
+      firstName: "Zonaib",
+      fullName: "Zonaib Siddiqui",
       parents: "Son of Mr. & Mrs. Salman Ahmed",
     },
-    monogram: "Z & A",
+    monogram: "Z & Y",
   },
   event: {
     formalDate: "Saturday, the Twenty-Eighth of November, Two Thousand Twenty-Six",
@@ -167,6 +167,6 @@ export const weddingData: WeddingData = {
   closingMessage: {
     duaArabic: "بَارَكَ اللَّهُ لَكَ وَبَارَكَ عَلَيْكَ وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ",
     quote: "“May Allah bless you, shower His blessings upon you, and unite you both in goodness and peace.”",
-    note: "Your presence and prayers are the greatest gift to our families as Ayla & Zayan embark on this blessed journey together.",
+    note: "Your presence and prayers are the greatest gift to our families as Zonaib & Yashal embark on this blessed journey together.",
   },
 };

@@ -206,7 +206,7 @@ export function RsvpSection() {
                     </label>
                     <textarea
                       rows={3}
-                      placeholder="Share your prayers, Duas, or congratulations for Zayan & Ayla..."
+                      placeholder="Share your prayers, Duas, or congratulations for Zonaib & Yashal..."
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       className="w-full px-4 py-2.5 rounded-sm bg-[#FAF7F2] border border-[#C5A05B]/40 text-[#45151F] placeholder-[#45151F]/40 font-serif text-sm focus:outline-none focus:border-[#C5A05B] focus:ring-1 focus:ring-[#C5A05B]/50 transition-all resize-none shadow-inner"
